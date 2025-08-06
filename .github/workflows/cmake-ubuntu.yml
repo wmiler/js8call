@@ -24,8 +24,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential git # Installs compilers and build tools
-        sudo apt build-dep hamlib js8call
+        sudo apt-get install -y build-essential git cmake libhamlib-dev qt6-base-dev qt6-multimedia-dev qt6-serialport-dev libusb-1.0-0-dev libfftw3-dev libboost-all-dev
 
     - name: Build Hamlib
       run: |
