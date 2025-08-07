@@ -47,8 +47,9 @@ jobs:
         make -j 4
 
     - name: Package JS8Call
-      working-directory: ~/js8call/build
-      run: cpack -G DEB
+      run: |
+        cd ~/js8call/build
+        cpack -G DEB
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
