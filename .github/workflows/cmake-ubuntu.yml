@@ -25,7 +25,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential git cmake libhamlib-dev qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
-          libusb-1.0-0-dev libfftw3-dev libboost-all-dev udev
+          libusb-1.0-0-dev libfftw3-dev libboost-all-dev libudev-dev
 
     - name: Build Hamlib
       run: |
