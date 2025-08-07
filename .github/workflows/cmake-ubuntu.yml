@@ -1,6 +1,6 @@
 # This starter workflow is for a CMake project running on a single platform. There is a different starter workflow if you need cross-platform coverage.
 # See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-multi-platform.yml
-name: CMake on a single platform
+name: Build for Debian x86_64
 
 on:
   push:
@@ -24,7 +24,8 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential git cmake libhamlib-dev qt6-base-dev qt6-multimedia-dev qt6-serialport-dev libusb-1.0-0-dev libfftw3-dev libboost-all-dev
+        sudo apt-get install -y build-essential git cmake libhamlib-dev qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
+          libusb-1.0-0-dev libfftw3-dev libboost-all-dev udev
 
     - name: Build Hamlib
       run: |
