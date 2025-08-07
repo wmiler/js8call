@@ -17,7 +17,7 @@ jobs:
     # You can convert this to a matrix build if you need cross-platform coverage.
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
     # add ubuntu-latest-arm64 to runs-on to try rpi3+ build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest, ubuntu-latest-arm64
 
     steps:
     - uses: actions/checkout@v4
@@ -54,6 +54,6 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: js8call_2.3.2-devel_amd64-${{ github.sha }}.deb
+        name: js8call_2.3.2-devel_amd64-${{ github.sha_short }}.deb
         path: ~/js8call/build/js8call_2.3.2-devel_amd64.deb
         retention-days: 7
