@@ -77,13 +77,13 @@ jobs:
     - name: Build QT 6.4.3
       # Instructions taken from https://wiki.qt.io/Building_Qt_6_from_Git
       run: |
-        git clone https://code.qt.io/qt/qt5.git qt6
-        cd qt6
+        git clone https://code.qt.io/qt/qt5.git ~/qt6
+        cd ~/qt6
         git switch 6.4.2
         ./init-repository
-        mkdir qt6-build
-        cd qt6-build
-        ../qt6/configure -submodules qtmultimedia qt6-serialport 
+        mkdir -p ~/qt6/qt6-build
+        cd ~/qt6/qt6-build
+        ~/qt6/configure -submodules qtmultimedia qt6-serialport 
         cmake --build . --parallel 4
         cmake --install .
 
