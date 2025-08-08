@@ -54,8 +54,8 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: js8call_2.3.2-devel_amd64_{{ $ImageOS }}_${{ github.sha }}.deb
-        path: ~/js8call/build/js8call_2.3.2-devel_amd64_{{ $ImageOS }}.deb
+        name: js8call_2.3.2-devel_amd64_ubuntu-24.04_${{ github.sha }}.deb
+        path: ~/js8call/build/js8call_2.3.2-devel_amd64_ubuntu-24.04.deb
         retention-days: 7
 
   build_amd64_2204:
@@ -69,9 +69,10 @@ jobs:
 
     - name: Install dependencies
       run: |
+        sudo add-apt-repository ppa:mhier/libboost-latest
         sudo apt-get update
         sudo apt-get install -y build-essential git cmake libhamlib-dev qt6-base-dev qt6-multimedia-dev libqt6serialport6-dev \
-          libusb-1.0-0-dev libfftw3-dev libboost-all-dev libudev-dev libxkbcommon-dev
+          libusb-1.0-0-dev libfftw3-dev boost1.81 libudev-dev libxkbcommon-dev
 
     - name: Build Hamlib
       run: |
@@ -99,6 +100,6 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: js8call_2.3.2-devel_amd64_{{ $ImageOS }}_${{ github.sha }}.deb
-        path: ~/js8call/build/js8call_2.3.2-devel_amd64_{{ $ImageOS }}.deb
+        name: js8call_2.3.2-devel_amd64_ubuntu-22.04_${{ github.sha }}.deb
+        path: ~/js8call/build/js8call_2.3.2-devel_amd64_ubuntu-22.04.deb
         retention-days: 7
