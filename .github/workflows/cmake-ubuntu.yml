@@ -74,7 +74,7 @@ jobs:
         sudo apt-get install -y build-essential git cmake libhamlib-dev \
           libusb-1.0-0-dev libfftw3-dev boost1.81 libudev-dev libxkbcommon-dev
 
-    - name: Build QT 6.4.3
+    - name: Build QT 6.4.2
       # Instructions taken from https://wiki.qt.io/Building_Qt_6_from_Git
       run: |
         git clone https://code.qt.io/qt/qt5.git ~/qt6
@@ -83,7 +83,7 @@ jobs:
         ./init-repository
         mkdir -p ~/qt6/qt6-build
         cd ~/qt6/qt6-build
-        ~/qt6/configure -submodules qtmultimedia qtserialport 
+        ~/qt6/configure -submodules 
         cmake --build . --parallel 4
         cmake --install .
 
