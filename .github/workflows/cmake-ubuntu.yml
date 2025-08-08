@@ -83,7 +83,7 @@ jobs:
         ./init-repository
         mkdir -p ~/qt6/qt6-build
         cd ~/qt6/qt6-build
-        ~/qt6/configure -submodules qtmultimedia qt6-serialport 
+        ~/qt6/configure -submodules qtmultimedia qtserialport 
         cmake --build . --parallel 4
         cmake --install .
 
