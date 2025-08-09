@@ -72,7 +72,8 @@ jobs:
         sudo add-apt-repository ppa:mhier/libboost-latest
         sudo apt-get update
         sudo apt-get install -y build-essential git cmake llvm-13-dev libclang-13-dev libhamlib-dev \
-          libusb-1.0-0-dev libfftw3-dev boost1.81 libudev-dev libxkbcommon-dev libopengl-dev
+          libusb-1.0-0-dev libfftw3-dev boost1.81 libudev-dev libxkbcommon-dev libopengl-dev \
+          libgles2-mesa-dev
 
     - name: Build QT 6.7.3
       # Instructions taken from https://wiki.qt.io/Building_Qt_6_from_Git
