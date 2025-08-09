@@ -74,13 +74,14 @@ jobs:
         sudo apt-get install -y build-essential git cmake llvm-13-dev libclang-13-dev libhamlib-dev \
           libusb-1.0-0-dev libfftw3-dev boost1.81 libudev-dev libxkbcommon-dev libopengl-dev
 
-    - name: Build QT 6.4.2
+    - name: Build QT 6.7.3
       # Instructions taken from https://wiki.qt.io/Building_Qt_6_from_Git
       run: |
         git clone https://code.qt.io/qt/qt5.git ~/qt6
         cd ~/qt6
-        git switch 6.4.2
-        ./init-repository --module-subset=qtbase,qtmultimedia,qtserialport,qtnetworkauth,qtsvg,qtshadertools,qtdeclarative
+        git switch 6.7.3
+        ./init-repository
+        #./init-repository --module-subset=qtbase,qtmultimedia,qtserialport,qtnetworkauth,qtsvg,qtshadertools,qtdeclarative
         mkdir -p ~/qt6/qt6-build
         cd ~/qt6/qt6-build
         ~/qt6/configure -DFEATURE_clang=OFF \
