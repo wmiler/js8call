@@ -80,14 +80,16 @@ jobs:
         git clone https://code.qt.io/qt/qt5.git ~/qt6
         cd ~/qt6
         git switch 6.4.2
-        ./init-repository
+        ./init-repository --module-subset=qtbase,qtmultimedia,qtserialport,qtnetworkauth,qtsvg
         mkdir -p ~/qt6/qt6-build
         cd ~/qt6/qt6-build
-        ~/qt6/configure -DFEATURE_clang=OFF -DQT_BUILD_EXAMPLES=OFF -DQT_FEATURE_opengles3=ON \
+        ~/qt6/configure -DFEATURE_clang=OFF \
+          -DQT_BUILD_EXAMPLES=OFF -DQT_FEATURE_opengles3=ON \
+          -DCMAKE_POLICY_DEFAULT_CMP0177=OLD \
           -skip qtdoc -skip qttools -skip qttranslations
         
         cmake --build . --parallel 4
-        cmake --install . -Wno-dev -DCMAKE_POLICY_DEFAULT_CMP0177=OLD
+        cmake --install . -Wno-dev
 
     - name: Build Hamlib
       run: |
