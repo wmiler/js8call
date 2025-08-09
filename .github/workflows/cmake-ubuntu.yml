@@ -85,9 +85,9 @@ jobs:
         cd ~/qt6/qt6-build
         ~/qt6/configure -DFEATURE_clang=OFF -DQT_BUILD_EXAMPLES=OFF -DQT_FEATURE_opengles3=ON \
           -skip qtdoc -skip qttools -skip qttranslations
-        cmake_policy(SET CMP0177 OLD)
-        cmake --build . --parallel 4 -Wno-dev
-        cmake --install .
+        
+        cmake --build . --parallel 4
+        cmake --install . -Wno-dev -DCMAKE_POLICY_DEFAULT_CMP0177=OLD
 
     - name: Build Hamlib
       run: |
