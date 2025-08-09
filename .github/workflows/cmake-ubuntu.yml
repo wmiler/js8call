@@ -67,11 +67,27 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Free Disk Space (Ubuntu)
+      uses: jlumbroso/free-disk-space@main
+      with:
+        # this might remove tools that are actually needed,
+        # if set to "true" but frees about 6 GB
+        tool-cache: false
+        
+        # all of these default to true, but feel free to set to
+        # "false" if necessary for your workflow
+        android: true
+        dotnet: true
+        haskell: true
+        large-packages: true
+        docker-images: true
+        swap-storage: true
+        
     - name: Install dependencies
       run: |
         sudo add-apt-repository ppa:mhier/libboost-latest
         sudo apt-get update
-        sudo apt-get install -y build-essential git cmake llvm-13-dev libclang-13-dev libhamlib-dev \
+        sudo apt-get install -y build-essential git cmake libhamlib-dev \
           libusb-1.0-0-dev libfftw3-dev boost1.81 libudev-dev libxkbcommon-dev libopengl-dev \
           libgles2-mesa-dev
 
