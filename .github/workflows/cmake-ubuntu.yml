@@ -80,7 +80,7 @@ jobs:
         git clone https://code.qt.io/qt/qt5.git ~/qt6
         cd ~/qt6
         git switch 6.4.2
-        ./init-repository --module-subset=qtbase,qtmultimedia,qtserialport,qtnetworkauth,qtsvg
+        ./init-repository --module-subset=qtbase,qtmultimedia,qtserialport,qtnetworkauth,qtsvg,qtshadertools,qtdeclarative
         mkdir -p ~/qt6/qt6-build
         cd ~/qt6/qt6-build
         ~/qt6/configure -DFEATURE_clang=OFF \
