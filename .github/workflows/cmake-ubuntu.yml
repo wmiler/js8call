@@ -83,7 +83,8 @@ jobs:
         ./init-repository
         mkdir -p ~/qt6/qt6-build
         cd ~/qt6/qt6-build
-        ~/qt6/configure -DFEATURE_clang=OFF -DQT_BUILD_EXAMPLES=OFF -skip qtdoc -skip qttools -skip qttranslations
+        ~/qt6/configure -DFEATURE_clang=OFF -DQT_BUILD_EXAMPLES=OFF -DQT_FEATURE_opengles3=ON \
+          -skip qtdoc -skip qttools -skip qttranslations
         cmake --build . --parallel 4
         cmake --install .
 
