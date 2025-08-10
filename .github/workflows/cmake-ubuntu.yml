@@ -75,13 +75,12 @@ jobs:
         echo "~/js8call/build/linuxdeploy/usr/bin:~/js8call/build/linuxdeploy-plugin-qt/usr/bin" >> $GITHUB_PATH
         echo "PATH: $GITHUB_PATH"
 
-        echo "make install"
         make DESTDIR=~/appimage/AppDir install
         
         test -f ~/appimage/AppDir/usr/share/applications/js8call.desktop || \
           cp ~/js8call/js8call.desktop ~/appimage/AppDir/usr/share/applications/ && \
         if [ ! -f ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png ]; then \
-        mkdir -p /appimage/AppDir/usr/share/icons/hicolor/128x128/apps && \
+        mkdir -p ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps && \
         convert ~/js8call/artwork/js8call_icon.png -resize 128x128 \
             ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png; \
         fi
