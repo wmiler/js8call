@@ -72,9 +72,6 @@ jobs:
           && mv squashfs-root linuxdeploy-plugin-qt \
           && rm *.AppImage
 
-        echo "~/js8call/build/linuxdeploy/usr/bin:~/js8call/build/linuxdeploy-plugin-qt/usr/bin" >> $GITHUB_PATH
-        echo "PATH: $GITHUB_PATH"
-
         make DESTDIR=~/appimage/AppDir install
         
         test -f ~/appimage/AppDir/usr/share/applications/js8call.desktop || \
@@ -86,10 +83,11 @@ jobs:
         fi
         cd ~/appimage
         echo "linuxdeploy"
+        echo "~/js8call/build/linuxdeploy/usr/bin:~/js8call/build/linuxdeploy-plugin-qt/usr/bin/" >> "$GITHUB_PATH"
 
         EXEC_PATH=$(find AppDir -type f -name "js8call" -executable | head -1) && \
           echo "Found executable at: $EXEC_PATH" && \
-        linuxdeploy --appdir AppDir \
+          ~/js8call/build/linuxdeploy/usr/bin/linuxdeploy --appdir AppDir \
           --executable "$EXEC_PATH" \
           --plugin qt \
           --output appimage \
