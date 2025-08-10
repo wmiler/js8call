@@ -51,10 +51,18 @@ jobs:
         cd ~/js8call/build
         cpack -G DEB
 
+    - name: Upload deb Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: js8call_2.3.2-devel_amd64_ubuntu-24.04.deb
+        path: ~/js8call/build/js8call_2.3.2-devel_amd64.deb
+        retention-days: 7
+
     - name: Package JS8Call AppImage
       run: |
         echo "****  WIP ****"
-        pwd
+        mkdir -p ~/appimage/AppDir
+        cd ~/js8call/build
         wget -q https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage \
           && wget -q https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage \
           && chmod +x linuxdeploy*.AppImage \
@@ -63,16 +71,16 @@ jobs:
           && ./linuxdeploy-plugin-qt-x86_64.AppImage --appimage-extract \
           && mv squashfs-root linuxdeploy-plugin-qt \
           && rm *.AppImage
-        cd ~/js8call/build
-        make DESTDIR=/appimage/AppDir install
-        test -f /appimage/AppDir/usr/share/applications/js8call.desktop || \
-          cp /js8call-prefix/src/js8call.desktop /appimage/AppDir/usr/share/applications/ && \
-        if [ ! -f /appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png ]; then \
+
+        make DESTDIR=~/appimage/AppDir install
+        test -f ~/appimage/AppDir/usr/share/applications/js8call.desktop || \
+          cp ~/js8call/js8call.desktop ~/appimage/AppDir/usr/share/applications/ && \
+        if [ ! -f ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png ]; then \
         mkdir -p /appimage/AppDir/usr/share/icons/hicolor/128x128/apps && \
-        convert /js8call-prefix/src/artwork/js8call_icon.png -resize 128x128 \
-            /appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png; \
+        convert ~/js8call/artwork/js8call_icon.png -resize 128x128 \
+            ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png; \
         fi
-        cd /appimage
+        cd ~/appimage
         EXEC_PATH=$(find AppDir -type f -name "js8call" -executable | head -1) && \
           echo "Found executable at: $EXEC_PATH" && \
         linuxdeploy --appdir AppDir \
@@ -81,13 +89,6 @@ jobs:
           --output appimage \
           --desktop-file AppDir/usr/share/applications/js8call.desktop \
           --icon-file AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png
-
-    - name: Upload deb Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: js8call_2.3.2-devel_amd64_ubuntu-24.04.deb
-        path: ~/js8call/build/js8call_2.3.2-devel_amd64.deb
-        retention-days: 7
 
     - name: Upload AppImage Artifact
       uses: actions/upload-artifact@v4
