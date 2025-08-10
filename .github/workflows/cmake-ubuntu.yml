@@ -57,84 +57,49 @@ jobs:
         name: js8call_2.3.2-devel_amd64_ubuntu-24.04_${{ github.sha }}.deb
         path: ~/js8call/build/js8call_2.3.2-devel_amd64.deb
         retention-days: 7
-
-#  build_amd64_2204:
+        
+  build_arm64_2404:
     # You can convert this to a matrix build if you need cross-platform coverage.
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
     # add ubuntu-latest-arm64 to runs-on to try rpi3+ build
-#    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04-arm
 
-#    steps:
-#    - uses: actions/checkout@v4
+    steps:
+    - uses: actions/checkout@v4
 
-#    - name: Free Disk Space (Ubuntu)
-#      uses: jlumbroso/free-disk-space@main
-#      with:
-        # this might remove tools that are actually needed,
-        # if set to "true" but frees about 6 GB
-#        tool-cache: false
-        
-        # all of these default to true, but feel free to set to
-        # "false" if necessary for your workflow
-#        android: true
-#        dotnet: true
-#        haskell: true
-#        large-packages: true
-#        docker-images: true
-#        swap-storage: true
-        
-#    - name: Install dependencies
-#      run: |
-#        sudo add-apt-repository ppa:mhier/libboost-latest
-#        sudo apt-get update
-#        sudo apt-get install -y build-essential git cmake libhamlib-dev \
-#          libusb-1.0-0-dev libfftw3-dev boost1.81 libudev-dev libxkbcommon-dev libopengl-dev \
-#          libgles2-mesa-dev
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential git cmake libhamlib-dev qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
+          libusb-1.0-0-dev libfftw3-dev libboost-all-dev libudev-dev libxkbcommon-dev
 
-#    - name: Build QT 6.7.3
-      # Instructions taken from https://wiki.qt.io/Building_Qt_6_from_Git
-#      run: |
-#        git clone https://code.qt.io/qt/qt5.git ~/qt6
-#        cd ~/qt6
-#        git switch 6.7.3
-        
-#        ./init-repository --module-subset=qtbase,qtmultimedia,qtserialport,qtnetworkauth,qtsvg,qtshadertools,qtdeclarative
-#        mkdir -p ~/qt6/qt6-build
-#        cd ~/qt6/qt6-build
-#        ~/qt6/configure -DFEATURE_clang=OFF \
-#          -DQT_BUILD_EXAMPLES=OFF \
-#          -DCMAKE_POLICY_DEFAULT_CMP0177=OLD \
-#          -skip qtdoc -skip qttools -skip qttranslations -Wno-dev
-        
-#        cmake --build . --parallel 4
-#        cmake --install .
+    - name: Build Hamlib
+      run: |
+        git clone https://github.com/Hamlib/Hamlib.git ~/hamlib
+        cd ~/hamlib
+        git checkout 4.6.4
+        ./bootstrap
+        ./configure
+        make -j 4
+        sudo make install-strip
+        sudo ldconfig
 
-#    - name: Build Hamlib
-#      run: |
-#        git clone https://github.com/Hamlib/Hamlib.git ~/hamlib
-#        cd ~/hamlib
-#        git checkout 4.6.4
-#        ./bootstrap
-#        ./configure
-#        make -j 4
-#        sudo make install-strip
-#        sudo ldconfig
+    - name: Build JS8Call
+      run: |
+        git clone https://github.com/js8call/js8call.git ~/js8call
+        mkdir -p ~/js8call/build && cd ~/js8call/build
+        cmake ..
+        make -j 4
 
-#    - name: Build JS8Call
-#      run: |
-#        git clone https://github.com/js8call/js8call.git ~/js8call
-#        mkdir -p ~/js8call/build && cd ~/js8call/build
-#        cmake ..
-#        make -j 4
+    - name: Package JS8Call
+      run: |
+        cd ~/js8call/build
+        cpack -G DEB
 
-#    - name: Package JS8Call
-#      run: |
-#        cd ~/js8call/build
-#        cpack -G DEB
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: js8call_2.3.2-devel_amd64_ubuntu-24.04_${{ github.sha }}.deb
+        path: ~/js8call/build/js8call_2.3.2-devel_amd64.deb
+        retention-days: 7
 
-#    - name: Upload Artifact
-#      uses: actions/upload-artifact@v4
-#      with:
-#        name: js8call_2.3.2-devel_amd64_ubuntu-22.04_${{ github.sha }}.deb
-#        path: ~/js8call/build/js8call_2.3.2-devel_amd64.deb
-#        retention-days: 7
