@@ -39,19 +39,19 @@ jobs:
         sudo make install-strip
         sudo ldconfig
 
-    - name: Build JS8Call
+    - name: Build JS8Call 
       run: |
         git clone https://github.com/js8call/js8call.git ~/js8call
         mkdir -p ~/js8call/build && cd ~/js8call/build
         cmake ..
         make -j 4
 
-    - name: Package JS8Call
+    - name: Package JS8Call (amd64-deb)
       run: |
         cd ~/js8call/build
         cpack -G DEB
 
-    - name: Upload deb Artifact
+    - name: Upload amd64-deb Artifact
       uses: actions/upload-artifact@v4
       with:
         name: js8call_2.3.2-devel_amd64_ubuntu-24.04.deb
@@ -82,7 +82,7 @@ jobs:
             ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png; \
         fi
         cd ~/appimage
-        echo "linuxdeploy"
+
         echo "~/js8call/build/linuxdeploy/usr/bin:~/js8call/build/linuxdeploy-plugin-qt/usr/bin/" >> "$GITHUB_PATH"
         ln -s ~/js8call/build/linuxdeploy-plugin-qt/usr/bin/linuxdeploy-plugin-qt ~/js8call/build/linuxdeploy/usr/bin/
         
@@ -94,16 +94,12 @@ jobs:
           --output appimage \
           --desktop-file AppDir/usr/share/applications/js8call.desktop \
           --icon-file AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png
-
-        pwd
-        ls -l *.AppImage
-        ls -l ~/js8call/build/*.AppImage
         
     - name: Upload AppImage Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: /appimage/*.AppImage
-        path: ~/js8call/build/js8call_2.3.2-devel_amd64.AppImage
+        name: js8call-x86_64.AppImage
+        path: ~/appimage/js8call-x86_64.AppImage
         retention-days: 7
         
   build_arm64_2404:
