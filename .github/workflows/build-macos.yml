@@ -44,15 +44,15 @@ jobs:
       run: |
         mkdir ~/development && mkdir ~/development/js8libs
         cd ~/development
+        wget -q https://fftw.org/fftw-3.3.10.tar.gz
+        tar zxf fftw-3.3.10.tar.gz
         
 #        wget -q https://github.com/libusb/libusb/releases/download/v1.0.29/libusb-1.0.29.tar.bz2
 #        wget -q https://github.com/Hamlib/Hamlib/releases/download/4.6.4/hamlib-4.6.4.tar.gz
-#        wget -q https://fftw.org/fftw-3.3.10.tar.gz
 #        wget -q https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.gz
 
 #        tar jxf libusb-1.0.29.tar.bz2
 #        tar zxf hamlib-4.6.4.tar.gz
-#        tar zxf fftw-3.3.10.tar.gz
 #        tar zxf boost_1_88_0.tar.gz
         
 #    - name: Build and install libusb
