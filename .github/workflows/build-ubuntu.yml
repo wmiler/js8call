@@ -12,9 +12,6 @@ env:
 
 jobs:
   build_amd64_2404:
-    # You can convert this to a matrix build if you need cross-platform coverage.
-    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-    # add ubuntu-latest-arm64 to runs-on to try rpi3+ build
     runs-on: ubuntu-24.04
 
     steps:
@@ -24,7 +21,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential git cmake libhamlib-dev qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
-          libusb-1.0-0-dev libfftw3-dev libboost-all-dev libudev-dev libxkbcommon-dev
+          libusb-1.0-0-dev libfftw3-dev libboost-all-dev libudev-dev libxkbcommon-dev libfuse2 imagemagick
 
     - name: Build Hamlib
       run: |
@@ -37,29 +34,69 @@ jobs:
         sudo make install-strip
         sudo ldconfig
 
-    - name: Build JS8Call
+    - name: Build JS8Call 
       run: |
         git clone https://github.com/js8call/js8call.git ~/js8call
         mkdir -p ~/js8call/build && cd ~/js8call/build
         cmake ..
         make -j 4
 
-    - name: Package JS8Call
+    - name: Package JS8Call (deb)
       run: |
         cd ~/js8call/build
         cpack -G DEB
 
-    - name: Upload Artifact
+    - name: Upload Artifact (deb)
       uses: actions/upload-artifact@v4
       with:
         name: js8call_2.3.2-devel_amd64_ubuntu-24.04.deb
         path: ~/js8call/build/js8call_2.3.2-devel_amd64.deb
         retention-days: 7
+
+    - name: Package JS8Call AppImage (amd64)
+      run: |
+        mkdir -p ~/appimage/AppDir
+        cd ~/js8call/build
+        wget -q https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage \
+          && wget -q https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage \
+          && chmod +x linuxdeploy*.AppImage \
+          && ./linuxdeploy-x86_64.AppImage --appimage-extract \
+          && mv squashfs-root linuxdeploy \
+          && ./linuxdeploy-plugin-qt-x86_64.AppImage --appimage-extract \
+          && mv squashfs-root linuxdeploy-plugin-qt \
+          && rm *.AppImage
+
+        make DESTDIR=~/appimage/AppDir install
+        
+        test -f ~/appimage/AppDir/usr/share/applications/js8call.desktop || \
+          cp ~/js8call/js8call.desktop ~/appimage/AppDir/usr/share/applications/ && \
+        if [ ! -f ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png ]; then \
+        mkdir -p ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps && \
+        convert ~/js8call/artwork/js8call_icon.png -resize 128x128 \
+            ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png; \
+        fi
+        cd ~/appimage
+
+        echo "~/js8call/build/linuxdeploy/usr/bin:~/js8call/build/linuxdeploy-plugin-qt/usr/bin/" >> "$GITHUB_PATH"
+        ln -s ~/js8call/build/linuxdeploy-plugin-qt/usr/bin/linuxdeploy-plugin-qt ~/js8call/build/linuxdeploy/usr/bin/
+        
+        EXEC_PATH=$(find AppDir -type f -name "js8call" -executable | head -1) && \
+          echo "Found executable at: $EXEC_PATH" && \
+          ~/js8call/build/linuxdeploy/usr/bin/linuxdeploy --appdir AppDir \
+          --executable "$EXEC_PATH" \
+          --plugin qt \
+          --output appimage \
+          --desktop-file AppDir/usr/share/applications/js8call.desktop \
+          --icon-file AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png
+        
+    - name: Upload AppImage Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: js8call_2.3.2-devel_x86_64_ubuntu-24.04.AppImage
+        path: ~/appimage/js8call-x86_64.AppImage
+        retention-days: 7
         
   build_arm64_2404:
-    # You can convert this to a matrix build if you need cross-platform coverage.
-    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-    # add ubuntu-latest-arm64 to runs-on to try rpi3+ build
     runs-on: ubuntu-24.04-arm
 
     steps:
@@ -69,7 +106,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential git cmake libhamlib-dev qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
-          libusb-1.0-0-dev libfftw3-dev libboost-all-dev libudev-dev libxkbcommon-dev
+          libusb-1.0-0-dev libfftw3-dev libboost-all-dev libudev-dev libxkbcommon-dev libfuse2 imagemagick
 
     - name: Build Hamlib
       run: |
@@ -89,14 +126,58 @@ jobs:
         cmake ..
         make -j 4
 
-    - name: Package JS8Call
+    - name: Package JS8Call (deb)
       run: |
         cd ~/js8call/build
         cpack -G DEB
 
-    - name: Upload Artifact
+    - name: Upload Artifact (deb)
       uses: actions/upload-artifact@v4
       with:
         name: js8call_2.3.2-devel_arm64_ubuntu-24.04.deb
         path: ~/js8call/build/js8call_2.3.2-devel_arm64.deb
         retention-days: 7
+
+    - name: Package JS8Call AppImage (arm64)
+      run: |
+        mkdir -p ~/appimage/AppDir
+        cd ~/js8call/build
+        wget -q https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-aarch64.AppImage \
+          && wget -q https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-aarch64.AppImage \
+          && chmod +x linuxdeploy*.AppImage \
+          && ./linuxdeploy-aarch64.AppImage --appimage-extract \
+          && mv squashfs-root linuxdeploy \
+          && ./linuxdeploy-plugin-qt-aarch64.AppImage --appimage-extract \
+          && mv squashfs-root linuxdeploy-plugin-qt \
+          && rm *.AppImage
+
+        make DESTDIR=~/appimage/AppDir install
+        
+        test -f ~/appimage/AppDir/usr/share/applications/js8call.desktop || \
+          cp ~/js8call/js8call.desktop ~/appimage/AppDir/usr/share/applications/ && \
+        if [ ! -f ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png ]; then \
+        mkdir -p ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps && \
+        convert ~/js8call/artwork/js8call_icon.png -resize 128x128 \
+            ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png; \
+        fi
+        cd ~/appimage
+
+        echo "~/js8call/build/linuxdeploy/usr/bin:~/js8call/build/linuxdeploy-plugin-qt/usr/bin/" >> "$GITHUB_PATH"
+        ln -s ~/js8call/build/linuxdeploy-plugin-qt/usr/bin/linuxdeploy-plugin-qt ~/js8call/build/linuxdeploy/usr/bin/
+        
+        EXEC_PATH=$(find AppDir -type f -name "js8call" -executable | head -1) && \
+          echo "Found executable at: $EXEC_PATH" && \
+          ~/js8call/build/linuxdeploy/usr/bin/linuxdeploy --appdir AppDir \
+          --executable "$EXEC_PATH" \
+          --plugin qt \
+          --output appimage \
+          --desktop-file AppDir/usr/share/applications/js8call.desktop \
+          --icon-file AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png
+        
+    - name: Upload AppImage Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: js8call_2.3.2-devel_aarch64_ubuntu-24.04.AppImage
+        path: ~/appimage/js8call-aarch64.AppImage
+        retention-days: 7
+        
