@@ -16,14 +16,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-
-#    - name: Get CMake and build
-#      run: |
-#        cd ~
-#        wget -q https://github.com/Kitware/CMake/releases/download/v4.0.3/cmake-4.0.3.tar.gz
-#        tar zxf cmake-4.0.3.tar.gz
-#        cd ~/cmake-4.0.3
-#        ./bootstrap && make && sudo make install
     
     - name: Install CMake
       run: |
@@ -68,7 +60,7 @@ jobs:
       run: |
         cd ~/development/fftw-3.3.10 \
             && ./configure CFLAGS=-mmacosx-version-min=11.0 \
-                    --prefix=$/Users/runner/development/js8libs \
+                    --prefix=/Users/runner/development/js8libs \
                     --enable-single \
                     --enable-threads \
                     --enable-neon
@@ -93,8 +85,7 @@ jobs:
         mkdir ~/development/qt6-build && cd ~/development/qt6-build \
             && ../qt6/configure -prefix /Users/runner/development/js8libs \
             && cmake --build . --parallel \
-            && cmake --install . \
-            && cmake --build . --target clean
+            && cmake --install .
 
     - name: Build JS8Call 
       run: |
