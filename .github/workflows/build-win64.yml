@@ -1,0 +1,74 @@
+name: Build for Windows 10+ amd64
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+  build_windows-2022:
+    runs-on: windows-2022
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install CMake
+      run: |
+        brew update
+        brew install cmake
+        
+    - name: Install Ninja
+      run: brew install ninja
+
+    - name: Install libusb
+      run: brew install libusb
+
+    - name: Install Hamlib
+      run: brew install hamlib
+
+#    - name: Install fftw
+#      run: brew install fftw
+
+    - name: Install Boost
+      run: brew install boost
+
+    - name: Install QT6
+      run: brew install qt
+
+    - name: Download dependencies
+      run: |
+        mkdir ~/development && mkdir ~/development/js8libs
+        cd ~/development
+        wget -q https://fftw.org/fftw-3.3.10.tar.gz
+        tar zxf fftw-3.3.10.tar.gz
+
+    - name: Build and install fftw
+      run: |
+       cd ~/development/fftw-3.3.10 \
+            && ./configure CFLAGS=-mmacosx-version-min=11.0 \
+                    --prefix=/Users/runner/development/js8libs \
+                    --enable-single \
+                    --enable-threads \
+                    --enable-neon
+        make \
+        && make install \
+        && make clean
+
+    - name: Build JS8Call 
+      run: |
+        git clone https://github.com/js8call/js8call.git ~/development/js8call
+        mkdir -p ~/development/js8call/build && cd ~/development/js8call/build
+        cmake -DCMAKE_PREFIX_PATH="/Users/runner/development/js8libs;/opt/homebrew" ..
+        make -j 4
+
+    - name: Upload Artifact (app)
+      uses: actions/upload-artifact@v4
+      with:
+        name: js8call_2.3.2-devel_arm64_macos15.app
+        path: ~/development/js8call/build/js8call.app
+        retention-days: 7
