@@ -95,6 +95,10 @@ jobs:
           --desktop-file AppDir/usr/share/applications/js8call.desktop \
           --icon-file AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png
 
+        pwd
+        ls -l *.AppImage
+        ls -l ~/js8call/build/*.AppImage
+        
     - name: Upload AppImage Artifact
       uses: actions/upload-artifact@v4
       with:
