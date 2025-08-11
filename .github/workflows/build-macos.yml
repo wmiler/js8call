@@ -51,7 +51,7 @@ jobs:
     - name: Build and install libusb
       run: |
         cd ~/development/libusb-1.0.29 \
-            && ./configure --prefix=~/development/js8libs \
+            && ./configure --prefix=$(pwd)/development/js8libs \
             && make \
             && make install \
             && make clean
@@ -59,7 +59,7 @@ jobs:
     - name: Build and install Hamlib
       run: |
         cd ~/development/hamlib-4.6.4 \
-            && ./configure --prefix=~/development/js8libs \
+            && ./configure --prefix=$(pwd)/development/js8libs \
             && make \
             && make install \
             && make clean
@@ -68,7 +68,7 @@ jobs:
       run: |
         cd ~/development/fftw-3.3.10 \
             && ./configure CFLAGS=-mmacosx-version-min=11.0 \
-                    --prefix=~/development/js8libs \
+                    --prefix=$(pwd)/development/js8libs \
                     --enable-single \
                     --enable-threads \
                     --enable-neon
@@ -79,7 +79,7 @@ jobs:
     - name: Build and install Boost
       run: |
         cd ~/development/boost_1_88_0 \
-            && ./bootstrap.sh --prefix=~/development/js8libs \
+            && ./bootstrap.sh --prefix=$(pwd)/development/js8libs \
             && ./b2 -a -q \
             && ./b2 -a -q install \
             && ./b2 --clean
@@ -91,7 +91,7 @@ jobs:
         git switch 6.8.1
         ./init-repository
         mkdir ~/development/qt6-build && cd ~/development/qt6-build \
-            && ../qt6/configure -prefix ~/development/js8libs \
+            && ../qt6/configure -prefix $(pwd)/development/js8libs \
             && cmake --build . --parallel \
             && cmake --install . \
             && cmake --build . --target clean
@@ -100,7 +100,7 @@ jobs:
       run: |
         git clone https://github.com/js8call/js8call.git ~/development/js8call
         mkdir -p ~/development/js8call/build && cd ~/development/js8call/build
-        cmake -DCMAKE_PREFIX_PATH=~/development/js8libs ..
+        cmake -DCMAKE_PREFIX_PATH=$(pwd)/development/js8libs ..
         make -j 4
 
     - name: Upload Artifact (deb)
