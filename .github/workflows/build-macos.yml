@@ -46,30 +46,6 @@ jobs:
         cd ~/development
         wget -q https://fftw.org/fftw-3.3.10.tar.gz
         tar zxf fftw-3.3.10.tar.gz
-        
-#        wget -q https://github.com/libusb/libusb/releases/download/v1.0.29/libusb-1.0.29.tar.bz2
-#        wget -q https://github.com/Hamlib/Hamlib/releases/download/4.6.4/hamlib-4.6.4.tar.gz
-#        wget -q https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.gz
-
-#        tar jxf libusb-1.0.29.tar.bz2
-#        tar zxf hamlib-4.6.4.tar.gz
-#        tar zxf boost_1_88_0.tar.gz
-        
-#    - name: Build and install libusb
-#      run: |
-#        cd ~/development/libusb-1.0.29 \
-#            && ./configure --prefix=/Users/runner/development/js8libs \
-#            && make \
-#            && make install \
-#            && make clean
-
-#    - name: Build and install Hamlib
-#      run: |
-#        cd ~/development/hamlib-4.6.4 \
-#            && ./configure --prefix=/Users/runner/development/js8libs \
-#            && make \
-#            && make install \
-#            && make clean
 
     - name: Build and install fftw
       run: |
@@ -82,25 +58,6 @@ jobs:
         make \
         && make install \
         && make clean
-
-#    - name: Build and install Boost
-#      run: |
-#        cd ~/development/boost_1_88_0 \
-#            && ./bootstrap.sh --prefix=/Users/runner/development/js8libs \
-#            && ./b2 -a -q \
-#            && ./b2 -a -q install \
-#            && ./b2 --clean
-
-#    - name: Build and install QT6.8.1 (will prolly run out of disk space here)
-#      run: |
-#        cd ~/development && git clone https://github.com/qt/qt5.git qt6
-#        cd qt6
-#        git switch 6.8.1
-#        ./init-repository
-#        mkdir ~/development/qt6-build && cd ~/development/qt6-build \
-#            && ../qt6/configure -prefix /Users/runner/development/js8libs -Wno-dev \
-#            && cmake --build . --parallel \
-#            && cmake --install .
 
     - name: Build JS8Call 
       run: |
