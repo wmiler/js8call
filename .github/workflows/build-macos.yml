@@ -1,6 +1,4 @@
-# This starter workflow is for a CMake project running on a single platform. There is a different starter workflow if you need cross-platform coverage.
-# See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-multi-platform.yml
-name: Build for Debian x86_64 and Arm64
+name: Build for MacOS 15
 
 on:
   push:
@@ -18,11 +16,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Get some info
+    - name: Get CMake and build
       run: |
-        pwd
-        wget https://github.com/Kitware/CMake/releases/download/v4.0.3/cmake-4.0.3.tar.gz
-
+        cd ~
+        wget -q https://github.com/Kitware/CMake/releases/download/v4.0.3/cmake-4.0.3.tar.gz
+        tar zxf cmake-4.0.3.tar.gz
+        ls -l
+        
 #    - name: Install dependencies
 #      run: |
 #        sudo apt-get update
