@@ -17,14 +17,20 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Get CMake and build
-      run: |
-        cd ~
-        wget -q https://github.com/Kitware/CMake/releases/download/v4.0.3/cmake-4.0.3.tar.gz
-        tar zxf cmake-4.0.3.tar.gz
-        cd ~/cmake-4.0.3
-        ./bootstrap && make && sudo make install
+#    - name: Get CMake and build
+#      run: |
+#        cd ~
+#        wget -q https://github.com/Kitware/CMake/releases/download/v4.0.3/cmake-4.0.3.tar.gz
+#        tar zxf cmake-4.0.3.tar.gz
+#        cd ~/cmake-4.0.3
+#        ./bootstrap && make && sudo make install
     
+    - name: Install CMake
+      run: |
+        brew update
+        brew install cmake@4.0.3
+        brew link --force --overwrite cmake@4.0.3
+        
     - name: Install Ninja
       run: brew install ninja
 
@@ -38,19 +44,26 @@ jobs:
         wget -q https://fftw.org/fftw-3.3.10.tar.gz
         wget -q https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.gz
 
+        tar jxf libusb-1.0.29.tar.bz2
+        tar zxf hamlib-4.6.4.tar.gz
+        tar zxf fftw-3.3.10.tar.gz
+        tar zxf boost_1_88_0.tar.gz
+        
     - name: Build and install libusb
       run: |
         cd ~/development/libusb-1.0.29 \
             && ./configure --prefix=~/development/js8libs \
             && make \
-            && make install
+            && make install \
+            && make clean
 
     - name: Build and install Hamlib
       run: |
         cd ~/development/hamlib-4.6.4 \
             && ./configure --prefix=~/development/js8libs \
             && make \
-            && make install
+            && make install \
+            && make clean
 
     - name: Build and install fftw
       run: |
@@ -60,14 +73,17 @@ jobs:
                     --enable-single \
                     --enable-threads \
                     --enable-neon
-        make && make install
+        make \
+        && make install \
+        && make clean
 
     - name: Build and install Boost
       run: |
         cd ~/development/boost_1_88_0 \
             && ./bootstrap.sh --prefix=~/development/js8libs \
             && ./b2 -a -q \
-            && ./b2 -a -q install
+            && ./b2 -a -q install \
+            && ./b2 --clean
 
     - name: Build and install QT6.8.1 (will prolly run out of disk space here)
       run: |
@@ -78,7 +94,8 @@ jobs:
         mkdir ~/development/qt6-build && cd ~/development/qt6-build \
             && ../qt6/configure -prefix ~/development/js8libs \
             && cmake --build . --parallel \
-            && cmake --install .
+            && cmake --install . \
+            && cmake --build . --target clean
 
     - name: Build JS8Call 
       run: |
