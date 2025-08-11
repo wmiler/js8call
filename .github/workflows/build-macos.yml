@@ -35,7 +35,7 @@ jobs:
 #      run: brew install fftw
 
     - name: Install Boost
-      run: brew install 
+      run: brew install boost
 
     - name: Install QT6
       run: brew install qt
