@@ -106,7 +106,7 @@ jobs:
       run: |
         git clone https://github.com/js8call/js8call.git ~/development/js8call
         mkdir -p ~/development/js8call/build && cd ~/development/js8call/build
-        cmake -DCMAKE_PREFIX_PATH=/Users/runner/development/js8libs;/opt/homebrew ..
+        cmake -DCMAKE_PREFIX_PATH="/Users/runner/development/js8libs;/opt/homebrew" ..
         make -j 4
 
     - name: Upload Artifact (app)
