@@ -18,10 +18,10 @@ jobs:
     - uses: actions/checkout@v4
     
     - name: Install CMake
-      run: winget install kitware.cmake
+      run: winget install kitware.cmake --accept-source-agreements
         
     - name: Install Ninja
-      run: winget install --id=Ninja-build.Ninja -e
+      run: winget install --id=Ninja-build.Ninja -e --accept-source-agreements
 
     - name: Install MinGW64 toolchain
       run: |
