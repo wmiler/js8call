@@ -97,7 +97,7 @@ jobs:
     - name: Upload AppImage Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: js8call-x86_64.AppImage
+        name: js8call_2.3.2-devel_x86_64_ubuntu-24.04.AppImage
         path: ~/appimage/js8call-x86_64.AppImage
         retention-days: 7
         
@@ -182,7 +182,7 @@ jobs:
     - name: Upload AppImage Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: js8call-aarch64.AppImage
+        name: js8call_2.3.2-devel_aarch64_ubuntu-24.04.AppImage
         path: ~/appimage/js8call-aarch64.AppImage
         retention-days: 7
         
