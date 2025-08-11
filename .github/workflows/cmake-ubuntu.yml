@@ -84,7 +84,8 @@ jobs:
         cd ~/appimage
         echo "linuxdeploy"
         echo "~/js8call/build/linuxdeploy/usr/bin:~/js8call/build/linuxdeploy-plugin-qt/usr/bin/" >> "$GITHUB_PATH"
-
+        ln -s ~/js8call/build/linuxdeploy-plugin-qt/usr/bin/linuxdeploy-plugin-qt ~/js8call/build/linuxdeploy/usr/bin/
+        
         EXEC_PATH=$(find AppDir -type f -name "js8call" -executable | head -1) && \
           echo "Found executable at: $EXEC_PATH" && \
           ~/js8call/build/linuxdeploy/usr/bin/linuxdeploy --appdir AppDir \
