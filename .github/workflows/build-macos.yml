@@ -28,8 +28,7 @@ jobs:
     - name: Install CMake
       run: |
         brew update
-        brew install cmake@4.0.3
-        brew link --force --overwrite cmake@4.0.3
+        brew install cmake
         
     - name: Install Ninja
       run: brew install ninja
