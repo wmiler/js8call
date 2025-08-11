@@ -18,27 +18,30 @@ jobs:
     - uses: actions/checkout@v4
     
     - name: Install CMake
-      run: |
-        brew update
-        brew install cmake
+      run: winget install kitware.cmake
         
     - name: Install Ninja
-      run: brew install ninja
+      run: winget install --id=Ninja-build.Ninja -e
 
-    - name: Install libusb
-      run: brew install libusb
+    - name: Install MinGW64 toolchain
+      run: |
+        pacman -Sy mingw-w64-x86_64-toolchain
+        pacman -Q | grep libusb
 
-    - name: Install Hamlib
-      run: brew install hamlib
+#    - name: Install libusb
+#      run: brew install libusb
+
+#    - name: Install Hamlib
+#      run: brew install hamlib
 
 #    - name: Install fftw
 #      run: brew install fftw
 
-    - name: Install Boost
-      run: brew install boost
+#    - name: Install Boost
+#      run: brew install boost
 
-    - name: Install QT6
-      run: brew install qt
+ #   - name: Install QT6
+ #     run: brew install qt
 
     - name: Download dependencies
       run: |
