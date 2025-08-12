@@ -21,7 +21,7 @@ jobs:
       with:
         update: true
         install: >-
-          git python base-devel make
+          git python base-devel make gpc
         pacboy: >-
           toolchain:p
           autotools:p
@@ -61,7 +61,8 @@ jobs:
       shell: msys2 {0}
       run: |
         git clone https://github.com/VE3NEA/OmniRig.git ~/development/omnirig
-        echo "Need to install Pascal compiler"
+        cd ~/development/omnirig
+        gpc *.pas omnirig-21.exe
 
     - name: Build JS8Call 
       shell: msys2 {0}
