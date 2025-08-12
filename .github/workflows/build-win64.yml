@@ -21,7 +21,7 @@ jobs:
       with:
         update: true
         install: >-
-          git python base-devel make
+          git python base-devel make unzip
         pacboy: >-
           toolchain:p
           autotools:p
