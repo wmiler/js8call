@@ -59,11 +59,8 @@ jobs:
         mkdir -p ~/development/js8call/build && cd ~/development/js8call/build
 
     - name: Patch CMakeLists to disable OmniRig requirement
-      uses: jacobtomlinson/gha-find-replace@v3
-      with:
-        find: "OmniRigTransceiver.cpp"
-        replace: ""
-        include: 'CMakeLists.txt'
+      shell: msys2 {0}
+      run: sed -i 's/OmniRigTransceiver.cpp//g' CMakeLists.txt
         
 #    - name: Build OmniRig (no pascal compiler available)
 #      shell: msys2 {0}
