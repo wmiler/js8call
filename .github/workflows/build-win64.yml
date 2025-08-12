@@ -15,9 +15,19 @@ jobs:
     runs-on: windows-2025
 
     steps:
+    - run: git config --global core.autocrlf input
     - uses: actions/checkout@v4
     - uses: msys2/setup-msys2@v2
-    
+      with:
+        update: true
+        install: >-
+          git python base-devel make
+        pacboy: >-
+          toolchain:p
+          cmake:p
+          ninja:p
+          
+
     - shell: msys2 {0}
       run: |
         uname -a
