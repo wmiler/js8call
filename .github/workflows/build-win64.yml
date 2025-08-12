@@ -36,8 +36,6 @@ jobs:
     - shell: msys2 {0}
       run: |
         uname -a
-        which gcc
-        which git
       
     - shell: msys2 {0}
       name: Build Hamlib
@@ -57,17 +55,15 @@ jobs:
         cd ~/development
         git clone https://github.com/js8call/js8call.git ~/development/js8call
         mkdir -p ~/development/js8call/build && cd ~/development/js8call/build
-
-    - name: Patch CMakeLists to disable OmniRig requirement
+     
+    - name: Install OmniRig
       shell: msys2 {0}
-      run: sed -i 's/OmniRigTransceiver.cpp//g' CMakeLists.txt
-        
-#    - name: Build OmniRig (no pascal compiler available)
-#      shell: msys2 {0}
-#      run: |
-#        git clone https://github.com/VE3NEA/OmniRig.git ~/development/omnirig
-#        cd ~/development/omnirig
-#        gpc *.pas omnirig-21.exe
+      run: |
+        cd ~/development
+        wget http://dxatlas.com/OmniRig/Files/OmniRig.zip
+        unzip OmniRig.zip
+        cd ~/development/OmniRig
+        powershell.exe -Command -ScriptBlock { cmd /c OmniRigSetup.exe *> $null;}
 
     - name: Build JS8Call 
       shell: msys2 {0}
