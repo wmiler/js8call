@@ -72,7 +72,7 @@ jobs:
 #        && make clean
 
     - name: Build JS8Call 
-    - shell: msys2 {0}
+      shell: msys2 {0}
       run: |
         git clone https://github.com/js8call/js8call.git ~/development/js8call
         mkdir -p ~/development/js8call/build && cd ~/development/js8call/build
