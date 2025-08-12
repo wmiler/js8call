@@ -21,7 +21,7 @@ jobs:
       with:
         update: true
         install: >-
-          git python base-devel make hamlib
+          git python base-devel make
         pacboy: >-
           toolchain:p
           cmake:p
@@ -38,12 +38,17 @@ jobs:
         which gcc
         which git
       
-#    - name: Install MinGW64 toolchain
-#      run: |
-#        pacman -Q | grep libusb
-
-#    - name: Install Hamlib
-#      run: brew install hamlib
+    - shell: msys2 {0}
+      name: Build Hamlib
+      run: |
+        git clone https://github.com/Hamlib/Hamlib.git ~/development/hamlib
+        cd ~/development/hamlib
+        git checkout 4.6.4
+        ./bootstrap
+        ./configure
+        make -j 4
+        sudo make install-strip
+        sudo ldconfig
 
 #    - name: Install fftw
 #      run: brew install fftw
