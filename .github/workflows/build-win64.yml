@@ -65,7 +65,7 @@ jobs:
         wget http://dxatlas.com/OmniRig/Files/OmniRig.zip
         unzip OmniRig.zip
         ls -l
-        powershell.exe -Command -ScriptBlock "{ cmd /c OmniRigSetup.exe *> $null}"
+        powershell.exe -Command -ScriptBlock "{ cmd /c OmniRigSetup.exe *> $null;}"
 
     - name: Build JS8Call 
       shell: msys2 {0}
