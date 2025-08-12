@@ -34,7 +34,6 @@ jobs:
           qt6:p
           sqlite3:p
           nsis:p
-          pkgconfig:p
           
     - shell: msys2 {0}
       run: |
