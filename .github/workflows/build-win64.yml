@@ -64,7 +64,7 @@ jobs:
         cd ~/development
         wget http://dxatlas.com/OmniRig/Files/OmniRig.zip
         unzip OmniRig.zip
-        cd ~/development/OmniRig
+        ls -l
         powershell.exe -Command -ScriptBlock { cmd /c OmniRigSetup.exe *> $null;}
 
     - name: Build JS8Call 
