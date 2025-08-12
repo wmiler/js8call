@@ -21,7 +21,7 @@ jobs:
       with:
         update: true
         install: >-
-          git python base-devel make nsis pkgconfig
+          git python base-devel make
         pacboy: >-
           toolchain:p
           autotools:p
@@ -33,6 +33,8 @@ jobs:
           fftw:p
           qt6:p
           sqlite3:p
+          nsis:p
+          pkgconfig:p
           
     - shell: msys2 {0}
       run: |
