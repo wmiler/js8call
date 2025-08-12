@@ -21,7 +21,7 @@ jobs:
       with:
         update: true
         install: >-
-          git python base-devel make gpc
+          git python base-devel make
         pacboy: >-
           toolchain:p
           autotools:p
