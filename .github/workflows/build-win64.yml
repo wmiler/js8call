@@ -16,17 +16,23 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - uses: msys2/setup-msys2@v2
     
-    - name: Install CMake
-      run: winget install kitware.cmake --accept-source-agreements
-        
-    - name: Install Ninja
-      run: winget install --id=Ninja-build.Ninja -e --accept-source-agreements
-
-    - name: Install MinGW64 toolchain
+    - shell: msys2 {0}
       run: |
-        pacman -Sy mingw-w64-x86_64-toolchain
-        pacman -Q | grep libusb
+        uname -a
+        which gcc
+      
+#    - name: Install CMake
+#      run: winget install kitware.cmake --accept-source-agreements
+        
+#    - name: Install Ninja
+#      run: winget install --id=Ninja-build.Ninja -e --accept-source-agreements
+
+#    - name: Install MinGW64 toolchain
+#      run: |
+#        pacman -Sy mingw-w64-x86_64-toolchain
+#        pacman -Q | grep libusb
 
 #    - name: Install libusb
 #      run: brew install libusb
