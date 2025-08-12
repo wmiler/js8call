@@ -65,12 +65,14 @@ jobs:
         wget http://dxatlas.com/OmniRig/Files/OmniRig.zip
         unzip OmniRig.zip
         powershell.exe -Command "cmd /c OmniRigSetup.exe"
+        ls -l /
+        which OmniRig
 
     - name: Build JS8Call 
       shell: msys2 {0}
       run: |
         cd ~/development/js8call/build
-        cmake ..
+        cmake -DCMAKE_FIND_DEBUG_MODE=1 ..
         make -j 4
 
     - name: Upload Artifact (app)
