@@ -48,38 +48,20 @@ jobs:
         ./bootstrap
         ./configure
         make -j 4
-        sudo make install-strip
-        sudo ldconfig
+        make install-strip
+        ldconfig
 
-#    - name: Install fftw
-#      run: brew install fftw
-
-#    - name: Install Boost
-#      run: brew install boost
-
- #   - name: Install QT6
- #     run: brew install qt
-
-    - name: Download dependencies
+    - name: Setup build directories
       shell: msys2 {0}
       run: |
         mkdir ~/development && mkdir ~/development/js8libs
         cd ~/development
-        wget -q https://fftw.org/fftw-3.3.10.tar.gz
-        tar zxf fftw-3.3.10.tar.gz
-        ls -l
 
-#    - name: Build and install fftw
-#      run: |
-#       cd ~/development/fftw-3.3.10 \
-#            && ./configure CFLAGS=-mmacosx-version-min=11.0 \
-#                    --prefix=/Users/runner/development/js8libs \
-#                    --enable-single \
-#                    --enable-threads \
-#                    --enable-neon
-#        make \
-#        && make install \
-#        && make clean
+    - name: Build OmniRig 
+      shell: msys2 {0}
+      run: |
+        git clone https://github.com/VE3NEA/OmniRig.git ~/development/omnirig
+        echo "Need to install Pascal compiler"
 
     - name: Build JS8Call 
       shell: msys2 {0}
