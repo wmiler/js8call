@@ -52,7 +52,7 @@ jobs:
  #     run: brew install qt
 
     - name: Download dependencies
-    - shell: msys2 {0}
+      shell: msys2 {0}
       run: |
         mkdir ~/development && mkdir ~/development/js8libs
         cd ~/development
