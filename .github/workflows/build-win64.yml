@@ -56,20 +56,28 @@ jobs:
       run: |
         mkdir ~/development && mkdir ~/development/js8libs
         cd ~/development
+        git clone https://github.com/js8call/js8call.git ~/development/js8call
+        mkdir -p ~/development/js8call/build && cd ~/development/js8call/build
 
-    - name: Build OmniRig 
-      shell: msys2 {0}
-      run: |
-        git clone https://github.com/VE3NEA/OmniRig.git ~/development/omnirig
-        cd ~/development/omnirig
-        gpc *.pas omnirig-21.exe
+    - name: Patch CMakeLists to disable OmniRig requirement
+      uses: jacobtomlison/gha-find-replace@v2
+      with:
+        find: "OmniRigTransceiver.cpp"
+        replace: ""
+        include: 'CMakeLists.txt'
+        
+#    - name: Build OmniRig (no pascal compiler available)
+#      shell: msys2 {0}
+#      run: |
+#        git clone https://github.com/VE3NEA/OmniRig.git ~/development/omnirig
+#        cd ~/development/omnirig
+#        gpc *.pas omnirig-21.exe
 
     - name: Build JS8Call 
       shell: msys2 {0}
       run: |
-        git clone https://github.com/js8call/js8call.git ~/development/js8call
-        mkdir -p ~/development/js8call/build && cd ~/development/js8call/build
-        cmake -DCMAKE_PREFIX_PATH="/Users/runner/development/js8libs;/opt/homebrew" ..
+        cd ~/development/js8call/build
+        cmake ..
         make -j 4
 
     - name: Upload Artifact (app)
