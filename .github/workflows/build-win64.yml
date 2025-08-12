@@ -21,7 +21,7 @@ jobs:
       with:
         update: true
         install: >-
-          git python base-devel make
+          git python base-devel make hamlib
         pacboy: >-
           toolchain:p
           cmake:p
@@ -29,7 +29,6 @@ jobs:
           libusb:p
           wget:p
           boost:p
-          hamlib:p
           fftw:p
           qt6:p
           
