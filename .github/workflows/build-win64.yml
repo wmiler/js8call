@@ -65,7 +65,8 @@ jobs:
         wget http://dxatlas.com/OmniRig/Files/OmniRig.zip
         unzip OmniRig.zip
         powershell.exe -Command "cmd /c OmniRigSetup.exe"
-        ls -l /
+        ls -l /c/
+        find / -name ?mni?ig -print
         which OmniRig
 
     - name: Build JS8Call 
