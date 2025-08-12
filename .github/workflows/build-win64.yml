@@ -24,6 +24,9 @@ jobs:
           git python base-devel make
         pacboy: >-
           toolchain:p
+          autoreconf:p
+          automake:p
+          libtool:p
           cmake:p
           ninja:p
           libusb:p
