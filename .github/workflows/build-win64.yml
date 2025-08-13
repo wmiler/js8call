@@ -66,14 +66,13 @@ jobs:
         unzip OmniRig.zip
         powershell.exe -Command "cmd /c OmniRigSetup.exe"
         ls -l /c/
-        find / -name ?mni?ig -print
-        which OmniRig
+        find /c/Program\ Files\ \(x86\)/ -name ?mni?ig -print
 
     - name: Build JS8Call 
       shell: msys2 {0}
       run: |
         cd ~/development/js8call/build
-        cmake -DCMAKE_FIND_DEBUG_MODE=1 ..
+        cmake -DCMAKE_FIND_DEBUG_MODE=1 -DCMAKE_PREFIX_PATH=/c/Program\ Files\ \(x86\)/ ..
         make -j 4
 
     - name: Upload Artifact (app)
