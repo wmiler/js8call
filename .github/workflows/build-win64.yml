@@ -64,9 +64,10 @@ jobs:
       shell: msys2 {0}
       run: |
         cd ~/development
-        wget http://dxatlas.com/OmniRig/Files/OmniRig.zip
-        unzip OmniRig.zip
-        powershell.exe -Command "cmd /c OmniRigSetup.exe"
+        winget install --id=AfreetSoftware.OmniRig -e
+#        wget http://dxatlas.com/OmniRig/Files/OmniRig.zip
+#        unzip OmniRig.zip
+#        powershell.exe -Command "cmd /c OmniRigSetup.exe"
         ls -l
         ls -l /c/Program\ Files\ \(x86\)/
         echo "*** ***"
