@@ -74,7 +74,7 @@ jobs:
       shell: msys2 {0}
       run: |
         cd ~/development/js8call/build
-        cmake -DCMAKE_FIND_DEBUG_MODE=1 -DCMAKE_PREFIX_PATH=/c/Program\ Files\ \(x86\)/ ..
+        cmake -DCMAKE_FIND_DEBUG_MODE=1 -DDUMPCPP=dumpcpp-qt6.exe -DCMAKE_PREFIX_PATH=/c/Program\ Files\ \(x86\)/ ..
         make -j 4
 
     - name: Upload Artifact (app)
