@@ -63,7 +63,7 @@ jobs:
     - name: Install OmniRig
       run: |
         winget install --id=AfreetSoftware.OmniRig -e --accept-package-agreements
-        ls -l /c/Program\ Files\ \(x86\)/
+        ls -l '/c/Program\ Files\ \(x86\)/'
         echo "*** ***"
         ls -l /c/Program\ Files/
 
