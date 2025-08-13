@@ -39,6 +39,7 @@ jobs:
     - shell: msys2 {0}
       run: |
         uname -a
+        env
       
     - shell: msys2 {0}
       name: Build Hamlib
@@ -58,14 +59,10 @@ jobs:
         cd ~/development
         git clone https://github.com/js8call/js8call.git ~/development/js8call
         mkdir -p ~/development/js8call/build && cd ~/development/js8call/build
-        env
      
     - name: Install OmniRig
       run: |
         winget install --id=AfreetSoftware.OmniRig -e --accept-source-agreements
-        ls -l 'C:\Program Files (x86)'
-        echo "*** ***"
-        ls -l 'C:\Program Files'
 
     - name: Build JS8Call 
       shell: msys2 {0}
