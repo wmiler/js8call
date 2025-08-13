@@ -63,9 +63,9 @@ jobs:
     - name: Install OmniRig
       run: |
         winget install --id=AfreetSoftware.OmniRig -e --accept-package-agreements
-        ls -l '/c/Program\ Files\ \(x86\)/'
+        ls -l 'C:\Program Files (x86)'
         echo "*** ***"
-        ls -l /c/Program\ Files/
+        ls -l 'C:\Program Files'
 
 #        wget http://dxatlas.com/OmniRig/Files/OmniRig.zip
 #        unzip OmniRig.zip
