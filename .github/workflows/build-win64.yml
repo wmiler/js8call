@@ -40,16 +40,16 @@ jobs:
       run: |
         uname -a
       
-#    - shell: msys2 {0}
-#      name: Build Hamlib
-#      run: |
-#        git clone https://github.com/Hamlib/Hamlib.git ~/development/hamlib
-#        cd ~/development/hamlib
-#        git checkout 4.6.4
-#        ./bootstrap
-#        ./configure
-#        make -j 4
-#        make install-strip
+    - shell: msys2 {0}
+      name: Build Hamlib
+      run: |
+        git clone https://github.com/Hamlib/Hamlib.git ~/development/hamlib
+        cd ~/development/hamlib
+        git checkout 4.6.4
+        ./bootstrap
+        ./configure
+        make -j 4
+        make install-strip
 
     - name: Setup build directories
       shell: msys2 {0}
@@ -66,10 +66,6 @@ jobs:
         ls -l 'C:\Program Files (x86)'
         echo "*** ***"
         ls -l 'C:\Program Files'
-
-#        wget http://dxatlas.com/OmniRig/Files/OmniRig.zip
-#        unzip OmniRig.zip
-#        powershell.exe -Command "cmd /c OmniRigSetup.exe"
 
     - name: Build JS8Call 
       shell: msys2 {0}
