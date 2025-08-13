@@ -69,7 +69,8 @@ jobs:
       run: |
         cd ~/development/js8call/build
         cmake -DDUMPCPP=/mingw64/bin/dumpcpp-qt6.exe -DCMAKE_PREFIX_PATH=/c/Program\ Files\ \(x86\)/AFreet/OmniRig/ ..
-        make -j 4
+        ls -l
+        make -n -j 4
 
     - name: Upload Artifact (app)
       uses: actions/upload-artifact@v4
