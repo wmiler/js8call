@@ -67,8 +67,10 @@ jobs:
         wget http://dxatlas.com/OmniRig/Files/OmniRig.zip
         unzip OmniRig.zip
         powershell.exe -Command "cmd /c OmniRigSetup.exe"
+        ls -l
         ls -l /c/Program\ Files\ \(x86\)/
-#        find /c/Program\ Files\ \(x86\)/ -name ?mni?ig -print
+        echo "*** ***"
+        ls -l /c/Program\ Files/
 
     - name: Build JS8Call 
       shell: msys2 {0}
