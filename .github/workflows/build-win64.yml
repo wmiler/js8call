@@ -65,13 +65,14 @@ jobs:
       run: |
         cd ~/development
         winget install --id=AfreetSoftware.OmniRig -e
-#        wget http://dxatlas.com/OmniRig/Files/OmniRig.zip
-#        unzip OmniRig.zip
-#        powershell.exe -Command "cmd /c OmniRigSetup.exe"
         ls -l
         ls -l /c/Program\ Files\ \(x86\)/
         echo "*** ***"
         ls -l /c/Program\ Files/
+
+#        wget http://dxatlas.com/OmniRig/Files/OmniRig.zip
+#        unzip OmniRig.zip
+#        powershell.exe -Command "cmd /c OmniRigSetup.exe"
 
     - name: Build JS8Call 
       shell: msys2 {0}
