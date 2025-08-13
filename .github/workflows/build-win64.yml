@@ -61,7 +61,7 @@ jobs:
         env
      
     - name: Install OmniRig
-      shell: msys2 {0}
+#      shell: msys2 {0}
       run: |
         cd ~/development
         winget install --id=AfreetSoftware.OmniRig -e
