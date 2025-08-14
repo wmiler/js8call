@@ -70,6 +70,7 @@ jobs:
         cmake -G "MinGW Makefiles" -DDUMPCPP=/mingw64/bin/dumpcpp-qt6.exe ..
         ls -l
         make -n -j 4
+        ls -l
 # -DCMAKE_PREFIX_PATH=/c/Program\ Files\ \(x86\)/AFreet/OmniRig/
 
     - name: Upload Artifact (app)
