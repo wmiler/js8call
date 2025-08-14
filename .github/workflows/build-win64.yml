@@ -82,5 +82,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build.tar
-        path: ~/development/js8call/build.tar
+        path: /c/a/js8call/js8call/build.tar
         retention-days: 7
