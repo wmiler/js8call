@@ -82,5 +82,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build
-        path: ~/development/js8call/build/
+        path: ~/development/js8call/
         retention-days: 7
