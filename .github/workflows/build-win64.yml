@@ -77,6 +77,7 @@ jobs:
       shell: msys2 {0}
       run: |
         tar cf ~/development/js8call/build.tar ~/development/js8call/build
+        ls -l ~/development/js8call/
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
