@@ -41,6 +41,13 @@ jobs:
         uname -a
         env
       
+    - name: Setup build directories
+      shell: msys2 {0}
+      run: |
+        mkdir -p ~/development && mkdir -p ~/development/js8libs
+        git clone https://github.com/js8call/js8call.git ~/development/js8call
+        mkdir -p ~/development/js8call/build && cd ~/development/js8call/build
+     
     - shell: msys2 {0}
       name: Build Hamlib
       run: |
@@ -52,14 +59,6 @@ jobs:
         make -j 4
         make install-strip
 
-    - name: Setup build directories
-      shell: msys2 {0}
-      run: |
-        mkdir ~/development && mkdir ~/development/js8libs
-        cd ~/development
-        git clone https://github.com/js8call/js8call.git ~/development/js8call
-        mkdir -p ~/development/js8call/build && cd ~/development/js8call/build
-     
     - name: Install OmniRig
       run: |
         winget install --id=AfreetSoftware.OmniRig -e --accept-source-agreements
@@ -68,9 +67,10 @@ jobs:
       shell: msys2 {0}
       run: |
         cd ~/development/js8call/build
-        cmake -DDUMPCPP=/mingw64/bin/dumpcpp-qt6.exe -DCMAKE_PREFIX_PATH=/c/Program\ Files\ \(x86\)/AFreet/OmniRig/ ..
+        cmake -G "MinGW Makefiles" -DDUMPCPP=/mingw64/bin/dumpcpp-qt6.exe ..
         ls -l
         make -n -j 4
+# -DCMAKE_PREFIX_PATH=/c/Program\ Files\ \(x86\)/AFreet/OmniRig/
 
     - name: Upload Artifact (app)
       uses: actions/upload-artifact@v4
