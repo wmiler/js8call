@@ -68,16 +68,15 @@ jobs:
       run: |
         cd ~/development/js8call/build
         cmake -G "MinGW Makefiles" -DDUMPCPP=/mingw64/bin/dumpcpp-qt6.exe ..
-        ls -l
         make -n -j 4
-        ls -lR
 # -DCMAKE_PREFIX_PATH=/c/Program\ Files\ \(x86\)/AFreet/OmniRig/
 
     - name: tar JS8Call build dir
       shell: msys2 {0}
       run: |
         tar cf ~/development/js8call/build.tar ~/development/js8call/build
-        ls -lh ~/development/js8call/
+        ls -lh ~/development/js8call/build.tar
+        pwd
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
