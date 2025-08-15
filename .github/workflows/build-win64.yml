@@ -69,8 +69,8 @@ jobs:
         cd ~/development/js8call/build
         cmake -G "MinGW Makefiles" -DDUMPCPP=/mingw64/bin/dumpcpp-qt6.exe ..
         make -n -j 4
-        tar cf ${{ github.workspace }}/build.tar ~/development/js8call/build
-        tar tvz ${{ github.workspace }}/build.tar
+        tar cf /tmp/build.tar ~/development/js8call/build
+        tar tvz /tmp/build.tar
 
 #    - name: tar JS8Call build dir
 #      shell: msys2 {0}
@@ -83,5 +83,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build.tar
-        path: ${{ github.workspace }}/build.tar
+        path: /tmp/build.tar
         retention-days: 7
