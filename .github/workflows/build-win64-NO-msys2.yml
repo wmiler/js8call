@@ -70,7 +70,11 @@ jobs:
           arch: ${{matrix.config.QT_ARCH}}
           setup-python: 'false'
           modules: 'qtcharts qtscxml qt5compat qtlocation qtmultimedia qtpositioning qtserialport qtspeech qtwebsockets qtwebengine qtshadertools qtwebchannel'
-          
+
+      - name: Install OmniRig
+        run: |
+          winget install --id=AfreetSoftware.OmniRig -e --accept-source-agreements
+
       - name: build js8call on Windows
         if: startsWith(matrix.config.os, 'windows')
         run: |
