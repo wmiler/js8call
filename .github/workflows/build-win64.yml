@@ -70,7 +70,7 @@ jobs:
         cmake -G "MinGW Makefiles" -DDUMPCPP=/mingw64/bin/dumpcpp-qt6.exe ..
         make -n -j 4
         tar cf /tmp/build.tar ~/development/js8call/build
-        tar tvz /tmp/build.tar
+        tar tvf /tmp/build.tar
 
 #    - name: tar JS8Call build dir
 #      shell: msys2 {0}
