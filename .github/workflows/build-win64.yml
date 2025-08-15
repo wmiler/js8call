@@ -15,6 +15,15 @@ jobs:
     runs-on: windows-2025
 
     steps:
+    - name: Gather Facts
+      id: facts
+      run : |
+          Get-PSDrive -PSProvider FileSystem | Format-Table -AutoSize -Wrap
+          Get-CIMInstance -Class Win32_Processor | Select-Object -Property Name
+          Get-CIMInstance Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum | Format-Table @{n="TotalPhysicalMemory";e={$_.Sum}}
+          $BUILD_DRIVE = Split-Path $env:GITHUB_WORKSPACE -Qualifier
+          echo "drive=$BUILD_DRIVE" >> $env:GITHUB_OUTPUT
+
     - run: git config --global core.autocrlf input
     - uses: actions/checkout@v4
     - uses: msys2/setup-msys2@v2
@@ -46,7 +55,7 @@ jobs:
       run: |
         mkdir -p ~/development && mkdir -p ~/development/js8libs
         git clone https://github.com/js8call/js8call.git ~/development/js8call
-        mkdir -p ~/development/js8call/build && cd ~/development/js8call/build
+        mkdir -p ~/development/js8call/build
      
     - shell: msys2 {0}
       name: Build Hamlib
@@ -69,22 +78,16 @@ jobs:
         cd ~/development/js8call/build
         cmake -G "MinGW Makefiles" -DDUMPCPP=/mingw64/bin/dumpcpp-qt6.exe ..
         make -n -j 4
-        tar cf ~/build.tar ~/development/js8call/build
+        tar cf "$env:USERPROFILE/build.tar" ~/development/js8call/build
 
-#    - name: tar JS8Call build dir
-#      shell: msys2 {0}
-#      run: |
-#        tar cf ~/development/js8call/build.tar ~/development/js8call/build
-#        ls -lh ~/development/js8call/build.tar
-#        pwd
     - name: What directory are we in?
       run: |
         pwd
-        ls -lR
+        Get-ChildItem -Recurse
       
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
         name: build.tar
-        path: ./build.tar
+        path: "$env:USERPROFILE/build.tar"
         retention-days: 7
