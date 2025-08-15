@@ -75,6 +75,8 @@ jobs:
       - name: Install OmniRig
         run: |
           winget install --id=AfreetSoftware.OmniRig -e --accept-source-agreements
+          ls "C:\Program Files\"
+          ls "C:\Program Files (x86)\"
 
       - name: Build js8call on Windows
         if: startsWith(matrix.config.os, 'windows')
