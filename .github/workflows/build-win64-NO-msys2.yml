@@ -58,6 +58,7 @@ jobs:
           7z -o$BOOST_ROOT x $BOOST_ROOT/download.tar -y -bd
           cd $BOOST_ROOT && cp -r boost_* $BOOST_DEST
           ls -l $BOOST_DEST
+          ls -l "C:\\Libraries\\boost_1_88_0"
           ls -l "C:\\"
           rm -rf boost_*/* download.tar.bz2 download.tar
         shell: bash
