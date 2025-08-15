@@ -69,8 +69,7 @@ jobs:
           dir: ${{matrix.config.QT_INST_DIR}}
           arch: ${{matrix.config.QT_ARCH}}
           setup-python: 'false'
-          modules: 'qtmultimedia qtserialport'
-          tools: 'activeqt'
+          modules: 'qtactiveqt qtmultimedia qtserialport'
 
       - name: Install OmniRig
         run: |
