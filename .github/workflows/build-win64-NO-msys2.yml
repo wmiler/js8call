@@ -35,7 +35,8 @@ jobs:
       - name: Install basic dependencies on Windows
         if: startsWith(matrix.config.os, 'windows')
         run: |
-          choco install ninja cmake boost-msvc-14.3
+          choco install ninja cmake
+          choco install boost-msvc-14.3 --version=1.77.0
           ninja --version
           cmake --version
           
