@@ -56,7 +56,8 @@ jobs:
           curl --location --output $BOOST_ROOT/download.tar.bz2 $BOOST_URL
           7z -o$BOOST_ROOT x $BOOST_ROOT/download.tar.bz2 -y -bd
           7z -o$BOOST_ROOT x $BOOST_ROOT/download.tar -y -bd
-          cd $BOOST_ROOT 
+          cd $BOOST_ROOT
+          ls -l
           cd tools && cd build && ./boostrap.bat
           b2 install --prefix=$BOOST_DEST
           cp -r boost_* $BOOST_DEST
