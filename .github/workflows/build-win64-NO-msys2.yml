@@ -59,7 +59,7 @@ jobs:
           cd $BOOST_ROOT
           cd boost_1_88_0
           ls -l
-          cd tools && cd build && ./boostrap.bat
+          cd tools && cd build && ./bootstrap.bat
           b2 install --prefix=$BOOST_DEST
           cp -r boost_* $BOOST_DEST
           ls -l $BOOST_DEST
