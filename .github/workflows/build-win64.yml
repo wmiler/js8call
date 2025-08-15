@@ -78,7 +78,9 @@ jobs:
 #        ls -lh ~/development/js8call/build.tar
 #        pwd
     - name: What directory are we in?
-      run: pwd
+      run: |
+        pwd
+        ls -lR
       
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
