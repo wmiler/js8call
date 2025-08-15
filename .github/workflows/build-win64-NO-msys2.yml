@@ -1,11 +1,10 @@
-name: JS8Call Windows CI build and signing
+name: JS8Call Windows CI build
 
 on:
   push:
-    branches:
-      - master
-    tags:
-      - 'v*'
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
