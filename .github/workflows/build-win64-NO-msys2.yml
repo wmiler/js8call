@@ -75,8 +75,8 @@ jobs:
       - name: Install OmniRig
         run: |
           winget install --id=AfreetSoftware.OmniRig -e --accept-source-agreements
-          ls "C:\Program Files\"
-          ls "C:\Program Files (x86)\"
+          ls "C:\"
+          ls "C:\local\"
 
       - name: Build js8call on Windows
         if: startsWith(matrix.config.os, 'windows')
@@ -84,7 +84,7 @@ jobs:
           cmd "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           choco install patch
           mkdir build && cd build
-          cmake .. -DCMAKE_FIND_DEBUG_MODE=1 -G "${{ matrix.config.generators }}" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="C:\Qt\6.6.3\msvc2019_64;C:\Program Files (x86)\Afreet\OmniRig;C:\Program Files\Boost"
+          cmake .. -DCMAKE_FIND_DEBUG_MODE=1 -G "${{ matrix.config.generators }}" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="C:\Qt\6.6.3\msvc2019_64;C:\Program Files (x86)\Afreet\OmniRig;C:\local"
           cmake --build . --config Release --target package
           
       - name: Check disk space
