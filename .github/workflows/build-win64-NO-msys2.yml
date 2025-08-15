@@ -35,7 +35,7 @@ jobs:
       - name: Install basic dependencies on Windows
         if: startsWith(matrix.config.os, 'windows')
         run: |
-          choco install ninja cmake
+          choco install ninja cmake boost-msvc-14.3
           ninja --version
           cmake --version
           
@@ -45,23 +45,23 @@ jobs:
         with:
           arch: x64
           
-      - name: Install Boost
-        env:
-          BOOST_ROOT: ${{ matrix.config.boost_dl }}
-          BOOST_DEST: ${{ matrix.config.lib_dir }}
-          BOOST_URL: https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.bz2
-        run: |
-          mkdir -p $BOOST_ROOT
-          mkdir -p $BOOST_DEST
-          curl --progress-bar --location --output $BOOST_ROOT/download.tar.bz2 $BOOST_URL
-          7z -o$BOOST_ROOT x $BOOST_ROOT/download.tar.bz2 -y -bd
-          7z -o$BOOST_ROOT x $BOOST_ROOT/download.tar -y -bd
-          cd $BOOST_ROOT && cp -r boost_* $BOOST_DEST
-          ls -l $BOOST_DEST
-          ls -l "C:\\Libraries\\boost_1_88_0"
-          ls -l "C:\\"
-          rm -rf boost_*/* download.tar.bz2 download.tar
-        shell: bash
+#      - name: Install Boost
+#        env:
+#          BOOST_ROOT: ${{ matrix.config.boost_dl }}
+#          BOOST_DEST: ${{ matrix.config.lib_dir }}
+#          BOOST_URL: https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.bz2
+#        run: |
+#          mkdir -p $BOOST_ROOT
+#          mkdir -p $BOOST_DEST
+#          curl --progress-bar --location --output $BOOST_ROOT/download.tar.bz2 $BOOST_URL
+#          7z -o$BOOST_ROOT x $BOOST_ROOT/download.tar.bz2 -y -bd
+#          7z -o$BOOST_ROOT x $BOOST_ROOT/download.tar -y -bd
+#          cd $BOOST_ROOT && cp -r boost_* $BOOST_DEST
+#          ls -l $BOOST_DEST
+#          ls -l "C:\\Libraries\\boost_1_88_0"
+#          ls -l "C:\\"
+#          rm -rf boost_*/* download.tar.bz2 download.tar
+#        shell: bash
         
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
