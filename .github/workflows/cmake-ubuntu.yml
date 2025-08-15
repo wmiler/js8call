@@ -46,17 +46,17 @@ jobs:
         cmake ..
         make -j 4
 
-    - name: Package JS8Call (deb)
-      run: |
-        cd ~/js8call/build
-        cpack -G DEB
+#    - name: Package JS8Call (deb)
+#      run: |
+#        cd ~/js8call/build
+#        cpack -G DEB
 
-    - name: Upload Artifact (deb)
-      uses: actions/upload-artifact@v4
-      with:
-        name: js8call_2.3.2-devel_amd64_ubuntu-24.04.deb
-        path: ~/js8call/build/js8call_2.3.2-devel_amd64.deb
-        retention-days: 7
+#    - name: Upload Artifact (deb)
+#      uses: actions/upload-artifact@v4
+#      with:
+#        name: js8call_2.3.2-devel_amd64_ubuntu-24.04.deb
+#        path: ~/js8call/build/js8call_2.3.2-devel_amd64.deb
+#        retention-days: 7
 
     - name: Package JS8Call AppImage (amd64)
       run: |
@@ -131,17 +131,17 @@ jobs:
         cmake ..
         make -j 4
 
-    - name: Package JS8Call (deb)
-      run: |
-        cd ~/js8call/build
-        cpack -G DEB
+#    - name: Package JS8Call (deb)
+#      run: |
+#        cd ~/js8call/build
+#        cpack -G DEB
 
-    - name: Upload Artifact (deb)
-      uses: actions/upload-artifact@v4
-      with:
-        name: js8call_2.3.2-devel_arm64_ubuntu-24.04.deb
-        path: ~/js8call/build/js8call_2.3.2-devel_arm64.deb
-        retention-days: 7
+#    - name: Upload Artifact (deb)
+#      uses: actions/upload-artifact@v4
+#      with:
+#        name: js8call_2.3.2-devel_arm64_ubuntu-24.04.deb
+#        path: ~/js8call/build/js8call_2.3.2-devel_arm64.deb
+#        retention-days: 7
 
     - name: Package JS8Call AppImage (arm64)
       run: |
