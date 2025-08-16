@@ -44,26 +44,16 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: x64
-          
-      - name: Install Boost
-        env:
-          BOOST_ROOT: ${{ matrix.config.boost_dl }}
-          BOOST_DEST: ${{ matrix.config.lib_dir }}
-          BOOST_URL: https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.bz2
-        run: |
-          mkdir -p $BOOST_ROOT
-          mkdir -p $BOOST_DEST
-          curl --location --output $BOOST_ROOT/download.tar.bz2 $BOOST_URL
-          7z -o$BOOST_ROOT x $BOOST_ROOT/download.tar.bz2 -y -bd
-          7z -o$BOOST_ROOT x $BOOST_ROOT/download.tar -y -bd
-          cd $BOOST_ROOT
-          cd boost_1_88_0
-          cd tools && cd build && ./bootstrap.bat
-          ./b2 --verbose --prefix="C:\Libraries" install
-          $Env:boost=${{ matrix.config.lib_dir }}
-          ls -l "C:\Libraries"
-#          env
-        shell: bash
+
+      - name: Install boost
+        uses: MarkusJx/install-boost@v2
+        id: install-boost
+        with:
+          boost_version: 1.88.0
+          # OPTIONAL: Specify a platform version
+          platform_version: 2025
+          # OPTIONAL: Specify a toolset
+          toolset: msvc
         
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
@@ -83,15 +73,23 @@ jobs:
           curl --location --output ${{ matrix.config.lib_dir }}/fftw-3.3.5-dll64.zip https://fftw.org/pub/fftw/fftw-3.3.5-dll64.zip
           cd ${{ matrix.config.lib_dir }}
           unzip fftw-3.3.5-dll64.zip
-          $Env:fftw3=${{ matrix.config.lib_dir }}\fftw-3.3.5-dll64
+          env: 
+            fftw3: ${{ matrix.config.lib_dir }}\fftw-3.3.5-dll64
 
       - name: Build js8call on Windows
         if: startsWith(matrix.config.os, 'windows')
+        env: 
+          BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
         run: |
           cmd "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           choco install patch
           mkdir build && cd build
-          cmake .. -DCMAKE_FIND_DEBUG_MODE=1 -G "${{ matrix.config.generators }}" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="C:\Qt\6.6.3\msvc2019_64;C:\Program Files (x86)\Afreet\OmniRig;C:\Libraries\"
+          cmake .. -DCMAKE_FIND_DEBUG_MODE=1 -G "${{ matrix.config.generators }}" \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_PREFIX_PATH="C:\Qt\6.6.3\msvc2019_64;C:\Program Files (x86)\Afreet\OmniRig" \
+          -DBoost_INCLUDE_DIR=${{steps.install-boost.outputs.BOOST_ROOT}}/include \
+          -DBoost_LIBRARY_DIRS=${{steps.install-boost.outputs.BOOST_ROOT}}/lib
+          
           cmake --build . --config Release --target package
           
       - name: Check disk space
