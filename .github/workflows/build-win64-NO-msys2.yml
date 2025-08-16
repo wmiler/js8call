@@ -58,10 +58,10 @@ jobs:
           7z -o$BOOST_ROOT x $BOOST_ROOT/download.tar -y -bd
           cd $BOOST_ROOT
           cd boost_1_88_0
-          ls -l
           cd tools && cd build && ./bootstrap.bat
-          ./b2 install --prefix=$BOOST_DEST
+          ./b2 --prefix=$BOOST_DEST install
           ls -l $BOOST_DEST
+          env
 #          ls -l "C:\\Libraries\\boost_1_88_0"
         shell: bash
         
