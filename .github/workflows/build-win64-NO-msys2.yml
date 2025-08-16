@@ -97,7 +97,8 @@ jobs:
         
       - name: Get version
         id: get_version
-        run: echo "version=$(grep js8call_VERSION build/CMakeCache.txt | cut -d "=" -f2)" >> $env:GITHUB_OUTPUT
+        working-directory: ${{ github.workspace }}/build
+        run: echo "version=$(grep 'CPACK_PACKAGE_VERSION ' CPackConfig.cmake |cut -d '"' -f2 |cut -d '"' -f1 >> $env:GITHUB_OUTPUT
         
       - name: Upload unsigned artifact
         id: upload-unsigned-artifact
