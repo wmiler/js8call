@@ -59,10 +59,9 @@ jobs:
           cd $BOOST_ROOT
           cd boost_1_88_0
           cd tools && cd build && ./bootstrap.bat
-          ./b2 --prefix=$BOOST_DEST install
-          ls -l $BOOST_DEST
+          ./b2 --verbose --prefix=$BOOST_DEST install
           env
-#          ls -l "C:\\Libraries\\boost_1_88_0"
+          ls -l "C:\\Libraries\\"
         shell: bash
         
       - name: Install Qt
