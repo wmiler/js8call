@@ -59,9 +59,10 @@ jobs:
           cd $BOOST_ROOT
           cd boost_1_88_0
           cd tools && cd build && ./bootstrap.bat
-          ./b2 --verbose --prefix="C:\\Libraries" install
-          env
-          ls -l "C:\\Libraries"
+          ./b2 --verbose --prefix="C:\Libraries" install
+          $Env:boost=${{ matrix.config.lib_dir }}
+          ls -l "C:\Libraries"
+#          env
         shell: bash
         
       - name: Install Qt
@@ -76,6 +77,13 @@ jobs:
       - name: Install OmniRig
         run: |
           winget install --id=AfreetSoftware.OmniRig -e --accept-source-agreements
+
+      - name: Install fftw3
+        run: |
+          curl --location --output ${{ matrix.config.lib_dir }}/fftw-3.3.5-dll64.zip https://fftw.org/pub/fftw/fftw-3.3.5-dll64.zip
+          cd ${{ matrix.config.lib_dir }}
+          unzip fftw-3.3.5-dll64.zip
+          $Env:fftw3=${{ matrix.config.lib_dir }}\fftw-3.3.5-dll64
 
       - name: Build js8call on Windows
         if: startsWith(matrix.config.os, 'windows')
