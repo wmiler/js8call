@@ -60,7 +60,7 @@ jobs:
           cd boost_1_88_0
           ls -l
           cd tools && cd build && ./bootstrap.bat
-          b2 install --prefix=$BOOST_DEST
+          ./b2 install --prefix=$BOOST_DEST
           cp -r boost_* $BOOST_DEST
           ls -l $BOOST_DEST
           ls -l "C:\\Libraries\\boost_1_88_0"
@@ -78,8 +78,6 @@ jobs:
       - name: Install OmniRig
         run: |
           winget install --id=AfreetSoftware.OmniRig -e --accept-source-agreements
-          ls "C:\"
-          ls "C:\local\boost_1_87_0"
 
       - name: Build js8call on Windows
         if: startsWith(matrix.config.os, 'windows')
@@ -87,7 +85,7 @@ jobs:
           cmd "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           choco install patch
           mkdir build && cd build
-          cmake .. -DCMAKE_FIND_DEBUG_MODE=1 -G "${{ matrix.config.generators }}" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="C:\Qt\6.6.3\msvc2019_64;C:\Program Files (x86)\Afreet\OmniRig;C:\local\boost_1_87_0\tools\cmake\config"
+          cmake .. -DCMAKE_FIND_DEBUG_MODE=1 -G "${{ matrix.config.generators }}" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="C:\Qt\6.6.3\msvc2019_64;C:\Program Files (x86)\Afreet\OmniRig;C:\Libraries\"
           cmake --build . --config Release --target package
           
       - name: Check disk space
