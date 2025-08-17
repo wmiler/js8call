@@ -64,7 +64,7 @@ jobs:
           ls -l "C:/Libraries"
           tar zxf "C:/Libraries/boost-1.88.0-windows-2025-msvc-shared-x86.tar.gz
           
-          echo "BOOST_ROOT=C:/Libraries/boost" >> $GITHUB_OUTPUT
+          echo "BOOST_ROOT='C:/Libraries/boost'" >> $GITHUB_OUTPUT
                   
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
