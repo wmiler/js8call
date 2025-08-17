@@ -35,6 +35,7 @@ jobs:
       - name: Install basic dependencies on Windows
         if: startsWith(matrix.config.os, 'windows')
         run: |
+          mkdir ${{ matrix.config.lib_dir }}
           choco install ninja cmake
           ninja --version
           cmake --version
