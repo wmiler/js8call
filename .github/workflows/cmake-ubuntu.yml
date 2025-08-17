@@ -98,7 +98,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential git cmake libhamlib-dev qt6-base-dev qt6-multimedia-dev libqt6serialport-dev \
+        sudo apt-get install -y build-essential git cmake libhamlib-dev qt6-base-dev qt6-multimedia-dev libqt6serialport6-dev \
           libusb-1.0-0-dev libfftw3-dev libboost-all-dev libudev-dev libxkbcommon-dev libfuse2 imagemagick
 
     - name: Build Hamlib
@@ -244,7 +244,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential git cmake libhamlib-dev qt6-base-dev qt6-multimedia-dev libqt6serialport-dev \
+        sudo apt-get install -y build-essential git cmake libhamlib-dev qt6-base-dev qt6-multimedia-dev libqt6serialport6-dev \
           libusb-1.0-0-dev libfftw3-dev libboost-all-dev libudev-dev libxkbcommon-dev libfuse2 imagemagick
 
     - name: Build Hamlib
