@@ -78,16 +78,16 @@ jobs:
         cd ~/development/js8call/build
         cmake -G "MinGW Makefiles" -DDUMPCPP=/mingw64/bin/dumpcpp-qt6.exe ..
         make -n -j 4
-        tar cf ~/build.tar ~/development/js8call/build
+        tar cf "C:/a/js8call/js8call/build.tar" ~/development/js8call/build
 
     - name: What directory are we in?
       run: |
         pwd
-        Get-ChildItem -Recurse
+        Get-ChildItem
       
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
         name: build.tar
-        path: "$env:USERPROFILE/build.tar"
+        path: "C:/a/js8call/js8call/build.tar"
         retention-days: 7
