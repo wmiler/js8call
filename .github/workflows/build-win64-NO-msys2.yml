@@ -93,7 +93,7 @@ jobs:
           choco install patch
           mkdir build && cd build
           ls -l ${{ matrix.config.lib_dir }}/boost/
-          cmake .. -G "${{ matrix.config.generators }}" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="C:\Qt\6.6.3\msvc2019_64;C:\Program Files (x86)\Afreet\OmniRig;C:\Libraries" -DBoost_INCLUDE_DIR=${{ matrix.config.lib_dir }}/boost/include -DBoost_LIBRARY_DIRS=${{ matrix.config.lib_dir }}/boost/lib -DFFTW3_INCLUDE_DIRS=${{ matrix.config.lib_dir }} -DFFTW3_LIBRARIES=${{ matrix.config.lib_dir }}
+          cmake .. -G "${{ matrix.config.generators }}" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="C:\Qt\6.6.3\msvc2019_64;C:\Program Files (x86)\Afreet\OmniRig;C:\Libraries" -DBoost_INCLUDE_DIR=${{ matrix.config.lib_dir }}/boost/include -DBoost_LIBRARY_DIRS=${{ matrix.config.lib_dir }}/boost/lib -DFFTW3_INCLUDE_DIRS=${{ matrix.config.lib_dir }} -DFFTW3_LIBRARY=${{ matrix.config.lib_dir }}
           cmake --build . --config Release --target package
           
       - name: Check disk space
