@@ -58,10 +58,11 @@ jobs:
       - name: Install Boost 1.88
         id: install-boost
         run: |
-          wget https://github.com/MarkusJx/prebuilt-boost/releases/download/1.88.0/boost-1.88.0-windows-2025-msvc-shared-x86.tar.gz
+          curl --location --output ${{ matrix.config.lib_dir }} https://github.com/MarkusJx/prebuilt-boost/releases/download/1.88.0/boost-1.88.0-windows-2025-msvc-shared-x86.tar.gz
           tar zxf boost-1.88.0-windows-2025-msvc-shared-x86.tar.gz
+          ls -l ${{ matrix.config.lib_dir }}
         env: 
-          BOOST_ROOT: boost
+          BOOST_ROOT: ${{ matrix.config.lib_dir }}/boost
         
           
       - name: Install Qt
@@ -96,8 +97,8 @@ jobs:
           cmake .. -DCMAKE_FIND_DEBUG_MODE=1 -G "${{ matrix.config.generators }}" \
           -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_PREFIX_PATH="C:\Qt\6.6.3\msvc2019_64;C:\Program Files (x86)\Afreet\OmniRig" \
-          -DBoost_INCLUDE_DIR=${{steps.install-boost.outputs.BOOST_ROOT}}/include \
-          -DBoost_LIBRARY_DIRS=${{steps.install-boost.outputs.BOOST_ROOT}}/lib
+          -DBoost_INCLUDE_DIR=${{ matrix.config.lib_dir }}/boost/include \
+          -DBoost_LIBRARY_DIRS=${{ matrix.config.lib_dir }}/boost/lib
           
           cmake --build . --config Release --target package
           
