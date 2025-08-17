@@ -82,7 +82,7 @@ jobs:
 
     - name: What directory are we in?
       run: |
-        cd "C:/a/js8call/js8call"
+        cd "C:/a/"
         pwd
         Get-ChildItem
       
