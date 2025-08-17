@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         config: 
-         - { name: "Windows-x64", WIN_ARCH: "x64", os: windows-2025, QT_INST_DIR: "C:/", QTDIR: "C:/Qt/6.6.3/msvc2019_64", QT_ARCH: win64_msvc2019_64, boost_dl: "${{ github.workspace }}\\downloads\\boost", lib_dir: "C:\\Libraries", generators: Ninja }
+         - { name: "Windows-x64", WIN_ARCH: "x64", os: windows-2025, QT_INST_DIR: "C:/", QTDIR: "C:/Qt/6.6.3/msvc2019_64", QT_ARCH: win64_msvc2019_64, boost_dl: "${{ github.workspace }}\\downloads\\boost", lib_dir: "${{ github.workspace }}\\Libraries", generators: Ninja }
             
     steps:
       - uses: actions/checkout@v4
@@ -61,7 +61,7 @@ jobs:
         run: |
           cd ${{ matrix.config.lib_dir }}
           curl --location --output ${{ matrix.config.lib_dir }} https://github.com/MarkusJx/prebuilt-boost/releases/download/1.88.0/boost-1.88.0-windows-2025-msvc-shared-x86.tar.gz
-          tar zxf boost-1.88.0-windows-2025-msvc-shared-x86.tar.gz
+          tar zxf ${{ matrix.config.lib_dir }}\boost-1.88.0-windows-2025-msvc-shared-x86.tar.gz
           ls -l ${{ matrix.config.lib_dir }}
           echo "BOOST_ROOT=${{ matrix.config.lib_dir }}\boost" >> $GITHUB_OUTPUT
         
