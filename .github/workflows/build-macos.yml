@@ -44,11 +44,11 @@ jobs:
       run: |
         mkdir ~/development && mkdir ~/development/js8libs
         cd ~/development
-        name: fftw
+        - name: fftw
           run: |
             wget -q https://fftw.org/fftw-3.3.10.tar.gz
             tar zxf fftw-3.3.10.tar.gz
-        name: QT6
+        - name: QT6
           run: |
             git clone https://github.com/qt/qt5.git qt6
             cd qt6
