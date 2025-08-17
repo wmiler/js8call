@@ -78,10 +78,11 @@ jobs:
         cd ~/development/js8call/build
         cmake -G "MinGW Makefiles" -DDUMPCPP=/mingw64/bin/dumpcpp-qt6.exe ..
         make -n -j 4
-        tar cf "C:/a/js8call/js8call/build.tar" ~/development/js8call/build
+        tar cf /home/runneradmin/build.tar ~/development/js8call/build
 
     - name: What directory are we in?
       run: |
+        cd "C:/a/js8call/js8call"
         pwd
         Get-ChildItem
       
