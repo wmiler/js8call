@@ -104,11 +104,9 @@ jobs:
         wget -q https://github.com/boostorg/boost/releases/download/boost-1.88.0/boost-1.88.0-cmake.tar.gz
         tar zxf boost-1.88.0-cmake.tar.gz
 
-
     - name: Build Boost (1.88)
       run: |
-        cd ~/boost-build
-        ls -l
+        cd ~/boost-build/boost-1.88.0
         ./bootstrap.sh
         sudo ./b2 install
         
@@ -260,10 +258,10 @@ jobs:
 
     - name: Build Boost (1.88)
       run: |
-        mkdir boost-build && cd boost-build
+        mkdir ~/boost-build && cd ~/boost-build
         wget -q https://github.com/boostorg/boost/releases/download/boost-1.88.0/boost-1.88.0-cmake.tar.gz
         tar zxf boost-1.88.0-cmake.tar.gz
-        cd boost
+        cd ~/boost-build/boost-1.88.0
         ./bootstrap.sh
         sudo ./b2 install
         
