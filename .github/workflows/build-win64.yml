@@ -82,9 +82,7 @@ jobs:
 
     - name: What directory are we in?
       run: |
-        cd "C:/a/"
-        pwd
-        Get-ChildItem
+        Get-ChildItem -Path "C:\a\*.tar" -Recurse | Select @{Name="MB Size";Expression={ "{0:N1}" -f ($_.Length / 1MB) }}, Fullname, LastWriteTime;
       
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
