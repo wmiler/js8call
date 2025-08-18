@@ -71,6 +71,7 @@ jobs:
     - name: Install OmniRig
       run: |
         winget install --id=AfreetSoftware.OmniRig -e --accept-source-agreements
+        ls "C:/Program Files (x86)/Afreet/OmniRig/"
 
     - name: Build JS8Call 
       shell: msys2 {0}
