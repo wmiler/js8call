@@ -105,7 +105,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential git cmake libhamlib-dev clang-15 \
+        sudo apt-get install -y build-essential git cmake libhamlib-dev clang-15 clang-tools-15 llvm-15-dev llvm-15-tools \
           libusb-1.0-0-dev libfftw3-dev libboost-all-dev libudev-dev libxkbcommon-dev libfuse2 imagemagick
         mkdir ~/boost-build && cd ~/boost-build
         wget -q https://github.com/boostorg/boost/releases/download/boost-1.88.0/boost-1.88.0-cmake.tar.gz
@@ -278,7 +278,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential git cmake libhamlib-dev clang-15 \
+        sudo apt-get install -y build-essential git cmake libhamlib-dev clang-15 clang-tools-15 llvm-15-dev llvm-15-tools \
           libusb-1.0-0-dev libfftw3-dev libboost-all-dev libudev-dev libxkbcommon-dev libfuse2 imagemagick
         git clone https://github.com/qt/qt5.git ~/development/qt6
         cd ~/development/qt6
