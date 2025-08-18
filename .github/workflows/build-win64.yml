@@ -71,12 +71,16 @@ jobs:
     - name: Install OmniRig
       run: |
         winget install --id=AfreetSoftware.OmniRig -e --accept-source-agreements
+        
+#        This just returns the file path to omnirig
+#        /mingw64/bin/dumpcpp-qt6.exe -getfile {4FE359C5-A58F-459D-BE95-CA559FB4F270}
 
     - name: Build JS8Call 
       shell: msys2 {0}
       run: |
         cd ~/development/js8call/build
-        /mingw64/bin/dumpcpp-qt6.exe -getfile {4FE359C5-A58F-459D-BE95-CA559FB4F270}
+        sed -i 's/COMMAND ${DUMPCPP} -getfile {4FE359C5-A58F-459D-BE95-CA559FB4F270}/ /g' ../CMakeLists.txt
+        sed -i 's/OUTPUT_VARIABLE AXSERVER/set(AXSERVER, "C:\Program Files (x86)\Afreet\OmniRig\OmniRig.exe")/g' ../CMakeLists.txt
         cmake -G "MinGW Makefiles" -DDUMPCPP=/mingw64/bin/dumpcpp-qt6.exe -DDUMPCPP_Executable=dumpcpp-qt6.exe ..
         cmake --build . --config Release --target package --verbose
         tar cf /home/runneradmin/build.tar ~/development/js8call
