@@ -95,6 +95,13 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install glibc from noble restricted
+      uses: myci-actions/add-deb-repo@11
+      with:
+        repo: http://us.archive.ubuntu.com/ubuntu noble main restricted
+        update: true
+        install: libc6:amd64 libstdc++6:amd64
+
     - name: Install dependencies
       run: |
         sudo apt-get update
@@ -250,6 +257,13 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install glibc from noble restricted
+      uses: myci-actions/add-deb-repo@11
+      with:
+        repo: http://us.archive.ubuntu.com/ubuntu noble main restricted
+        update: true
+        install: libc6:amd64 libstdc++6:amd64
+
     - name: Install dependencies
       run: |
         sudo apt-get update
@@ -283,7 +297,7 @@ jobs:
         cmake ..
         make -j 4
 
-    - name: Package JS8Call AppImage (arm64)
+    - name: Package JS8Call AppImage (arm64_22.04)
       run: |
         mkdir -p ~/appimage/AppDir
         cd ~/js8call/build
