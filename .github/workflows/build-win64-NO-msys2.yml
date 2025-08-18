@@ -83,8 +83,25 @@ jobs:
           cd ${{ matrix.config.lib_dir }}
           unzip fftw-3.3.5-dll64.zip
           ls
-#          env: 
-#            fftw3: ${{ matrix.config.lib_dir }}\fftw-3.3.5-dll64
+
+      - name: Install libusb
+        run: |
+          git clone https://github.com/Microsoft/vcpkg.git
+          cd vcpkg
+          ./bootstrap-vcpkg.bat
+          ./vspkg integrate install
+          vcpkg install libusb
+          
+      - name: Build Hamlib
+        run: |
+          git clone https://github.com/Hamlib/Hamlib.git ~/hamlib
+          cd ~/hamlib
+          git checkout 4.6.4
+          ./bootstrap
+          ./configure
+          make -j 4
+          make install-strip
+          ldconfig
 
       - name: Build js8call on Windows
         if: startsWith(matrix.config.os, 'windows')
