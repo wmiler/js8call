@@ -77,12 +77,12 @@ jobs:
       run: |
         cd ~/development/js8call/build
         cmake -G "MinGW Makefiles" -DDUMPCPP=/mingw64/bin/dumpcpp-qt6.exe ..
-        make -n -j 4
+        make -j 4
         tar cf /home/runneradmin/build.tar ~/development/js8call/build
 
-    - name: What directory are we in?
-      run: |
-        Get-ChildItem -Path "C:\a\*.tar" -Recurse | Select @{Name="MB Size";Expression={ "{0:N1}" -f ($_.Length / 1MB) }}, Fullname, LastWriteTime;
+#    - name: What directory are we in?
+#      run: |
+#        Get-ChildItem -Path "C:\a\*.tar" -Recurse | Select @{Name="MB Size";Expression={ "{0:N1}" -f ($_.Length / 1MB) }}, Fullname, LastWriteTime;
       
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
