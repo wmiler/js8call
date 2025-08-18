@@ -88,5 +88,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build.tar
-        path: "C:/a/js8call/js8call/build.tar"
+        path: "C:/a/_temp/msys64/home/runneradmin/build.tar"
         retention-days: 7
