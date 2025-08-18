@@ -77,7 +77,7 @@ jobs:
       run: |
         cd ~/development/js8call/build
         cmake -G "MinGW Makefiles" -DDUMPCPP=/mingw64/bin/dumpcpp-qt6.exe ..
-        make -j 4
+        cmake --build . --config Release --target package
         tar cf /home/runneradmin/build.tar ~/development/js8call
 
 #    - name: What directory are we in?
