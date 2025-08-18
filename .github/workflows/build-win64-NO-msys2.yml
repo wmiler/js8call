@@ -94,8 +94,8 @@ jobs:
           
       - name: Build Hamlib
         run: |
-          git clone https://github.com/Hamlib/Hamlib.git ~/hamlib
-          cd ~/hamlib
+          git clone https://github.com/Hamlib/Hamlib.git ${{ matrix.config.lib_dir }}/hamlib
+          cd ${{ matrix.config.lib_dir }}/hamlib
           git checkout 4.6.4
           ./bootstrap
           ./configure
