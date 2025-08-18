@@ -92,16 +92,11 @@ jobs:
           ./vcpkg integrate install
           vcpkg install libusb
           
-      - name: Build Hamlib
-        run: |
-          git clone https://github.com/Hamlib/Hamlib.git ${{ matrix.config.lib_dir }}/hamlib
-          cd ${{ matrix.config.lib_dir }}/hamlib
-          git checkout 4.6.4
-          ./bootstrap
-          ./configure
-          make -j 4
-          make install-strip
-          ldconfig
+#      - name: Install Hamlib
+#        run: |
+#          cd ${{ matrix.config.lib_dir }}
+#          curl --location --output ${{ matrix.config.lib_dir }}/hamlib.exe https://github.com/Hamlib/Hamlib/releases/download/4.6.4/hamlib-w64-4.6.4.exe
+#          hamlib.exe
 
       - name: Build js8call on Windows
         if: startsWith(matrix.config.os, 'windows')
