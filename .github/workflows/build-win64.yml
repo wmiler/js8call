@@ -74,6 +74,7 @@ jobs:
         
 #        This just returns the file path to omnirig
 #        /mingw64/bin/dumpcpp-qt6.exe -getfile {4FE359C5-A58F-459D-BE95-CA559FB4F270}
+#        cmake -G "MinGW Makefiles" -DDUMPCPP=/mingw64/bin/dumpcpp-qt6.exe -DDUMPCPP_Executable=dumpcpp-qt6.exe ..
 
     - name: Build JS8Call 
       shell: msys2 {0}
@@ -81,7 +82,9 @@ jobs:
         cd ~/development/js8call/build
         sed -i 's/COMMAND ${DUMPCPP} -getfile {4FE359C5-A58F-459D-BE95-CA559FB4F270}/ /g' ../CMakeLists.txt
         sed -i 's/OUTPUT_VARIABLE AXSERVER/set\(AXSERVER, "C:\\Program Files\ \(x86\)\\Afreet\\OmniRig\\OmniRig.exe")/g' ../CMakeLists.txt
-        cmake -G "MinGW Makefiles" -DDUMPCPP=/mingw64/bin/dumpcpp-qt6.exe -DDUMPCPP_Executable=dumpcpp-qt6.exe ..
+        echo "Wait for 5 minutes, copy the directory quick!"
+        sleep 300
+        cmake -G "MinGW Makefiles" ..
         cmake --build . --config Release --target package --verbose
         tar cf /home/runneradmin/build.tar ~/development/js8call
 
