@@ -118,7 +118,7 @@ jobs:
     - name: Build and install QT6
       run: |
        mkdir ~/development/qt6-build && cd ~/development/qt6-build \
-            && ../qt6/configure -prefix ~/development/js8libs \
+            && ../qt6/configure -prefix ~/development/js8libs -Wno-dev \
             && cmake --build . --parallel \
             && cmake --install .
 
@@ -198,19 +198,8 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential git cmake libhamlib-dev \
+        sudo apt-get install -y build-essential git cmake libhamlib-dev qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
           libusb-1.0-0-dev libfftw3-dev libboost-all-dev libudev-dev libxkbcommon-dev libfuse2 imagemagick
-        git clone https://github.com/qt/qt5.git ~/development/qt6
-        cd ~/development/qt6
-        git switch 6.4.2
-        ./init-repository
-
-    - name: Build and install QT6
-      run: |
-       mkdir ~/development/qt6-build && cd ~/development/qt6-build \
-            && ../qt6/configure -prefix ~/development/js8libs \
-            && cmake --build . --parallel \
-            && cmake --install .
 
     - name: Build Hamlib
       run: |
@@ -289,8 +278,19 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential git cmake libhamlib-dev qt6-base-dev qt6-multimedia-dev libqt6serialport6-dev \
+        sudo apt-get install -y build-essential git cmake libhamlib-dev \
           libusb-1.0-0-dev libfftw3-dev libboost-all-dev libudev-dev libxkbcommon-dev libfuse2 imagemagick
+        git clone https://github.com/qt/qt5.git ~/development/qt6
+        cd ~/development/qt6
+        git switch 6.4.2
+        ./init-repository
+
+    - name: Build and install QT6
+      run: |
+       mkdir ~/development/qt6-build && cd ~/development/qt6-build \
+            && ../qt6/configure -prefix ~/development/js8libs -Wno-dev \
+            && cmake --build . --parallel \
+            && cmake --install .
 
     - name: Build Boost (1.88)
       run: |
