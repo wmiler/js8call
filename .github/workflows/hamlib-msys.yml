@@ -24,8 +24,6 @@ jobs:
           submodules: recursive
           lfs: true
           clean: true
-          config: | 
-            core.autocrlf=false
 
       - name: Setup MSYS2
         uses: msys2/setup-msys2@v2
@@ -43,6 +41,7 @@ jobs:
             autotools:p
             cmake:p
             ninja:p
+            libusb:p
 
       - name: Bootstrap Hamlib build system
         run: ./bootstrap
