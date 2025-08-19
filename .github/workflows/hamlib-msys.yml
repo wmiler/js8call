@@ -34,10 +34,15 @@ jobs:
           install: > 
             git 
             make 
-            mingw-w64-msvc-x86_64-toolchain 
+            base-devel
             autoconf 
             libtool 
             pkg-config
+          pacboy: >-
+            toolchain:p
+            autotools:p
+            cmake:p
+            ninja:p
 
       - name: Bootstrap Hamlib build system
         run: ./bootstrap
@@ -45,7 +50,7 @@ jobs:
       - name: Configure Hamlib
         run: |
           ./configure --prefix=/c/hamlib-install \
-                      --enable-static \
+                      --enable-shared --enable-static \
                       --without-cxx-binding --disable-winradio \
                       CFLAGS="-g -O2 -fdata-sections -ffunction-sections" \
                       LDFLAGS="-Wl,--gc-sections" #
