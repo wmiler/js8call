@@ -56,7 +56,9 @@ jobs:
         mkdir -p ~/development && mkdir -p ~/development/js8libs
         git clone https://github.com/js8call/js8call.git ~/development/js8call
         mkdir -p ~/development/js8call/build
-     
+
+# This will be going away hopefully soon and replaced with the secion below it to
+# speed up compile time, we will use a precompiled hamlib at 4.6.4
     - shell: msys2 {0}
       name: Build Hamlib
       run: |
@@ -68,21 +70,28 @@ jobs:
         make -j 4
         make install-strip
 
+#    - name: Download hamlib-windows-msys2-binaries
+#      uses: actions/download-artifact@v5
+#      with:
+#        repository: wmiler/js8call
+#        name: hamlib-windows-msys2-binaries.tar.zip
+#        artifact-ids: 12345
+
+#    - name: Install hamlib
+#      run: |
+#        unzip hamlib-windows-msys2-binaries.tar.zip
+#        cd hamlib
+#        make install-strip
+
     - name: Install OmniRig
       run: |
         winget install --id=AfreetSoftware.OmniRig -e --accept-source-agreements
         
-#        This just returns the file path to omnirig
-#        /mingw64/bin/dumpcpp-qt6.exe -getfile {4FE359C5-A58F-459D-BE95-CA559FB4F270}
-#        cmake -G "MinGW Makefiles" -DDUMPCPP=/mingw64/bin/dumpcpp-qt6.exe -DDUMPCPP_Executable=dumpcpp-qt6.exe ..
-# This sed fails
-#        sed -i "/^execute_process ( COMMAND \${DUMPCPP} -getfile {4FE359C5-A58F-459D-BE95-CA559FB4F270} OUTPUT_VARIABLE AXSERVER OUTPUT_STRIP_TRAILING_WHITESPACE )/,/^$/d" ../CMakeLists.txt
-
     - name: Patch CMakeLists.txt
       shell: msys2 {0}
       run: |
         cd ~/development/js8call/build
-        sed -i 's/COMMAND ${DUMPCPP} -getfile {4FE359C5-A58F-459D-BE95-CA559FB4F270}/ /g' ../CMakeLists.txt
+        sed -i '353,367d' ../CMakeLists.txt
         sed -i '3i\set\(AXSERVERSRCS "C:/Program Files (x86)/Afreet/OmniRig/OmniRig.exe")' ../CMakeLists.txt
         echo "Wait for 5 minutes, copy the CMakeLists.txt quick!"
         sleep 300
@@ -94,7 +103,6 @@ jobs:
         cmake -G "MinGW Makefiles" ..
         cmake --build . --config Release --target package --verbose
         tar cf /home/runneradmin/build.tar ~/development/js8call
-
 
 #    - name: What directory are we in?
 #      run: |
