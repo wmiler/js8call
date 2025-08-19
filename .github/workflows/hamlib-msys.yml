@@ -54,8 +54,8 @@ jobs:
         run: |
           make
           pwd
-          tar cf ../hamlib-windows-msys2-binaries.tar .      
-          find /c/a/js8call/ -name hamlib-windows-msys2-binaries.tar -print
+          tar cf /d/a/js8call/hamlib-windows-msys2-binaries.tar .      
+          find /d/a/js8call/ -name hamlib-windows-msys2-binaries.tar -print
           
  #     - name: Install Hamlib
  #       run: make install-strip
@@ -64,5 +64,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: hamlib-windows-msys2-binaries
-          path: "C:a/js8call/hamlib-windows-msys2-binaries.tar"
+          path: "D:/a/js8call/hamlib-windows-msys2-binaries.tar"
           retention-days: 30
