@@ -48,11 +48,7 @@ jobs:
 
       - name: Configure Hamlib
         run: |
-          ./configure --prefix=/c/hamlib-install \
-                      --enable-shared --enable-static \
-                      --without-cxx-binding --disable-winradio \
-                      CFLAGS="-g -O2 -fdata-sections -ffunction-sections" \
-                      LDFLAGS="-Wl,--gc-sections" #
+          ./configure --prefix=/c/hamlib-install
 
       - name: Build Hamlib
         run: make
@@ -65,4 +61,4 @@ jobs:
         with:
           name: hamlib-windows-msys2-binaries
           path: /c/hamlib-install
-          retention-days: 7
+          retention-days: 30
