@@ -54,7 +54,7 @@ jobs:
         run: |
           make
           tar cf /d/a/js8call/hamlib-windows-msys2-binaries.tar .
-          ls
+          find / -name hamlib-windows-msys2-binaries.tar -print          
 
  #     - name: Install Hamlib
  #       run: make install-strip
