@@ -59,27 +59,27 @@ jobs:
 
 # This will be going away hopefully soon and replaced with the secion below it to
 # speed up compile time, we will use a precompiled hamlib at 4.6.4
-    - shell: msys2 {0}
-      name: Build Hamlib
-      run: |
-        git clone https://github.com/Hamlib/Hamlib.git ~/development/hamlib
-        cd ~/development/hamlib
-        git checkout 4.6.4
-        ./bootstrap
-        ./configure
-        make -j 4
-        make install-strip
-
-#    - name: Download hamlib-windows-msys2-binaries
-#      uses: actions/download-artifact@v5
-#      with:
-#        repository: wmiler/js8call
-#        name: hamlib-windows-msys2-binaries.tar.zip
-#        artifact-ids: 12345
-
-#    - name: Install hamlib
+#    - shell: msys2 {0}
+#      name: Build Hamlib
 #      run: |
-#        unzip hamlib-windows-msys2-binaries.tar.zip
+#        git clone https://github.com/Hamlib/Hamlib.git ~/development/hamlib
+#        cd ~/development/hamlib
+#        git checkout 4.6.4
+#        ./bootstrap
+#        ./configure
+#        make -j 4
+#        make install-strip
+
+    - name: Download hamlib-windows-msys2-binaries
+      uses: actions/download-artifact@v5
+      with:
+        repository: wmiler/js8call
+        artifact-ids: 3803582079
+
+    - name: Install hamlib
+      run: |
+        unzip hamlib-windows-msys2-binaries.tar.zip
+        ls -l
 #        cd hamlib
 #        make install-strip
 
