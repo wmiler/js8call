@@ -74,14 +74,17 @@ jobs:
       uses: actions/download-artifact@v5
       with:
         repository: wmiler/js8call
+        run-id: 17082808777
         artifact-ids: 3803582079
+        github-token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Install hamlib
       run: |
-        unzip hamlib-windows-msys2-binaries.tar.zip
+        mkdir hamlib-464 & cd hamlib-464
+        unzip ../hamlib-windows-msys2-binaries.tar.zip
+        tar xf hamlib-windows-msys2-binaries.tar
         ls -l
-#        cd hamlib
-#        make install-strip
+        make install-strip
 
     - name: Install OmniRig
       run: |
