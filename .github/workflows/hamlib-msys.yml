@@ -1,0 +1,64 @@
+name: Build Hamlib SDK on Windows (MSYS2)
+
+on:
+  push:
+    branches:
+      - build-artifacts
+
+jobs:
+  build-windows-msys2:
+    runs-on: windows-2025
+
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          repository: https://github.com/Hamlib/Hamlib.git ~/development/hamlib 
+          ref: '4.6.4' 
+          fetch-depth: 0 
+          persist-credentials: false
+          submodules: recursive
+          lfs: true
+          clean: true
+          config: | 
+            core.autocrlf=false
+
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true 
+          install: > 
+            git 
+            make 
+            mingw-w64-msvc-x86_64-toolchain 
+            autoconf 
+            libtool 
+            pkg-config
+
+      - name: Bootstrap Hamlib build system
+        run: ./bootstrap
+
+      - name: Configure Hamlib
+        run: |
+          ./configure --prefix=/c/hamlib-install \
+                      --enable-static \
+                      --without-cxx-binding --disable-winradio \
+                      CFLAGS="-g -O2 -fdata-sections -ffunction-sections" \
+                      LDFLAGS="-Wl,--gc-sections" #
+
+      - name: Build Hamlib
+        run: make
+
+      - name: Install Hamlib
+        run: make install-strip
+
+      - name: Upload Hamlib binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: hamlib-windows-msys2-binaries
+          path: /c/hamlib-install
+          retention-days: 7
