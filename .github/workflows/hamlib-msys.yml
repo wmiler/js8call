@@ -53,14 +53,15 @@ jobs:
       - name: Build Hamlib
         run: |
           make
-          tar cf /home/runneradmin/hamlib-windows-msys2-binaries.tar .
+          tar cf ../hamlib-windows-msys2-binaries.tar .
+          ls
 
-      - name: Install Hamlib
-        run: make install-strip
+ #     - name: Install Hamlib
+ #       run: make install-strip
 
       - name: Upload Hamlib binaries
         uses: actions/upload-artifact@v4
         with:
           name: hamlib-windows-msys2-binaries
-          path: /home/runneradmin/hamlib-windows-msys2-binaries.tar
+          path: ../hamlib-windows-msys2-binaries.tar
           retention-days: 30
