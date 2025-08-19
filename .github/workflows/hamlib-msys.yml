@@ -53,7 +53,7 @@ jobs:
       - name: Build Hamlib
         run: |
           make
-          tar cf ../hamlib-windows-msys2-binaries.tar .
+          tar cf /d/a/js8call/hamlib-windows-msys2-binaries.tar .
           ls
 
  #     - name: Install Hamlib
@@ -63,5 +63,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: hamlib-windows-msys2-binaries
-          path: ../hamlib-windows-msys2-binaries.tar
+          path: /d/a/js8call/hamlib-windows-msys2-binaries.tar
           retention-days: 30
