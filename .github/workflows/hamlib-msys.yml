@@ -60,5 +60,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: hamlib-windows-msys2-binaries
-          path: /c/hamlib-install
+          path: /c/hamlib-install/
           retention-days: 30
