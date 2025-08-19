@@ -64,5 +64,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: hamlib-windows-msys2-binaries
-          path: /d/a/js8call/hamlib-windows-msys2-binaries.tar
+          path: "D:a/js8call/hamlib-windows-msys2-binaries.tar"
           retention-days: 30
