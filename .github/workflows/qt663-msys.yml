@@ -40,7 +40,7 @@ jobs:
           mkdir js8libs
           cd qt6
           git switch 6.6.3
-          ./init-repository
+          ./init-repository --module-subset=essential,qtactiveqt,qtmultimedia,qtserialport
           mkdir build
           cd build
           ../qt6/configure -prefix ../../js8libs
