@@ -35,7 +35,6 @@ jobs:
             libusb:p
 
       - name: Checkout QT 6.6.3
-        shell: msys {0}
         run: |
           git clone https://github.com/qt/qt5.git qt6
           mkdir js8libs
@@ -50,7 +49,6 @@ jobs:
 #          cmake --install .
 
       - name: Build QT 6.6.3
-        shell: msys {0}
         run: |
           cd qt6/build
           cmake --build . --parallel
