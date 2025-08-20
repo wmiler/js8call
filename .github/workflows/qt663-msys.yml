@@ -36,6 +36,7 @@ jobs:
 
       - name: Checkout QT 6.6.3
         run: |
+          pwd
           git clone https://github.com/qt/qt5.git qt6
           mkdir /c/actions-runner/_work/js8call/js8call/js8libs
           cd qt6
@@ -43,11 +44,12 @@ jobs:
           ./init-repository --module-subset=essential,qtactiveqt,qtmultimedia,qtserialport,qtsvg
           mkdir ./build
           cd build
-          ../qt6/configure -prefix /c/actions-runner/_work/js8call/js8call/js8libs
+          ../configure -prefix /c/actions-runner/_work/js8call/js8call/js8libs
 
       - name: Build QT 6.6.3
         run: |
-          cd /c/actions-runner/_work/js8call/js8call/qt6/build
+          pwd
+          cd qt6/build
           cmake --build . --parallel
           pwd
 
