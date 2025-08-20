@@ -49,13 +49,15 @@ jobs:
       run: |
         uname -a
         env
-      
+
+# actions/checkout does this for us      
+#        git clone https://github.com/js8call/js8call.git ~/development/js8call
     - name: Setup build directories
       shell: msys2 {0}
       run: |
-        mkdir -p ~/development && mkdir -p ~/development/js8libs
-        git clone https://github.com/js8call/js8call.git ~/development/js8call
-        mkdir -p ~/development/js8call/build
+        pwd
+        mkdir -p js8libs
+        mkdir -p build
 
 # This will be going away hopefully soon and replaced with the secion below it to
 # speed up compile time, we will use a precompiled hamlib at 4.6.4
@@ -80,14 +82,14 @@ jobs:
 
 # I guess it unzips it when it fetches it
 #         unzip /c/actions-runner/_work/js8call/js8call/hamlib-windows-msys2-binaries.tar.zip
+#        find /c/actions-runner/_work/js8call/ -name "hamlib-windows-msys2-binaries.tar" -print
     - name: Install hamlib
       shell: msys2 {0}
       run: |
         pwd
-        find /c/actions-runner/_work/js8call/js8call -name hamlib-windows-msys2-binaries -print
-        mkdir ~/hamlib-464
-        cd ~/hamlib-464
-        tar xf hamlib-windows-msys2-binaries.tar
+        mkdir ./hamlib-464
+        cd ./hamlib-464
+        tar xf ../hamlib-windows-msys2-binaries.tar
         ls -l
         make install-strip
 
@@ -98,23 +100,33 @@ jobs:
     - name: Patch CMakeLists.txt
       shell: msys2 {0}
       run: |
-        cd ~/development/js8call/build
+        pwd
+        cd ./build
         sed -i '353,367d' ../CMakeLists.txt
         sed -i '3i\set\(AXSERVERSRCS "C:/Program Files (x86)/Afreet/OmniRig/OmniRig.exe")' ../CMakeLists.txt
         
     - name: Build JS8Call 
       shell: msys2 {0}
       run: |
-        cd ~/development/js8call/build
+        cd ./build
         cmake -G "MinGW Makefiles" ..
         cmake --build . --config Release --target package --verbose
-        tar cf /home/runneradmin/build.tar ~/development/js8call
+        tar cf /home/runneradmin/build.tar ../js8call
 
 #    - name: What directory are we in?
 #      run: |
 #        Get-ChildItem -Path "C:\a\*.tar" -Recurse | Select @{Name="MB Size";Expression={ "{0:N1}" -f ($_.Length / 1MB) }}, Fullname, LastWriteTime;
       
-    - name: Upload Artifact
+    - name: Upload Artifact (from self-hosted)
+      if: ${{ contains(runner.labels, 'self-hosted') }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: build.tar
+        path: "C:/actions-runner/_work/_temp/msys64/home/runneradmin/build.tar"
+        retention-days: 7
+
+    - name: Upload Artifact (from Github runner)
+      if: ${{ !contains(runner.labels, 'self-hosted') }}
       uses: actions/upload-artifact@v4
       with:
         name: build.tar
