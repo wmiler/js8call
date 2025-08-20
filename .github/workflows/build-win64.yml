@@ -80,7 +80,8 @@ jobs:
 
     - name: Install hamlib
       run: |
-        mkdir hamlib-464 & cd hamlib-464
+        mkdir hamlib-464
+        cd hamlib-464
         unzip ../hamlib-windows-msys2-binaries.tar.zip
         tar xf hamlib-windows-msys2-binaries.tar
         ls -l
