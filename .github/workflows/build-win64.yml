@@ -78,18 +78,18 @@ jobs:
         artifact-ids: 3803582079
         github-token: ${{ secrets.GITHUB_TOKEN }}
 
+# I guess it unzips it when it fetches it
+#         unzip /c/actions-runner/_work/js8call/js8call/hamlib-windows-msys2-binaries.tar.zip
     - name: Install hamlib
       shell: msys2 {0}
       run: |
         pwd
-        find /c/actions-runner/_work/ -name hamlib-windows-msys2-binaries.zip -print
+        find /c/actions-runner/_work/js8call/js8call -name hamlib-windows-msys2-binaries -print
         mkdir ~/hamlib-464
         cd ~/hamlib-464
-        
-#        unzip ./hamlib-windows-msys2-binaries.tar.zip
-#        tar xf hamlib-windows-msys2-binaries.tar
-#        ls -l
-#        make install-strip
+        tar xf hamlib-windows-msys2-binaries.tar
+        ls -l
+        make install-strip
 
     - name: Install OmniRig
       run: |
@@ -101,8 +101,6 @@ jobs:
         cd ~/development/js8call/build
         sed -i '353,367d' ../CMakeLists.txt
         sed -i '3i\set\(AXSERVERSRCS "C:/Program Files (x86)/Afreet/OmniRig/OmniRig.exe")' ../CMakeLists.txt
-        echo "Wait for 5 minutes, copy the CMakeLists.txt quick!"
-        sleep 300
         
     - name: Build JS8Call 
       shell: msys2 {0}
