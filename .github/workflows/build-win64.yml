@@ -82,7 +82,7 @@ jobs:
       run: |
         mkdir hamlib-464
         cd hamlib-464
-        Expand-Archive -Path "C:\actions-runner\_work\js8call\js8call\amlib-windows-msys2-binaries.tar.zip" -DestinationPath "C:\actions-runner\_work\js8call\js8call\hamlib-464" 
+        Expand-Archive -Path "C:\actions-runner\_work\js8call\js8call\hamlib-windows-msys2-binaries.tar.zip" -DestinationPath "C:\actions-runner\_work\js8call\js8call\hamlib-464" 
         tar xf hamlib-windows-msys2-binaries.tar
         ls -l
         make install-strip
