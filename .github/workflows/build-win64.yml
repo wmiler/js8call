@@ -80,6 +80,8 @@ jobs:
 
     - name: Install hamlib
       run: |
+        ls -l
+        pwd
         mkdir hamlib-464
         cd hamlib-464
         Expand-Archive -Path "C:\actions-runner\_work\js8call\js8call\hamlib-windows-msys2-binaries.tar.zip" -DestinationPath "C:\actions-runner\_work\js8call\js8call\hamlib-464" 
