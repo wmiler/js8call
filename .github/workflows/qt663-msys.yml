@@ -1,0 +1,71 @@
+name: Build QT 6.6.3 on Windows (MSYS2)
+
+on:
+  push:
+    branches:
+      - build-artifacts
+    paths:
+      '.github/workflows/qt663-msys.yml'
+
+jobs:
+  build-windows-msys2:
+    runs-on: windows-2025
+
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true 
+          install: > 
+            git 
+            make 
+            base-devel
+            autoconf 
+            libtool 
+            pkg-config
+          pacboy: >-
+            toolchain:p
+            autotools:p
+            cmake:p
+            ninja:p
+            libusb:p
+
+      - name: Checkout QT 6.6.3
+        shell: msys {0}
+        run: |
+          git clone https://github.com/qt/qt5.git qt6
+          mkdir js8libs
+          cd qt6
+          git switch 6.6.3
+          ./init-repository
+          mkdir build
+          cd build
+          ../qt6/configure -prefix ../../js8libs
+
+#          cmake --build . --parallel
+#          cmake --install .
+
+      - name: Build QT 6.6.3
+        shell: msys {0}
+        run: |
+          cd qt6/build
+          cmake --build . --parallel
+          pwd
+
+#          tar cf /d/a/js8call/hamlib-windows-msys2-binaries.tar .      
+#          find /d/a/js8call/ -name hamlib-windows-msys2-binaries.tar -print
+          
+ #     - name: Install QT 6.6.3
+ #       run: make install-strip
+
+      - name: Upload QT 6.6.3 binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: qt663-windows-msys2-binaries
+          path: "D:/a/js8call/qt663-windows-msys2-binaries.tar"
+          retention-days: 7
+          
