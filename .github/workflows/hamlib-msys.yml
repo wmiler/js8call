@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - build-artifacts
+    paths:
+      '.github/workflows/hamlib-msys.yml'
 
 jobs:
   build-windows-msys2:
