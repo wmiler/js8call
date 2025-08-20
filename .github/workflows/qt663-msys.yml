@@ -8,7 +8,7 @@ on:
       '.github/workflows/qt663-msys.yml'
 
 jobs:
-  build-windows-msys2:
+  build-qt663-windows-msys2:
     runs-on: self-hosted
 
     defaults:
