@@ -41,7 +41,7 @@ jobs:
           mkdir /c/actions-runner/_work/js8call/js8call/js8libs
           cd qt6
           git switch 6.6.3
-          ./init-repository --module-subset=essential,qtactiveqt,qtmultimedia,qtserialport,qtsvg
+          ./init-repository --module-subset=essential,qtactiveqt,qtmultimedia,qtserialport,qtsvg,qtshadertools,qttools
           mkdir ./build
           cd build
           ../configure -prefix /c/actions-runner/_work/js8call/js8call/js8libs
