@@ -8,7 +8,7 @@ on:
       '.github/workflows/hamlib-msys.yml'
 
 jobs:
-  build-windows-msys2:
+  build-hamlib-windows-msys2:
     runs-on: windows-2025
 
     defaults:
