@@ -82,10 +82,10 @@ jobs:
       shell: msys2 {0}
       run: |
         pwd
-        ls
-        mkdir hamlib-464
-        cd hamlib-464
-        unzip ./hamlib-windows-msys2-binaries.tar.zip -DestinationPath
+        find /c/actions-runner/_work/ -name hamlib-windows-msys2-binaries.zip -print
+        mkdir ~/hamlib-464
+        cd ~/hamlib-464
+        unzip ./hamlib-windows-msys2-binaries.tar.zip
         tar xf hamlib-windows-msys2-binaries.tar
         ls -l
         make install-strip
