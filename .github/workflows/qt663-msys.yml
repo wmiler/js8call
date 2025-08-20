@@ -37,24 +37,24 @@ jobs:
       - name: Checkout QT 6.6.3
         run: |
           git clone https://github.com/qt/qt5.git qt6
-          mkdir js8libs
+          mkdir /c/actions-runner/_work/js8call/js8call/js8libs
           cd qt6
           git switch 6.6.3
           ./init-repository --module-subset=essential,qtactiveqt,qtmultimedia,qtserialport
-          mkdir build
+          mkdir ./build
           cd build
-          ../qt6/configure -prefix ../../js8libs
+          ../qt6/configure -prefix /c/actions-runner/_work/js8call/js8call/js8libs
 
 #          cmake --build . --parallel
 #          cmake --install .
 
       - name: Build QT 6.6.3
         run: |
-          cd qt6/build
+          cd /c/actions-runner/_work/js8call/js8call/qt6/build
           cmake --build . --parallel
           pwd
 
-#          tar cf /d/a/js8call/hamlib-windows-msys2-binaries.tar .      
+          tar cf /c/actions-runner/_work/js8call/qt663-windows-msys2-binaries.tar .      
 #          find /d/a/js8call/ -name hamlib-windows-msys2-binaries.tar -print
           
  #     - name: Install QT 6.6.3
@@ -64,6 +64,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: qt663-windows-msys2-binaries
-          path: "D:/a/js8call/qt663-windows-msys2-binaries.tar"
+          path: "C:/aactions_runner/_work/js8call/qt663-windows-msys2-binaries.tar"
           retention-days: 7
           
