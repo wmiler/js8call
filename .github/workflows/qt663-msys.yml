@@ -50,9 +50,12 @@ jobs:
         run: |
           pwd
           cd qt6/build
-          cmake --build . --parallel
-          pwd
+          cmake --build . --parallel 4
+          cmake --install .
 
+      - name: Generate QT 6.6.3 tarfile
+        run: |
+          cd /c/actions-runner/_work/js8call/js8call/js8libs
           tar cf /c/actions-runner/_work/js8call/qt663-windows-msys2-binaries.tar .      
 #          find /d/a/js8call/ -name qt663-windows-msys2-binaries.tar -print
           
@@ -60,6 +63,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: qt663-windows-msys2-binaries
-          path: "C:/actions_runner/_work/js8call/qt663-windows-msys2-binaries.tar"
+          path: "C:/actions-runner/_work/js8call/qt663-windows-msys2-binaries.tar"
           retention-days: 7
           
