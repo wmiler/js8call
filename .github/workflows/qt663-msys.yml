@@ -46,7 +46,7 @@ jobs:
           ./init-repository --module-subset=essential,qtactiveqt,qtmultimedia,qtserialport,qtsvg,qtshadertools,qttools
           mkdir ./build
           cd build
-          ../configure -prefix=/d/a/js8call/qt663-install
+          ../configure --prefix=/d/a/js8call/qt663-install
           
       - name: Build QT 6.6.3
         run: |
