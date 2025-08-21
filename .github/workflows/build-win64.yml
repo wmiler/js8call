@@ -33,8 +33,6 @@ jobs:
           fftw:p
           sqlite3:p
           nsis:p
-#          qt6:p
-#          qt6-tools:p
 
     - name: Setup build directories
       shell: msys2 {0}
@@ -44,7 +42,6 @@ jobs:
         mkdir -p build
         
 # NOTE: So long as these are coming from a branch, the run-id and artifact-ids have to be kept updated.
-# Once these are active, need to remove qt and qt-tools from pacboy install above
     - name: Download qt663-windows-msys2-binaries
       uses: actions/download-artifact@v5
       with:
@@ -80,23 +77,17 @@ jobs:
         pwd
         cd ./build
         cmake --build . --config Release --target package --verbose
-        ls -l
-        tar cf /c/actions-runner/_work/js8call/js8call.tar ../js8call
 
-#    - name: What directory are we in?
-#      run: |
-#        Get-ChildItem -Path "C:\a\*.tar" -Recurse | Select @{Name="MB Size";Expression={ "{0:N1}" -f ($_.Length / 1MB) }}, Fullname, LastWriteTime;
-      
     - name: Upload Artifact (from self-hosted)
       if: ${{ contains(runner.labels, 'self-hosted') }}
       uses: actions/upload-artifact@v4
       with:
         name: build.tar
-        path: "C:/actions-runner/_work/_work/js8call/js8call.tar"
+        path: "C:/actions-runner/_work/js8call/js8call/build/js8call-2.3.2-devel-win64.exe"
 
     - name: Upload Artifact (from Github runner)
       if: ${{ !contains(runner.labels, 'self-hosted') }}
       uses: actions/upload-artifact@v4
       with:
         name: js8call.tar
-        path: /d/a/js8call/js8call.tar"
+        path: /d/a/js8call/js8call/build/js8call-2.3.2-devel-win64.exe"
