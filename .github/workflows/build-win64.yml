@@ -86,6 +86,7 @@ jobs:
       shell: msys2 {0}
       run: |
         pwd
+        ls -lR
         cd js8libs
         tar xf ../hamlib-windows-msys2-binaries.tar
         ls -l
