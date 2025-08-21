@@ -34,9 +34,6 @@ jobs:
             ninja:p
             libusb:p
 
-# These two are for running selfhosted
-#          mkdir /c/actions-runner/_work/js8call/js8call/js8libs
-#          ../configure -prefix /c/actions-runner/_work/js8call/js8call/js8libs
       - name: Checkout QT 6.6.3
         run: |
           pwd
@@ -54,20 +51,10 @@ jobs:
           cd qt6/build
           cmake --build . --parallel 4
           cmake --install .
+          ls -l /d/a/js8call/qt663-install
 
-#      - name: Generate QT 6.6.3 tarfile
-#        run: |
-#          cd /c/actions-runner/_work/js8call/js8call/
-#          ls -l /c/actions-runner/_work/js8call/js8call/js8libs
-#          tar cf /c/actions-runner/_work/js8call/qt663-windows-msys2-binaries.tar /c/actions-runner/_work/js8call/js8call/js8libs      
-#          find /d/a/js8call/ -name qt663-windows-msys2-binaries.tar -print
-          
-# For selfhosted
-#          path: "C:/actions-runner/_work/js8call/qt663-windows-msys2-binaries.tar"
       - name: Upload QT 6.6.3 binaries
         uses: actions/upload-artifact@v4
         with:
           name: qt663-windows-msys2-binaries
-          path: "D:/a/js8call/qt663-install/"
-          retention-days: 7
-          
+          path: "D:/a/js8call/qt663-install/"          
