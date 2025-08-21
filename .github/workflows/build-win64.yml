@@ -51,7 +51,7 @@ jobs:
 #        run-id: replace-me
 #        artifact-ids: replace-me
 #        github-token: ${{ secrets.GITHUB_TOKEN }}
-#        path: /msys64/mingw64/
+#        path: "C:/actions-runner/_work/_temp/msys64/mingw64/"
 
     - name: Download hamlib-windows-msys2-binaries
       uses: actions/download-artifact@v5
@@ -83,11 +83,11 @@ jobs:
         cmake -G "MinGW Makefiles" ..
 
 # Hackish to be removed once we have a good QT 6.6.3 working
+#        mv OmniRig.cpp OmniRig.h build/
     - name: Patch wsjt_qt_autogen_timestamp_deps/build.make (remove dumpcpp requirements)
       shell: msys2 {0}
       run: |
         pwd
-        mv OmniRig.cpp OmniRig.h build/
         cd build/CMakeFiles/wsjt_qt_autogen_timestamp_deps.dir
         sed -i '71, 74d' ./build.make
 
@@ -110,7 +110,6 @@ jobs:
       with:
         name: build.tar
         path: "C:/actions-runner/_work/_temp/msys64/home/runneradmin/build.tar"
-        retention-days: 7
 
     - name: Upload Artifact (from Github runner)
       if: ${{ !contains(runner.labels, 'self-hosted') }}
@@ -118,4 +117,3 @@ jobs:
       with:
         name: build.tar
         path: "C:/a/_temp/msys64/home/runneradmin/build.tar"
-        retention-days: 7
