@@ -87,7 +87,7 @@ jobs:
       run: |
         pwd
         cd js8libs
-        tar xf ../js8call/hamlib-windows-msys2-binaries.tar
+        tar xf ../hamlib-windows-msys2-binaries.tar
         ls -l
 
     - name: Install OmniRig
