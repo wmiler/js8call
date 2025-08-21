@@ -15,15 +15,6 @@ jobs:
     runs-on: self-hosted
 
     steps:
-    - name: Gather Facts
-      id: facts
-      run : |
-          Get-PSDrive -PSProvider FileSystem | Format-Table -AutoSize -Wrap
-          Get-CIMInstance -Class Win32_Processor | Select-Object -Property Name
-          Get-CIMInstance Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum | Format-Table @{n="TotalPhysicalMemory";e={$_.Sum}}
-          $BUILD_DRIVE = Split-Path $env:GITHUB_WORKSPACE -Qualifier
-          echo "drive=$BUILD_DRIVE" >> $env:GITHUB_OUTPUT
-
     - run: git config --global core.autocrlf input
     - uses: actions/checkout@v4
     - uses: msys2/setup-msys2@v2
@@ -45,11 +36,6 @@ jobs:
           sqlite3:p
           nsis:p
           
-#    - shell: msys2 {0}
-#      run: |
-#        uname -a
-#        env
-
     - name: Setup build directories
       shell: msys2 {0}
       run: |
@@ -67,14 +53,6 @@ jobs:
 #        github-token: ${{ secrets.GITHUB_TOKEN }}
 #        path: /msys64/mingw64/
 
-#    - name: Install QT 6.6.3
-#      shell: msys2 {0}
-#      run: |
-#        pwd
-#        cd js8libs
-#        tar xf ../js8call/qt663b-windows-msys2-binaries.tar
-#        ls -l
-
     - name: Download hamlib-windows-msys2-binaries
       uses: actions/download-artifact@v5
       with:
@@ -82,16 +60,7 @@ jobs:
         run-id: 17105686888
         artifact-ids: 3811637899
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path: /msys64/mingw64/
-
-#    - name: Install hamlib
-#      shell: msys2 {0}
-#      run: |
-#        pwd
-#        ls -lR
-#        cd js8libs
-#        tar xf ../hamlib-windows-msys2-binaries.tar
-#        ls -l
+        path: /c/actions-runner/_work/_temp/msys64/mingw64/
 
     - name: Install OmniRig
       run: |
@@ -109,9 +78,11 @@ jobs:
     - name: Build JS8Call 
       shell: msys2 {0}
       run: |
+        pwd
         cd ./build
         cmake -G "MinGW Makefiles" ..
         cmake --build . --config Release --target package --verbose
+        ls -l
         tar cf /home/runneradmin/build.tar ../js8call
 
 #    - name: What directory are we in?
