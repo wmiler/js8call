@@ -65,6 +65,7 @@ jobs:
 #        run-id: replace-me
 #        artifact-ids: replace-me
 #        github-token: ${{ secrets.GITHUB_TOKEN }}
+#        working-directory: /msys64/mingw64/
 
 #    - name: Install QT 6.6.3
 #      shell: msys2 {0}
@@ -81,6 +82,7 @@ jobs:
         run-id: 17105686888
         artifact-ids: 3811637899
         github-token: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: /msys64/mingw64/
 
 #    - name: Install hamlib
 #      shell: msys2 {0}
@@ -103,6 +105,8 @@ jobs:
         cd build
         sed -i '353,367d' ../CMakeLists.txt
         sed -i '3i\set\(AXSERVERSRCS "C:/Program Files (x86)/Afreet/OmniRig/OmniRig.exe")' ../CMakeLists.txt
+        echo "Short wait 5 minutes"
+        sleep 300
         
     - name: Build JS8Call 
       shell: msys2 {0}
