@@ -31,34 +31,36 @@ jobs:
           wget:p
           boost:p
           fftw:p
-          qt6:p
-          qt6-tools:p
           sqlite3:p
           nsis:p
-          
+#          qt6:p
+#          qt6-tools:p
+
     - name: Setup build directories
       shell: msys2 {0}
       run: |
         pwd
         mkdir -p js8libs
         mkdir -p build
-
+        
+# https://github.com/wmiler/js8call/actions/runs/17137490514/artifacts/3823059396
+# NOTE: So long as these are coming from a branch, the run-id and artifact-ids have to be kept updated.
 # Once these are active, need to remove qt and qt-tools from pacboy install above
-#    - name: Download qt663-windows-msys2-binaries
-#      uses: actions/download-artifact@v5
-#      with:
-#        repository: wmiler/js8call
-#        run-id: replace-me
-#        artifact-ids: replace-me
-#        github-token: ${{ secrets.GITHUB_TOKEN }}
-#        path: "C:/actions-runner/_work/_temp/msys64/mingw64/"
+    - name: Download qt663-windows-msys2-binaries
+      uses: actions/download-artifact@v5
+      with:
+        repository: wmiler/js8call
+        run-id: 17137490514
+        artifact-ids: 3823059396
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path: "C:/actions-runner/_work/_temp/msys64/mingw64/"
 
     - name: Download hamlib-windows-msys2-binaries
       uses: actions/download-artifact@v5
       with:
         repository: wmiler/js8call
-        run-id: 17105686888
-        artifact-ids: 3811637899
+        run-id: 17136037916
+        artifact-ids: 3822186802
         github-token: ${{ secrets.GITHUB_TOKEN }}
         path: "C:/actions-runner/_work/_temp/msys64/mingw64/"
 
@@ -67,13 +69,13 @@ jobs:
         winget install --id=AfreetSoftware.OmniRig -e --accept-source-agreements
         
 # Hackish to be removed once we have a good QT 6.6.3 working
-    - name: Patch CMakeLists.txt (remove dumpcpp requirements)
-      shell: msys2 {0}
-      run: |
-        pwd
-        cd build
-        sed -i '353,368d' ../CMakeLists.txt
-        sed -i '3i\set\(AXSERVERSRCS "C:/Program Files (x86)/Afreet/OmniRig/OmniRig.exe")' ../CMakeLists.txt
+#    - name: Patch CMakeLists.txt (remove dumpcpp requirements)
+#      shell: msys2 {0}
+#      run: |
+#        pwd
+#        cd build
+#        sed -i '353,368d' ../CMakeLists.txt
+#        sed -i '3i\set\(AXSERVERSRCS "C:/Program Files (x86)/Afreet/OmniRig/OmniRig.exe")' ../CMakeLists.txt
         
     - name: Configure JS8Call
       shell: msys2 {0}
@@ -85,15 +87,12 @@ jobs:
 # Hackish to be removed once we have a good QT 6.6.3 working
 # One of these spots has to be the right place ::rolls eyes::
 #        mv OmniRig.cpp OmniRig.h build/
-    - name: Patch wsjt_qt_autogen_timestamp_deps/build.make (remove dumpcpp requirements)
-      shell: msys2 {0}
-      run: |
-        pwd
-        cp OmniRig.cpp OmniRig.h build/
-        cp OmniRig.cpp OmniRig.h build/CMakeFiles/
-        cp OmniRig.cpp OmniRig.h build/CMakeFiles/wsjt_qt_autogen_timestamp_deps.dir
-        cd build/CMakeFiles/wsjt_qt_autogen_timestamp_deps.dir
-        sed -i '71, 74d' ./build.make
+#    - name: Patch wsjt_qt_autogen_timestamp_deps/build.make (remove dumpcpp requirements)
+#      shell: msys2 {0}
+#      run: |
+#        pwd
+#        cd build/CMakeFiles/wsjt_qt_autogen_timestamp_deps.dir
+#        sed -i '71, 74d' ./build.make
 
     - name: Build JS8Call
       shell: msys2 {0}
@@ -102,7 +101,7 @@ jobs:
         cd ./build
         cmake --build . --config Release --target package --verbose
         ls -l
-        tar cf /home/runneradmin/build.tar ../js8call
+        tar cf /c/actions-runner/_work/js8call/js8call.tar ../js8call
 
 #    - name: What directory are we in?
 #      run: |
@@ -113,11 +112,11 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build.tar
-        path: "C:/actions-runner/_work/_temp/msys64/home/runneradmin/build.tar"
+        path: "C:/actions-runner/_work/_work/js8call/js8call.tar"
 
     - name: Upload Artifact (from Github runner)
       if: ${{ !contains(runner.labels, 'self-hosted') }}
       uses: actions/upload-artifact@v4
       with:
-        name: build.tar
-        path: "C:/a/_temp/msys64/home/runneradmin/build.tar"
+        name: js8call.tar
+        path: /d/a/js8call/js8call.tar"
