@@ -43,7 +43,6 @@ jobs:
         mkdir -p js8libs
         mkdir -p build
         
-# https://github.com/wmiler/js8call/actions/runs/17137490514/artifacts/3823059396
 # NOTE: So long as these are coming from a branch, the run-id and artifact-ids have to be kept updated.
 # Once these are active, need to remove qt and qt-tools from pacboy install above
     - name: Download qt663-windows-msys2-binaries
@@ -67,32 +66,13 @@ jobs:
     - name: Install OmniRig
       run: |
         winget install --id=AfreetSoftware.OmniRig -e --accept-source-agreements
-        
-# Hackish to be removed once we have a good QT 6.6.3 working
-#    - name: Patch CMakeLists.txt (remove dumpcpp requirements)
-#      shell: msys2 {0}
-#      run: |
-#        pwd
-#        cd build
-#        sed -i '353,368d' ../CMakeLists.txt
-#        sed -i '3i\set\(AXSERVERSRCS "C:/Program Files (x86)/Afreet/OmniRig/OmniRig.exe")' ../CMakeLists.txt
-        
+                
     - name: Configure JS8Call
       shell: msys2 {0}
       run: |
         pwd
         cd ./build
         cmake -G "MinGW Makefiles" ..
-
-# Hackish to be removed once we have a good QT 6.6.3 working
-# One of these spots has to be the right place ::rolls eyes::
-#        mv OmniRig.cpp OmniRig.h build/
-#    - name: Patch wsjt_qt_autogen_timestamp_deps/build.make (remove dumpcpp requirements)
-#      shell: msys2 {0}
-#      run: |
-#        pwd
-#        cd build/CMakeFiles/wsjt_qt_autogen_timestamp_deps.dir
-#        sed -i '71, 74d' ./build.make
 
     - name: Build JS8Call
       shell: msys2 {0}
