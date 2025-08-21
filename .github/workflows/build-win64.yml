@@ -83,11 +83,15 @@ jobs:
         cmake -G "MinGW Makefiles" ..
 
 # Hackish to be removed once we have a good QT 6.6.3 working
+# One of these spots has to be the right place ::rolls eyes::
 #        mv OmniRig.cpp OmniRig.h build/
     - name: Patch wsjt_qt_autogen_timestamp_deps/build.make (remove dumpcpp requirements)
       shell: msys2 {0}
       run: |
         pwd
+        cp OmniRig.cpp OmniRig.h build/
+        cp OmniRig.cpp OmniRig.h build/CMakeFiles/
+        cp OmniRig.cpp OmniRig.h build/CMakeFiles/wsjt_qt_autogen_timestamp_deps.dir
         cd build/CMakeFiles/wsjt_qt_autogen_timestamp_deps.dir
         sed -i '71, 74d' ./build.make
 
