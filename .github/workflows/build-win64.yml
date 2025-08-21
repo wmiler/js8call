@@ -76,18 +76,18 @@ jobs:
       run: |
         pwd
         cd ./build
-        cmake --build . --config Release --target package --verbose
+        cmake --build . --config Release --target package
 
     - name: Upload Artifact (from self-hosted)
-      if: ${{ contains(runner.labels, 'self-hosted') }}
+#      if: ${{ contains(runner.labels, 'self-hosted') }}
       uses: actions/upload-artifact@v4
       with:
-        name: build.tar
+        name: js8call-2.3.2-devel-win64.exe
         path: "C:/actions-runner/_work/js8call/js8call/build/js8call-2.3.2-devel-win64.exe"
 
-    - name: Upload Artifact (from Github runner)
-      if: ${{ !contains(runner.labels, 'self-hosted') }}
-      uses: actions/upload-artifact@v4
-      with:
-        name: js8call.tar
-        path: /d/a/js8call/js8call/build/js8call-2.3.2-devel-win64.exe"
+#    - name: Upload Artifact (from Github runner)
+#      if: ${{ !contains(runner.labels, 'self-hosted') }}
+#      uses: actions/upload-artifact@v4
+#      with:
+#        name: js8call-2.3.2-devel-win64.exe
+#        path: /d/a/js8call/js8call/build/js8call-2.3.2-devel-win64.exe"
