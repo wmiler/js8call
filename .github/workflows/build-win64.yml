@@ -75,12 +75,27 @@ jobs:
         sed -i '353,368d' ../CMakeLists.txt
         sed -i '3i\set\(AXSERVERSRCS "C:/Program Files (x86)/Afreet/OmniRig/OmniRig.exe")' ../CMakeLists.txt
         
-    - name: Build JS8Call 
+    - name: Configure JS8Call
       shell: msys2 {0}
       run: |
         pwd
         cd ./build
         cmake -G "MinGW Makefiles" ..
+
+# Hackish to be removed once we have a good QT 6.6.3 working
+    - name: Patch wsjt_qt_autogen_timestamp_deps/build.make (remove dumpcpp requirements)
+      shell: msys2 {0}
+      run: |
+        pwd
+        mv OmniRig.cpp OmniRig.h build/
+        cd build/CMakeFiles/wsjt_qt_autogen_timestamp_deps.dir
+        sed -i '71, 74d' ./build.make
+
+    - name: Build JS8Call
+      shell: msys2 {0}
+      run: |
+        pwd
+        cd ./build
         cmake --build . --config Release --target package --verbose
         ls -l
         tar cf /home/runneradmin/build.tar ../js8call
