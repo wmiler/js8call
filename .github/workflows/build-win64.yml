@@ -60,7 +60,7 @@ jobs:
         run-id: 17105686888
         artifact-ids: 3811637899
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path: /c/actions-runner/_work/_temp/msys64/mingw64/
+        path: "C:/actions-runner/_work/_temp/msys64/mingw64/"
 
     - name: Install OmniRig
       run: |
