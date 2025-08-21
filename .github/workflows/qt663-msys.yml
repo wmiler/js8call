@@ -51,7 +51,7 @@ jobs:
           cd qt6/build
           cmake --build . --parallel 4
           cmake --install .
-          ls -l /d/a/js8call/qt663-install
+          ls -lR /d/a/js8call/
 
       - name: Upload QT 6.6.3 binaries
         uses: actions/upload-artifact@v4
