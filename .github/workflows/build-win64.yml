@@ -82,14 +82,14 @@ jobs:
         artifact-ids: 3811637899
         github-token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Install hamlib
-      shell: msys2 {0}
-      run: |
-        pwd
-        ls -lR
-        cd js8libs
-        tar xf ../hamlib-windows-msys2-binaries.tar
-        ls -l
+#    - name: Install hamlib
+#      shell: msys2 {0}
+#      run: |
+#        pwd
+#        ls -lR
+#        cd js8libs
+#        tar xf ../hamlib-windows-msys2-binaries.tar
+#        ls -l
 
     - name: Install OmniRig
       run: |
