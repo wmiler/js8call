@@ -31,7 +31,7 @@ jobs:
         git clone https://github.com/qt/qt5.git qt6
         cd qt6
         git switch 6.8.1
-        ./init-repository --module-subset=essential,qtactiveqt,qtmultimedia,qtserialport,qtsvg,qtshadertools,qttools
+        ./init-repository --module-subset=essential,qtmultimedia,qtserialport,qtsvg,qtshadertools,qttools
         mkdir ./build
         
     - name: Configure QT 6.8.1
