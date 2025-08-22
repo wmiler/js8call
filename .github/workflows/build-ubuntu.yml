@@ -198,11 +198,12 @@ jobs:
       id: install-boost
       run: |
         mkdir boost
-        curl --location --output ./boost/boost-1.88.0.tar.gz" https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.gz
+        curl --location --output ./boost/boost-1.88.0.tar.gz https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.gz
         cd boost
         tar zxf boost-1.88.0.tar.gz
         ls -l
-        bootstrap.sh
+        ./bootstrap.sh
+        ./b2 install
 
     - name: Build Hamlib
       run: |
