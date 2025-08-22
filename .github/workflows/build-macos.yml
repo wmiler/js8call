@@ -1,3 +1,6 @@
+permissions:
+  contents: read
+
 name: Build for MacOS 15 Arm64 (M1 and higher)
 
 on:
