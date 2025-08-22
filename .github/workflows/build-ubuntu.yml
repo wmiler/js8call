@@ -182,8 +182,8 @@ jobs:
         name: js8call_2.3.2-devel_aarch64_ubuntu-24.04.AppImage
         path: ~/appimage/js8call-aarch64.AppImage
         
-# ### Beware! Monsters live here!
-  build_amd64_Debian12:
+# ### Beware! Monsters live here! ###
+  build_x86_64_Debian12:
     runs-on: ubuntu-latest
     container:
       image: debian:bookworm
@@ -194,8 +194,10 @@ jobs:
       run: |
         uname -a
         apt-get update
-        apt-get install -y build-essential git cmake libhamlib-dev qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
-          libusb-1.0-0-dev libfftw3-dev curl libudev-dev libxkbcommon-dev libfuse2 imagemagick automake
+        apt-get install -y build-essential git cmake curl automake libtool libfuse2 imagemagick \
+          qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
+          libusb-1.0-0-dev libfftw3-dev libudev-dev libxkbcommon-dev \
+          libhamlib-dev
 
     - name: Install Boost 1.88
       id: install-boost
