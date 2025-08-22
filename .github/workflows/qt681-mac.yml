@@ -1,0 +1,51 @@
+name: Build QT 6.8.1 on MacOS
+
+on:
+  push:
+    branches:
+      - build-artifacts
+    paths:
+      '.github/workflows/qt681-mac.yml'
+
+jobs:
+  build-qt681-mac:
+    runs-on: macos-15
+
+    steps:
+    - name: Install CMake
+      run: |
+        brew update
+        brew install cmake
+        
+    - name: Install Ninja
+      run: brew install ninja
+
+    - name: Install libusb
+      run: brew install libusb
+
+    - name: Checkout QT 6.8.1
+      run: |
+        pwd
+        git clone https://github.com/qt/qt5.git qt6
+        cd qt6
+        git switch 6.8.1
+        ./init-repository --module-subset=essential,qtactiveqt,qtmultimedia,qtserialport,qtsvg,qtshadertools,qttools
+        mkdir ./build
+        
+    - name: Configure QT 6.8.1
+      run: |
+        cd qt6/build
+        ../configure --prefix=/d/a/js8call/qt681-install
+          
+    - name: Build QT 6.6.3
+      run: |
+        pwd
+        cd qt6/build
+        cmake --build . --parallel 4
+        cmake --install .
+
+    - name: Upload QT 6.6.3 binaries
+      uses: actions/upload-artifact@v4
+      with:
+        name: qt681-macos-binaries
+        path: /d/a/js8call/qt681-install/          
