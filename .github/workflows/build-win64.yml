@@ -1,0 +1,85 @@
+name: Build for Windows 10+ amd64
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+  build_windows-2022:
+    runs-on: self-hosted
+
+    steps:
+    - run: git config --global core.autocrlf input
+    - uses: actions/checkout@v4
+    - uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: >-
+          git python base-devel make unzip
+        pacboy: >-
+          toolchain:p
+          autotools:p
+          cmake:p
+          ninja:p
+          libusb:p
+          wget:p
+          boost:p
+          fftw:p
+          sqlite3:p
+          nsis:p
+
+    - name: Setup build directories
+      shell: msys2 {0}
+      run: |
+        pwd
+        mkdir -p js8libs
+        mkdir -p build
+        
+# NOTE: So long as these are coming from a branch, the run-id and artifact-ids have to be kept updated.
+    - name: Download qt663-windows-msys2-binaries
+      uses: actions/download-artifact@v5
+      with:
+        repository: wmiler/js8call
+        run-id: 17137490514
+        artifact-ids: 3823059396
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path: "C:/actions-runner/_work/_temp/msys64/mingw64/"
+
+    - name: Download hamlib-windows-msys2-binaries
+      uses: actions/download-artifact@v5
+      with:
+        repository: wmiler/js8call
+        run-id: 17136037916
+        artifact-ids: 3822186802
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path: "C:/actions-runner/_work/_temp/msys64/mingw64/"
+
+    - name: Install OmniRig
+      run: |
+        winget install --id=AfreetSoftware.OmniRig -e --accept-source-agreements
+                
+    - name: Configure JS8Call
+      shell: msys2 {0}
+      run: |
+        pwd
+        cd ./build
+        cmake -G "MinGW Makefiles" ..
+
+    - name: Build JS8Call
+      shell: msys2 {0}
+      run: |
+        pwd
+        cd ./build
+        cmake --build . --config Release --target package
+
+    - name: Upload Artifact (from self-hosted)
+      uses: actions/upload-artifact@v4
+      with:
+        name: js8call-2.3.2-devel-win64.exe
+        path: "C:/actions-runner/_work/js8call/js8call/build/js8call-2.3.2-devel-win64.exe"
