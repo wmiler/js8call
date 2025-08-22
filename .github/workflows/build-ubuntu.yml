@@ -189,6 +189,7 @@ jobs:
 
     - name: Install dependencies
       run: |
+        uname -a
         apt-get update
         apt-get install -y build-essential git cmake libhamlib-dev qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
           libusb-1.0-0-dev libfftw3-dev libboost-all-dev libudev-dev libxkbcommon-dev libfuse2 imagemagick
@@ -201,15 +202,15 @@ jobs:
         ./bootstrap
         ./configure
         make -j 4
-        sudo make install-strip
-        sudo ldconfig
+        make install-strip
+        ldconfig
 
     - name: Build JS8Call 
       run: |
         git clone https://github.com/js8call/js8call.git ~/js8call
         mkdir -p ~/js8call/build && cd ~/js8call/build
         cmake ..
-        make -j 4
+        cmake -j 4
 
     - name: Package JS8Call (deb)
       run: |
