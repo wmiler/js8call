@@ -12,8 +12,7 @@ env:
 
 jobs:
   build_windows-2022:
-#    runs-on: self-hosted
-    runs-on: windows-2025
+    runs-on: self-hosted
 
     steps:
     - run: git config --global core.autocrlf input
@@ -63,9 +62,7 @@ jobs:
 
     - name: Install OmniRig
       run: |
-        choco install omnirig
-        cat C:\ProgramData\chocolatey\logs\chocolatey.log
-#        winget install --id=AfreetSoftware.OmniRig -e --accept-source-agreements
+        winget install --id=AfreetSoftware.OmniRig -e --accept-source-agreements
                 
     - name: Configure JS8Call
       shell: msys2 {0}
