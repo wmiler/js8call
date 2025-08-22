@@ -10,6 +10,8 @@ on:
 jobs:
   build-hamlib-windows-msys2:
     runs-on: windows-2025
+    permissions:
+      contents: write
 
     defaults:
       run:
@@ -65,3 +67,25 @@ jobs:
         with:
           name: hamlib-windows-msys2-binaries
           path: "D:/a/js8call/hamlib-install/"
+
+  create_and_upload:
+    name: Create GitHub Release
+    needs: build-hamlib-windows-msys2
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: hamlib-windows-msys2-binaries
+          path: my-artifact/ # Path to save the downloaded artifact
+
+      - name: Create Release and Upload Assets
+        uses: softprops/action-gh-release@v1
+        with:
+          prerelease: true
+          files: |
+            my-artifact/**
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
