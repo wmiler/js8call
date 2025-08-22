@@ -41,7 +41,7 @@ jobs:
         git clone https://github.com/js8call/js8call.git ~/js8call
         mkdir -p ~/js8call/build && cd ~/js8call/build
         cmake ..
-        make -j 4
+        cmake -j 4
 
     - name: Package JS8Call (deb)
       run: |
@@ -124,7 +124,7 @@ jobs:
         git clone https://github.com/js8call/js8call.git ~/js8call
         mkdir -p ~/js8call/build && cd ~/js8call/build
         cmake ..
-        make -j 4
+        cmake -j 4
 
     - name: Package JS8Call (deb)
       run: |
@@ -199,10 +199,10 @@ jobs:
       run: |
         mkdir boost
         curl --location --output ./boost/boost-1.88.0.tar.gz" https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.gz
-        cd ./boost
-        tar zxf ./boost-1.88.0.tar.gz
+        cd boost
+        tar zxf boost-1.88.0.tar.gz
         ls -l
-        ./bootstrap.sh
+        bootstrap.sh
 
     - name: Build Hamlib
       run: |
