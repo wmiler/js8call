@@ -85,6 +85,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           prerelease: true
+          target_commitish: ${{ github.ref }}
           files: |
             my-artifact/**
         env:
