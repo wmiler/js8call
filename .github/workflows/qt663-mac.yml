@@ -37,7 +37,7 @@ jobs:
     - name: Configure QT 6.6.3
       run: |
         cd qt6/build
-        ../configure --prefix=/d/a/js8call/qt663-install
+        ../configure --prefix=/Users/runner/work/js8call/qt663-install
         df -h /
           
     - name: Build QT 6.6.3
@@ -51,4 +51,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: qt663-macos-binaries
-        path: /d/a/js8call/qt663-install/          
+        path: /Users/runner/work/js8call/qt663-install/          
