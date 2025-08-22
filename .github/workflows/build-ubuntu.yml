@@ -1,3 +1,6 @@
+permissions:
+  contents: read
+
 name: Build for Debian x86_64 and Arm64
 
 on:
