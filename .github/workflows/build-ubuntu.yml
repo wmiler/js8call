@@ -192,7 +192,17 @@ jobs:
         uname -a
         apt-get update
         apt-get install -y build-essential git cmake libhamlib-dev qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
-          libusb-1.0-0-dev libfftw3-dev libboost-all-dev libudev-dev libxkbcommon-dev libfuse2 imagemagick
+          libusb-1.0-0-dev libfftw3-dev curl libudev-dev libxkbcommon-dev libfuse2 imagemagick
+
+    - name: Install Boost 1.88
+      id: install-boost
+      run: |
+        mkdir -p boost
+        curl --location --output ./boost/boost-1.88.0.tar.gz" https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.gz
+        cd ./boost
+        tar zxf boost-1.88.0.tar.gz
+        ls -l boost/
+        ./bootstrap.sh
 
     - name: Build Hamlib
       run: |
