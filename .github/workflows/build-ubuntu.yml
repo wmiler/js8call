@@ -253,4 +253,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: js8call_2.3.2-devel_x86_64_debian-12.deb
-        path: ~/js8call/build/js8call_2.3.2-devel_x86_64.deb
+        path: ~/js8call/build/js8call_2.3.2-devel_amd64.deb
