@@ -89,7 +89,7 @@ namespace JS8
 
     struct Decoded
     {
-      int         utc;
+      int         utc;  // you can use the output of code_time() from commons.h here.
       int         snr;
       float       xdt;
       float       frequency;
@@ -101,7 +101,7 @@ namespace JS8
 
     struct DecodeFinished
     {
-      int decoded;
+      std::size_t decoded;
     };
 
     using Variant = std::variant<DecodeStarted,
