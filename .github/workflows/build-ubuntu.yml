@@ -41,7 +41,7 @@ jobs:
         git clone https://github.com/js8call/js8call.git ~/js8call
         mkdir -p ~/js8call/build && cd ~/js8call/build
         cmake ..
-        cmake -j 4
+        cmake --parallel 4
 
     - name: Package JS8Call (deb)
       run: |
@@ -124,7 +124,7 @@ jobs:
         git clone https://github.com/js8call/js8call.git ~/js8call
         mkdir -p ~/js8call/build && cd ~/js8call/build
         cmake ..
-        cmake -j 4
+        cmake --parallel 4
 
     - name: Package JS8Call (deb)
       run: |
@@ -197,10 +197,9 @@ jobs:
     - name: Install Boost 1.88
       id: install-boost
       run: |
-        mkdir boost
-        curl --location --output ./boost/boost-1.88.0.tar.gz https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.gz
-        cd boost
+        curl --location --output ./boost-1.88.0.tar.gz https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.gz
         tar zxf boost-1.88.0.tar.gz
+        cd boost_1_88_0
         ls -l
         ./bootstrap.sh
         ./b2 install
@@ -221,7 +220,7 @@ jobs:
         git clone https://github.com/js8call/js8call.git ~/js8call
         mkdir -p ~/js8call/build && cd ~/js8call/build
         cmake ..
-        cmake -j 4
+        cmake --parallel 4
 
     - name: Package JS8Call (deb)
       run: |
