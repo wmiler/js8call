@@ -38,6 +38,7 @@ jobs:
       run: |
         cd qt6/build
         ../configure --prefix=/d/a/js8call/qt681-install
+        df -h /
           
     - name: Build QT 6.6.3
       run: |
