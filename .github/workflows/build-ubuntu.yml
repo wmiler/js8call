@@ -197,11 +197,11 @@ jobs:
     - name: Install Boost 1.88
       id: install-boost
       run: |
-        mkdir -p boost
+        mkdir boost
         curl --location --output ./boost/boost-1.88.0.tar.gz" https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.gz
         cd ./boost
-        tar zxf boost-1.88.0.tar.gz
-        ls -l boost/
+        tar zxf ./boost-1.88.0.tar.gz
+        ls -l
         ./bootstrap.sh
 
     - name: Build Hamlib
