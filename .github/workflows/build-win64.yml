@@ -64,6 +64,7 @@ jobs:
     - name: Install OmniRig
       run: |
         choco install omnirig
+        cat C:\ProgramData\chocolatey\logs\chocolatey.log
 #        winget install --id=AfreetSoftware.OmniRig -e --accept-source-agreements
                 
     - name: Configure JS8Call
