@@ -12,7 +12,8 @@ env:
 
 jobs:
   build_windows-2022:
-    runs-on: self-hosted
+#    runs-on: self-hosted
+    runs-on: windows-2025
 
     steps:
     - run: git config --global core.autocrlf input
