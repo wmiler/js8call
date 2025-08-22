@@ -26,6 +26,7 @@ jobs:
     - name: Checkout QT 6.8.1
       run: |
         pwd
+        df -h /
         git clone https://github.com/qt/qt5.git qt6
         cd qt6
         git switch 6.8.1
@@ -44,7 +45,7 @@ jobs:
         cmake --build . --parallel 4
         cmake --install .
 
-    - name: Upload QT 6.6.3 binaries
+    - name: Upload QT 6.8.1 binaries
       uses: actions/upload-artifact@v4
       with:
         name: qt681-macos-binaries
