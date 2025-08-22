@@ -63,7 +63,8 @@ jobs:
 
     - name: Install OmniRig
       run: |
-        winget install --id=AfreetSoftware.OmniRig -e --accept-source-agreements
+        choco install omnirig
+#        winget install --id=AfreetSoftware.OmniRig -e --accept-source-agreements
                 
     - name: Configure JS8Call
       shell: msys2 {0}
