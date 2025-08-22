@@ -41,7 +41,7 @@ jobs:
         git clone https://github.com/js8call/js8call.git ~/js8call
         mkdir -p ~/js8call/build && cd ~/js8call/build
         cmake ..
-        cmake --parallel 4
+        make -j 4
 
     - name: Package JS8Call (deb)
       run: |
@@ -124,7 +124,7 @@ jobs:
         git clone https://github.com/js8call/js8call.git ~/js8call
         mkdir -p ~/js8call/build && cd ~/js8call/build
         cmake ..
-        cmake --parallel 4
+        make -j 4
 
     - name: Package JS8Call (deb)
       run: |
@@ -192,7 +192,7 @@ jobs:
         uname -a
         apt-get update
         apt-get install -y build-essential git cmake libhamlib-dev qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
-          libusb-1.0-0-dev libfftw3-dev curl libudev-dev libxkbcommon-dev libfuse2 imagemagick
+          libusb-1.0-0-dev libfftw3-dev curl libudev-dev libxkbcommon-dev libfuse2 imagemagick automake
 
     - name: Install Boost 1.88
       id: install-boost
@@ -200,7 +200,6 @@ jobs:
         curl --location --output ./boost-1.88.0.tar.gz https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.gz
         tar zxf boost-1.88.0.tar.gz
         cd boost_1_88_0
-        ls -l
         ./bootstrap.sh
         ./b2 install
 
@@ -215,12 +214,30 @@ jobs:
         make install-strip
         ldconfig
 
+    - name: Checkout QT 6.4.2
+      run: |
+        pwd
+        git clone https://github.com/qt/qt5.git qt6
+        cd qt6
+        git switch 6.4.2
+        ./init-repository --module-subset=essential,qtmultimedia,qtserialport,qtsvg,qtshadertools,qttools
+        mkdir ./build
+        cd build
+        ../configure
+          
+    - name: Build QT 6.4.2
+      run: |
+        pwd
+        cd qt6/build
+        cmake --build . --parallel 4
+        cmake --install .
+
     - name: Build JS8Call 
       run: |
         git clone https://github.com/js8call/js8call.git ~/js8call
         mkdir -p ~/js8call/build && cd ~/js8call/build
         cmake ..
-        cmake --parallel 4
+        make -j 4
 
     - name: Package JS8Call (deb)
       run: |
@@ -230,5 +247,5 @@ jobs:
     - name: Upload Artifact (deb)
       uses: actions/upload-artifact@v4
       with:
-        name: js8call_2.3.2-devel_amd64_debian-12.deb
-        path: ~/js8call/build/js8call_2.3.2-devel_amd64.deb
+        name: js8call_2.3.2-devel_x86_64_debian-12.deb
+        path: ~/js8call/build/js8call_2.3.2-devel_x86_64.deb
