@@ -29,6 +29,24 @@ jobs:
           lfs: true
           clean: true
           
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true 
+          install: > 
+            git 
+            make 
+            base-devel
+            autoconf 
+            libtool 
+            pkg-config
+          pacboy: >-
+            toolchain:p
+            autotools:p
+            cmake:p
+            ninja:p
+            libusb:p
+
       - name: Get short commit SHA
         id: get_sha
         run: |
@@ -51,24 +69,6 @@ jobs:
             console.log(`Tag '${tagName}' created.`);
         env:
           SHORT_SHA: ${{ steps.get_sha.outputs.short_sha }}
-
-      - name: Setup MSYS2
-        uses: msys2/setup-msys2@v2
-        with:
-          update: true 
-          install: > 
-            git 
-            make 
-            base-devel
-            autoconf 
-            libtool 
-            pkg-config
-          pacboy: >-
-            toolchain:p
-            autotools:p
-            cmake:p
-            ninja:p
-            libusb:p
 
       - name: Bootstrap Hamlib build system
         run: ./bootstrap
