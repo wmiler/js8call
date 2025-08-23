@@ -20,22 +20,22 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Install CMake
-      run: |
-        brew update
-        brew install cmake
+#    - name: Install CMake
+#      run: |
+#        brew update
+#        brew install cmake
         
-    - name: Install Ninja
-      run: brew install ninja
+#    - name: Install Ninja
+#      run: brew install ninja
 
-    - name: Install libusb
-      run: brew install libusb
+#    - name: Install libusb
+#      run: brew install libusb
 
-    - name: Install Hamlib
-      run: brew install hamlib
+#    - name: Install Hamlib
+#      run: brew install hamlib
 
-    - name: Install Boost
-      run: brew install boost
+#    - name: Install Boost
+#      run: brew install boost
         
     - name: Download dependencies
       run: |
@@ -43,11 +43,20 @@ jobs:
         cd ~/development
         wget -q https://fftw.org/fftw-3.3.10.tar.gz
         tar zxf fftw-3.3.10.tar.gz
-        git clone https://github.com/qt/qt5.git qt6
-        cd qt6
-        git switch 6.8.1
-        ./init-repository
+        wget -q https://github.com/Chris-AC9KH/js8lib/releases/download/js8lib-2.3/js8lib-2.3_Darwin_arm64.tar.gz
+#        git clone https://github.com/qt/qt5.git qt6
+#        cd qt6
+#        git switch 6.6.3
+#        ./init-repository
 
+    - name: Install AC9KH package
+      run: |
+        tar zxf js8lib-2.3_Darwin_arm64.tar.gz
+        ls
+
+    - name: Likely broken after this
+        echo "The rest of this is likely broken"
+        
     - name: Build and install fftw
       run: |
        cd ~/development/fftw-3.3.10 \
@@ -71,8 +80,9 @@ jobs:
       run: |
         git clone https://github.com/js8call/js8call.git ~/development/js8call
         mkdir -p ~/development/js8call/build && cd ~/development/js8call/build
-        cmake -DCMAKE_PREFIX_PATH="/Users/runner/development/js8libs;/opt/homebrew" ..
-        make -j 4
+        cmake -DCMAKE_PREFIX_PATH="/Users/runner/development/js8libs" ..
+        make
+        make install
 
     - name: Upload Artifact (app)
       uses: actions/upload-artifact@v4
