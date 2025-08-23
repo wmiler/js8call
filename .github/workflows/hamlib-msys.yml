@@ -67,24 +67,12 @@ jobs:
           name: hamlib-windows-msys2-binaries
           path: "D:/a/js8call/hamlib-install/"
 
-  create_and_upload:
-    name: Create GitHub Release
-    needs: build-hamlib-windows-msys2
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: hamlib-windows-msys2-binaries
-#          path: my-artifact/ # Path to save the downloaded artifact
-
+#  create_and_upload:
+      - name: Create GitHub Release
       - name: Get short commit SHA
         id: get_sha
         run: |
           echo "short_sha=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
-#          echo "short_sha=CI-test" >> $GITHUB_OUTPUT
 
       - name: Create Git Tag
         id: create_tag
@@ -104,6 +92,9 @@ jobs:
         env:
           SHORT_SHA: ${{ steps.get_sha.outputs.short_sha }}
 
+      - name: Create zip file to upload to release page
+        run: zip -r hamlib-windows-msys2-binaries-${{ steps.get_sha.outputs.short_sha }}.zip "D:/a/js8call/hamlib-install/"
+
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v1
         with:
@@ -113,8 +104,7 @@ jobs:
           body: |
             Release created automatically from commit ${{ github.sha }}.
             This release is tagged with the short commit SHA.
-          files: |
-            hamlib-windows-msys2-binaries*
- #           my-artifact/**
+          files: "hamlib-windows-msys2-binaries-${{ steps.get_sha.outputs.short_sha }}.zip"
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
