@@ -54,26 +54,26 @@ jobs:
       run: |
         cd ~/development
         tar zxf js8lib-2.3_Darwin_arm64.tar.gz
-        ls
+        ls js8libs
         
-    - name: Build and install fftw
-      run: |
-       cd ~/development/fftw-3.3.10 \
-            && ./configure CFLAGS=-mmacosx-version-min=11.0 \
-                    --prefix=/Users/runner/development/js8libs \
-                    --enable-single \
-                    --enable-threads \
-                    --enable-neon
-        make \
-        && make install \
-        && make clean
+#    - name: Build and install fftw
+#      run: |
+#       cd ~/development/fftw-3.3.10 \
+#            && ./configure CFLAGS=-mmacosx-version-min=11.0 \
+#                    --prefix=/Users/runner/development/js8libs \
+#                    --enable-single \
+#                    --enable-threads \
+#                    --enable-neon
+#        make \
+#        && make install \
+#        && make clean
 
-    - name: Build and install QT6
-      run: |
-       mkdir ~/development/qt6-build && cd ~/development/qt6-build \
-            && ../qt6/configure -prefix ~/development/js8libs \
-            && cmake --build . --parallel \
-            && cmake --install .
+#    - name: Build and install QT6
+#      run: |
+#       mkdir ~/development/qt6-build && cd ~/development/qt6-build \
+#            && ../qt6/configure -prefix ~/development/js8libs \
+#            && cmake --build . --parallel \
+#            && cmake --install .
         
     - name: Build JS8Call 
       run: |
