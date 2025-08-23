@@ -94,7 +94,15 @@ jobs:
           SHORT_SHA: ${{ steps.get_sha.outputs.short_sha }}
 
       - name: Create zip file to upload to release page
-        run: zip -r hamlib-windows-msys2-binaries-${{ steps.get_sha.outputs.short_sha }}.zip "D:/a/js8call/hamlib-install/"
+        run: |
+          cd "D:/a/js8call/"
+          zip -r ~/hamlib-windows-msys2-binaries-${{ steps.get_sha.outputs.short_sha }}.zip ./hamlib-install/
+
+      - name: Create Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v1
@@ -105,7 +113,8 @@ jobs:
           body: |
             Release created automatically from commit ${{ github.sha }}.
             This release is tagged with the short commit SHA.
-          files: "hamlib-windows-msys2-binaries-${{ steps.get_sha.outputs.short_sha }}.zip"
+            ${{steps.github_release.outputs.changelog}}
+          files: "~/hamlib-windows-msys2-binaries-${{ steps.get_sha.outputs.short_sha }}.zip"
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
