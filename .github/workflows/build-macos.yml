@@ -55,7 +55,6 @@ jobs:
         ls
 
     - name: Likely broken after this
-        echo "The rest of this is likely broken"
         
     - name: Build and install fftw
       run: |
