@@ -79,15 +79,15 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: hamlib-windows-msys2-binaries
-          path: my-artifact/ # Path to save the downloaded artifact
+#          path: my-artifact/ # Path to save the downloaded artifact
 
 # This doesn't work from branches
       - name: Get short commit SHA
         id: get_sha
         run: |
-          echo "short_sha=CI-test" >> $GITHUB_OUTPUT
-#          echo "short_sha=$(git rev-parse --short build-artifacts ${{ github.sha }})" >> $GITHUB_OUTPUT
+          echo "short_sha=$(git rev-parse --short build-artifacts ${{ github.sha }})" >> $GITHUB_OUTPUT
 #          echo "short_sha=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
+#          echo "short_sha=CI-test" >> $GITHUB_OUTPUT
 
       - name: Create Git Tag
         id: create_tag
@@ -117,6 +117,7 @@ jobs:
             Release created automatically from commit ${{ github.sha }}.
             This release is tagged with the short commit SHA.
           files: |
-            my-artifact/**
+            hamlib-windows-msys2-binaries*
+ #           my-artifact/**
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
