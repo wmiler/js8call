@@ -81,10 +81,13 @@ jobs:
           name: hamlib-windows-msys2-binaries
           path: my-artifact/ # Path to save the downloaded artifact
 
+# This doesn't work from branches
       - name: Get short commit SHA
         id: get_sha
         run: |
-          echo "short_sha=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
+          echo "short_sha=CI-test" >> $GITHUB_OUTPUT
+#          echo "short_sha=$(git rev-parse --short build-artifacts ${{ github.sha }})" >> $GITHUB_OUTPUT
+#          echo "short_sha=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
 
       - name: Create Git Tag
         id: create_tag
@@ -92,7 +95,7 @@ jobs:
         with:
           script: |
             const shortSha = process.env.SHORT_SHA;
-            const tagName = `v0.1.0-${shortSha}`;
+            const tagName = `v4.6.4-${shortSha}`;
             
             await github.rest.git.createRef({
               owner: context.repo.owner,
@@ -107,10 +110,9 @@ jobs:
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v1.0.0-${{ steps.get_sha.outputs.short_sha }}
+          tag_name: v4.6.4-${{ steps.get_sha.outputs.short_sha }}
           name: "Release from SHA: ${{ steps.get_sha.outputs.short_sha }}"
           prerelease: true
-          target_commitish: ${{ github.ref }}
           body: |
             Release created automatically from commit ${{ github.sha }}.
             This release is tagged with the short commit SHA.
