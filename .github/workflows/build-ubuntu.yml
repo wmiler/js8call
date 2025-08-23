@@ -254,3 +254,45 @@ jobs:
       with:
         name: js8call_2.3.2-devel_x86_64_debian-12.deb
         path: ~/js8call/build/js8call_2.3.2-devel_amd64.deb
+
+    - name: Package JS8Call Debian 12 AppImage (x86_64)
+      run: |
+        mkdir -p ~/appimage/AppDir
+        cd ~/js8call/build
+        wget -q https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage \
+          && wget -q https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage \
+          && chmod +x linuxdeploy*.AppImage \
+          && ./linuxdeploy-x86_64.AppImage --appimage-extract \
+          && mv squashfs-root linuxdeploy \
+          && ./linuxdeploy-plugin-qt-x86_64.AppImage --appimage-extract \
+          && mv squashfs-root linuxdeploy-plugin-qt \
+          && rm *.AppImage
+
+        make DESTDIR=~/appimage/AppDir install
+        
+        test -f ~/appimage/AppDir/usr/share/applications/js8call.desktop || \
+          cp ~/js8call/js8call.desktop ~/appimage/AppDir/usr/share/applications/ && \
+        if [ ! -f ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png ]; then \
+        mkdir -p ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps && \
+        convert ~/js8call/artwork/js8call_icon.png -resize 128x128 \
+            ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png; \
+        fi
+        cd ~/appimage
+
+        echo "~/js8call/build/linuxdeploy/usr/bin:~/js8call/build/linuxdeploy-plugin-qt/usr/bin/" >> "$GITHUB_PATH"
+        ln -s ~/js8call/build/linuxdeploy-plugin-qt/usr/bin/linuxdeploy-plugin-qt ~/js8call/build/linuxdeploy/usr/bin/
+        
+        EXEC_PATH=$(find AppDir -type f -name "js8call" -executable | head -1) && \
+          echo "Found executable at: $EXEC_PATH" && \
+          ~/js8call/build/linuxdeploy/usr/bin/linuxdeploy --appdir AppDir \
+          --executable "$EXEC_PATH" \
+          --plugin qt \
+          --output appimage \
+          --desktop-file AppDir/usr/share/applications/js8call.desktop \
+          --icon-file AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png
+        
+    - name: Upload AppImage Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: js8call_2.3.2-devel_x86_64_debian-12.AppImage
+        path: ~/appimage/js8call-x86_64.AppImage
