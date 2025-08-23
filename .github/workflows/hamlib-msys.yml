@@ -2,8 +2,7 @@ name: Build Hamlib SDK on Windows (MSYS2)
 
 on:
   push:
-    branches:
-      - build-artifacts
+    branches: [ "main" ]
     paths:
       '.github/workflows/hamlib-msys.yml'
 
@@ -81,7 +80,6 @@ jobs:
           name: hamlib-windows-msys2-binaries
 #          path: my-artifact/ # Path to save the downloaded artifact
 
-# This doesn't work from branches
       - name: Get short commit SHA
         id: get_sha
         run: |
