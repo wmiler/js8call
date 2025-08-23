@@ -68,8 +68,8 @@ jobs:
           path: "D:/a/js8call/hamlib-install/"
 
 #  create_and_upload:
-      - name: Create GitHub Release
-      - name: Get short commit SHA
+#      - name: Create GitHub Release
+      - name: Create GitHub Release and get short commit SHA
         id: get_sha
         run: |
           echo "short_sha=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
