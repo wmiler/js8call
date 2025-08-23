@@ -1,0 +1,122 @@
+name: Build Hamlib SDK on Windows (MSYS2)
+
+on:
+  push:
+    branches:
+      - build-artifacts
+    paths:
+      '.github/workflows/hamlib-msys.yml'
+
+jobs:
+  build-hamlib-windows-msys2:
+    runs-on: windows-2025
+    permissions:
+      contents: write
+
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          repository: 'Hamlib/Hamlib.git'
+          ref: '4.6.4' 
+          fetch-depth: 0 
+          persist-credentials: false
+          submodules: recursive
+          lfs: true
+          clean: true
+          
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true 
+          install: > 
+            git 
+            make 
+            base-devel
+            autoconf 
+            libtool 
+            pkg-config
+          pacboy: >-
+            toolchain:p
+            autotools:p
+            cmake:p
+            ninja:p
+            libusb:p
+
+      - name: Bootstrap Hamlib build system
+        run: ./bootstrap
+
+      - name: Configure Hamlib
+        run: |
+          ./configure --prefix=/d/a/js8call/hamlib-install
+
+      - name: Build Hamlib
+        run: |
+          make
+          pwd
+          
+      - name: Install Hamlib
+        run: make install-strip
+
+      - name: Upload Hamlib binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: hamlib-windows-msys2-binaries
+          path: "D:/a/js8call/hamlib-install/"
+
+  create_and_upload:
+    name: Create GitHub Release
+    needs: build-hamlib-windows-msys2
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: hamlib-windows-msys2-binaries
+#          path: my-artifact/ # Path to save the downloaded artifact
+
+# This doesn't work from branches
+      - name: Get short commit SHA
+        id: get_sha
+        run: |
+          echo "short_sha=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
+#          echo "short_sha=CI-test" >> $GITHUB_OUTPUT
+
+      - name: Create Git Tag
+        id: create_tag
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const shortSha = process.env.SHORT_SHA;
+            const tagName = `v4.6.4-${shortSha}`;
+            
+            await github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: `refs/tags/${tagName}`,
+              sha: context.sha,
+            });
+            console.log(`Tag '${tagName}' created.`);
+        env:
+          SHORT_SHA: ${{ steps.get_sha.outputs.short_sha }}
+
+      - name: Create Release and Upload Assets
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v4.6.4-${{ steps.get_sha.outputs.short_sha }}
+          name: "Release from SHA: ${{ steps.get_sha.outputs.short_sha }}"
+          prerelease: true
+          body: |
+            Release created automatically from commit ${{ github.sha }}.
+            This release is tagged with the short commit SHA.
+          files: |
+            hamlib-windows-msys2-binaries*
+ #           my-artifact/**
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
