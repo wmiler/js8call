@@ -194,7 +194,7 @@ jobs:
       run: |
         uname -a
         apt-get update
-        apt-get install -y build-essential git cmake curl automake libtool libfuse2 imagemagick \
+        apt-get install -y build-essential git cmake curl wget automake libtool libfuse2 imagemagick \
           qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
           libusb-1.0-0-dev libfftw3-dev libudev-dev libxkbcommon-dev \
           libhamlib-dev
