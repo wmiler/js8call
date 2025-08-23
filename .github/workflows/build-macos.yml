@@ -44,6 +44,7 @@ jobs:
         wget -q https://fftw.org/fftw-3.3.10.tar.gz
         tar zxf fftw-3.3.10.tar.gz
         wget -q https://github.com/Chris-AC9KH/js8lib/releases/download/js8lib-2.3/js8lib-2.3_Darwin_arm64.tar.gz
+        ls
 #        git clone https://github.com/qt/qt5.git qt6
 #        cd qt6
 #        git switch 6.6.3
@@ -51,6 +52,7 @@ jobs:
 
     - name: Install AC9KH package
       run: |
+        cd ~/development
         tar zxf js8lib-2.3_Darwin_arm64.tar.gz
         ls
         
