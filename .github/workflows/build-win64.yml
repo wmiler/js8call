@@ -6,9 +6,13 @@ name: Build for Windows 10+ amd64
 on:
   push:
     branches: [ "main" ]
+    paths:
+      '.github/workflows/build-win64.yml'
   pull_request:
     branches: [ "main" ]
-
+    paths:
+      '.github/workflows/build-win64.yml'
+      
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
