@@ -47,29 +47,6 @@ jobs:
             ninja:p
             libusb:p
 
-      - name: Get short commit SHA
-        id: get_sha
-        run: |
-          echo "short_sha=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
-
-      - name: Create Git Tag
-        id: create_tag
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const shortSha = process.env.SHORT_SHA;
-            const tagName = `v0.1.0-${shortSha}`;
-            
-            await github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: `refs/tags/${tagName}`,
-              sha: context.sha,
-            });
-            console.log(`Tag '${tagName}' created.`);
-        env:
-          SHORT_SHA: ${{ steps.get_sha.outputs.short_sha }}
-
       - name: Bootstrap Hamlib build system
         run: ./bootstrap
 
@@ -103,6 +80,29 @@ jobs:
         with:
           name: hamlib-windows-msys2-binaries
           path: my-artifact/ # Path to save the downloaded artifact
+
+      - name: Get short commit SHA
+        id: get_sha
+        run: |
+          echo "short_sha=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
+
+      - name: Create Git Tag
+        id: create_tag
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const shortSha = process.env.SHORT_SHA;
+            const tagName = `v0.1.0-${shortSha}`;
+            
+            await github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: `refs/tags/${tagName}`,
+              sha: context.sha,
+            });
+            console.log(`Tag '${tagName}' created.`);
+        env:
+          SHORT_SHA: ${{ steps.get_sha.outputs.short_sha }}
 
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v1
