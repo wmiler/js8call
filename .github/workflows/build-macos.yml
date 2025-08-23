@@ -41,10 +41,10 @@ jobs:
       run: |
         mkdir ~/development && mkdir ~/development/js8libs
         cd ~/development
-        wget -q https://fftw.org/fftw-3.3.10.tar.gz
-        tar zxf fftw-3.3.10.tar.gz
         wget -q https://github.com/Chris-AC9KH/js8lib/releases/download/js8lib-2.3/js8lib-2.3_Darwin_arm64.tar.gz
         ls
+#        wget -q https://fftw.org/fftw-3.3.10.tar.gz
+#        tar zxf fftw-3.3.10.tar.gz
 #        git clone https://github.com/qt/qt5.git qt6
 #        cd qt6
 #        git switch 6.6.3
@@ -53,8 +53,9 @@ jobs:
     - name: Install AC9KH package
       run: |
         cd ~/development
+        pwd
         tar zxf js8lib-2.3_Darwin_arm64.tar.gz
-        ls js8libs
+        ls js8lib
         
 #    - name: Build and install fftw
 #      run: |
@@ -79,7 +80,7 @@ jobs:
       run: |
         git clone https://github.com/js8call/js8call.git ~/development/js8call
         mkdir -p ~/development/js8call/build && cd ~/development/js8call/build
-        cmake -DCMAKE_PREFIX_PATH="/Users/runner/development/js8libs" ..
+        cmake -DCMAKE_PREFIX_PATH="/Users/runner/development/js8lib" ..
         make
         make install
 
