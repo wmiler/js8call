@@ -6,6 +6,7 @@ name: Build for MacOS 15 Arm64 (M1 and higher)
 on:
   push:
     branches: [ "main" ]
+    paths: '.github/workflows/build-macos.yml'
   pull_request:
     branches: [ "main" ]
 
