@@ -52,7 +52,7 @@ jobs:
     - name: Install AC9KH package
       run: |
         tar zxf js8lib-2.3_Darwin_arm64.tar.gz
-        ls
+        ls 
 
     - name: Likely broken after this
         echo "The rest of this is likely broken"
