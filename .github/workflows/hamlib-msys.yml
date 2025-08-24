@@ -10,9 +10,6 @@ jobs:
   build-hamlib-windows-msys2:
     runs-on: windows-2025
     permissions: write-all
-#      contents: write
-#      actions: write
-#      checks: write
   
     defaults:
       run:
