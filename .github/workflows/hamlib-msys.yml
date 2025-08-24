@@ -97,7 +97,7 @@ jobs:
         run: |
           pwd
           zip -r /d/a/js8call/js8call/hamlib-windows-msys2-binaries-${{ steps.get_sha.outputs.short_sha }}.zip ../hamlib-install/
-          ls -lh /d/a/js8call/hamlib-windows-msys2-binaries*
+          ls -lh /d/a/js8call/js8call/hamlib-windows-msys2-binaries*
  #         cd "D:/a/js8call/"
                   
       - name: Create Changelog
