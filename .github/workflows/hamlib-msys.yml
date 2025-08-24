@@ -97,6 +97,7 @@ jobs:
         run: |
           cd "D:/a/js8call/"
           zip -r /d/a/js8call/hamlib-windows-msys2-binaries-${{ steps.get_sha.outputs.short_sha }}.zip ./hamlib-install/
+          ls -lh /d/a/js8call/hamlib-windows-msys2-binaries*
 
       - name: Create Changelog
         id: github_release
@@ -141,7 +142,8 @@ jobs:
             Release created automatically from commit ${{ github.sha }}.
             This release is for use in the Windows MSYS2 CI builds for JS8Call. Use at your own risk!
             ${{steps.github_release.outputs.changelog}}
-          files: /d/a/js8call/hamlib-windows-msys2-binaries-${{ steps.get_sha.outputs.short_sha }}.zip
-          
+          files: /d/a/js8call/hamlib-windows-msys2*.zip
+#          files: /d/a/js8call/hamlib-windows-msys2-binaries-${{ steps.get_sha.outputs.short_sha }}.zip
+       
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
