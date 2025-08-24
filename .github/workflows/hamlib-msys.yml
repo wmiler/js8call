@@ -97,8 +97,6 @@ jobs:
         run: |
           pwd
           zip -r /d/a/js8call/js8call/hamlib-windows-msys2-binaries-${{ steps.get_sha.outputs.short_sha }}.zip ../hamlib-install/
-          ls -lh /d/a/js8call/js8call/hamlib-windows-msys2-binaries*
- #         cd "D:/a/js8call/"
                   
       - name: Create Changelog
         id: github_release
@@ -137,7 +135,7 @@ jobs:
         uses: softprops/action-gh-release@v2.3.2
         with:
           tag_name: v4.6.4-${{ steps.get_sha.outputs.short_sha }}
-          name: "Hamlib v4.6.4 compiled for Windows MSYS2 CI build ${{ steps.get_sha.outputs.short_sha }}"
+          name: "Hamlib v4.6.4 for Windows MSYS2 CI build ${{ steps.get_sha.outputs.short_sha }}"
           prerelease: true
           body: |
             Release created automatically from commit ${{ github.sha }}.
