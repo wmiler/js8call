@@ -21,7 +21,7 @@ jobs:
          - { name: "Windows-x64", WIN_ARCH: "x64", os: windows-2025, QT_INST_DIR: "C:/", QTDIR: "C:/Qt/6.6.3/msvc2019_64", QT_ARCH: win64_msvc2019_64, lib_dir: "C:/Libraries", generators: Ninja }
             
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: true
           fetch-depth: 0
