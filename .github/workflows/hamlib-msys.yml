@@ -93,8 +93,8 @@ jobs:
       - name: Create zip file to upload to release page
         run: |
           pwd
-          cd ..
-          zip -r /d/a/js8call/js8call/hamlib-windows-msys2-binaries-${{ steps.get_sha.outputs.short_sha }}.zip hamlib-install/
+          cd ../hamlib-install/
+          zip -r /d/a/js8call/js8call/hamlib-windows-msys2-binaries-${{ steps.get_sha.outputs.short_sha }}.zip .
                   
       - name: Create Changelog
         id: github_release
