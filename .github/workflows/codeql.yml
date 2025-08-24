@@ -27,7 +27,7 @@ jobs:
     #   - https://gh.io/supported-runners-and-hardware-resources
     #   - https://gh.io/using-larger-runners (GitHub.com only)
     # Consider using larger runners or machines with greater resources for possible analysis time improvements.
-    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    runs-on: ubuntu-24.04
     permissions:
       # required for all workflows
       security-events: write
@@ -66,6 +66,22 @@ jobs:
     # or others). This is typically only required for manual builds.
     # - name: Setup runtime (example)
     #   uses: actions/setup-example@v1
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential git cmake libhamlib-dev qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
+          libusb-1.0-0-dev libfftw3-dev libboost-all-dev libudev-dev libxkbcommon-dev libfuse2 imagemagick
+
+    - name: Build Hamlib
+      run: |
+        git clone https://github.com/Hamlib/Hamlib.git ~/hamlib
+        cd ~/hamlib
+        git checkout 4.6.4
+        ./bootstrap
+        ./configure
+        make -j 4
+        sudo make install-strip
+        sudo ldconfig
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
