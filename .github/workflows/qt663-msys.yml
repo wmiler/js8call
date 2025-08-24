@@ -84,7 +84,7 @@ jobs:
       - name: Create zip file to upload to release page
         run: |
           pwd
-          cd ../qt663-install/
+          cd /d/a/js8call/qt663-install
           zip -r /d/a/js8call/js8call/qt663-windows-msys2-binaries-${{ steps.get_sha.outputs.short_sha }}.zip .
                   
       - name: Create Changelog
