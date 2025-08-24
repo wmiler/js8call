@@ -9,7 +9,8 @@ on:
 jobs:
   build-qt663-windows-msys2:
     runs-on: windows-2025
-
+    permissions: write-all
+    
     defaults:
       run:
         shell: msys2 {0}
