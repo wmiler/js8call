@@ -26,7 +26,7 @@ jobs:
       with:
         update: true
         install: >-
-          git python base-devel make unzip
+          git python base-devel make unzip zip tar
         pacboy: >-
           toolchain:p
           autotools:p
@@ -118,7 +118,7 @@ jobs:
       with:
         script: |
           const shortSha = process.env.SHORT_SHA;
-          const tagName = `v2.3.2-devel-ci`;
+          const tagName = `js8call-v2.3.2-devel-ci`;
             
           await github.rest.git.createRef({
             owner: context.repo.owner,
@@ -171,7 +171,7 @@ jobs:
     - name: Create Release and Upload Assets
       uses: softprops/action-gh-release@v2.3.2
       with:
-        tag_name: v2.3.2-devel-ci
+        tag_name: js8call-v2.3.2-devel-ci
         name: "JS8Call v2.3.2-devel Windows MSYS2 CI build ${{ steps.get_sha.outputs.short_sha }}"
         prerelease: true
         make-latest: true
