@@ -60,12 +60,7 @@ jobs:
 #        && make clean
     - name: CMakeLists patch
       run: |
-        sed -i '' '/fixup_bundle/i \
-          add_custom_command( \
-          TARGET js8call POST_BUILD \
-          COMMAND find "${CMAKE_INSTALL_PREFIX}/js8call.app/Contents/PlugIns" -name '._*' -delete \
-          COMMAND find "${CMAKE_INSTALL_PREFIX}/js8call.app/Contents/PlugIns" -name '.DS_Store' -delete \
-          VERBATIM)' CMakeLists.txt
+        sed -i '' '/fixup_bundle/i add_custom_command(TARGET js8call POST_BUILD COMMAND find "${CMAKE_INSTALL_PREFIX}/js8call.app/Contents/PlugIns" -name '._*' -delete COMMAND find "${CMAKE_INSTALL_PREFIX}/js8call.app/Contents/PlugIns" -name '.DS_Store' -delete VERBATIM)' CMakeLists.txt
 
     - name: Build JS8Call 
       run: |
