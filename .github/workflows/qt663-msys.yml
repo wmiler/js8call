@@ -51,19 +51,20 @@ jobs:
           cd qt6/build
           cmake --build . --parallel 4
           cmake --install .
+          ls -lh .
+
+      - name: Create zip file to upload to release page
+        run: |
+          pwd
+          cd qt6/build
+          zip -r /d/a/js8call/js8call/qt663-windows-msys2-binaries.zip .
+          ls -lh .
 
       - name: Upload QT 6.6.3 binaries
         uses: actions/upload-artifact@v4
         with:
           name: qt663-windows-msys2-binaries
           path: /d/a/js8call/qt663-install/
-
-      - name: Create zip file to upload to release page
-        run: |
-          pwd
-          cd /d/a/js8call/qt663-install
-          zip -r /d/a/js8call/js8call/qt663-windows-msys2-binaries.zip .
-          ls -lh .
 
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v2.3.2
