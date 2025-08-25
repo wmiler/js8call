@@ -58,80 +58,23 @@ jobs:
           name: qt663-windows-msys2-binaries
           path: /d/a/js8call/qt663-install/
 
-      - name: Create GitHub Release and get short commit SHA
-        id: get_sha
-        run: |
-          echo "short_sha=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
-
-      - name: Create Git Tag
-        id: create_tag
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const shortSha = process.env.SHORT_SHA;
-            const tagName = `v6.6.3-${shortSha}`;
-            
-            await github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: `refs/tags/${tagName}`,
-              sha: context.sha,
-            });
-            console.log(`Tag '${tagName}' created.`);
-        env:
-          SHORT_SHA: ${{ steps.get_sha.outputs.short_sha }}
-
       - name: Create zip file to upload to release page
         run: |
           pwd
           cd /d/a/js8call/qt663-install
-          zip -r /d/a/js8call/js8call/qt663-windows-msys2-binaries-${{ steps.get_sha.outputs.short_sha }}.zip .
-                  
-      - name: Create Changelog
-        id: github_release
-        uses: mikepenz/release-changelog-builder-action@v5
-        with:
-          mode: "COMMIT"
-          configurationJson: |
-            {
-              "template": "#{{CHANGELOG}}",
-              "categories": [
-                {
-                    "title": "## Feature",
-                    "labels": ["feat", "feature"]
-                },
-                {
-                    "title": "## Fix",
-                    "labels": ["fix", "bug"]
-                },
-                {
-                    "title": "## Other",
-                    "labels": []
-                }
-              ],
-              "label_extractor": [
-                {
-                  "pattern": "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\\([\\w\\-\\.]+\\))?(!)?: ([\\w ])+([\\s\\S]*)",
-                  "on_property": "title",
-                  "target": "$1"
-                }
-              ]
-            }
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          zip -r /d/a/js8call/js8call/qt663-windows-msys2-binaries.zip .
 
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v2.3.2
         with:
-          tag_name: v6.6.3-${{ steps.get_sha.outputs.short_sha }}
-          name: "QT6 v6.6.3 for Windows MSYS2 CI build ${{ steps.get_sha.outputs.short_sha }}"
+          tag_name: v6.6.3
+          name: "QT6 v6.6.3 for Windows MSYS2 CI build"
           prerelease: false
           make-latest: true
           body: |
-            Release created automatically from commit ${{ github.sha }}.
+            Release created automatically from commit.
             This release is for use in the Windows MSYS2 CI builds for JS8Call. Use at your own risk!
-            ${{steps.github_release.outputs.changelog}}
-          files: hamlib-windows-msys2-binaries-${{ steps.get_sha.outputs.short_sha }}.zip
+          files: qt663-windows-msys2-binaries.zip
        
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
