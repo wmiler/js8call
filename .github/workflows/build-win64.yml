@@ -123,6 +123,7 @@ jobs:
       continue-on-error: true
 
     - name: Create zip file to upload to release page
+      shell: msys2 {0}
       run: |
         pwd
         zip -r "C:/actions-runner/_work/js8call/js8call/js8call-2.3.2-devel-win64.exe-ci.zip" "C:/actions-runner/_work/js8call/js8call/build/js8call-2.3.2-devel-win64.exe"
