@@ -59,7 +59,7 @@ jobs:
         fileName: 'js8lib-2.3_Darwin_arm64.tar.gz'
         latest: true
         extract: true
-        out-file-path: '/usr/local/'
+        out-file-path: '~/development/js8call/'
 
 #    - name: Install AC9KH package
 #      run: |
@@ -91,7 +91,7 @@ jobs:
       run: |
         git clone https://github.com/js8call/js8call.git ~/development/js8call
         mkdir -p ~/development/js8call/build && cd ~/development/js8call/build
-        cmake -DCMAKE_PREFIX_PATH="/usr/local/js8lib" ..
+        cmake -DCMAKE_PREFIX_PATH="~/development/js8call/js8lib" ..
         make
         make install
 
