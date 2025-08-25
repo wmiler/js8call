@@ -38,12 +38,12 @@ jobs:
 #    - name: Install Boost
 #      run: brew install boost
         
-    - name: Download dependencies
-      run: |
-        mkdir ~/development && mkdir ~/development/js8libs
-        cd ~/development
-        wget -q https://github.com/Chris-AC9KH/js8lib/releases/download/js8lib-2.3/js8lib-2.3_Darwin_arm64.tar.gz
-        ls
+#    - name: Setup directories
+#      run: |
+#        mkdir ~/development && mkdir ~/development/js8libs
+#        cd ~/development
+#        wget -q https://github.com/Chris-AC9KH/js8lib/releases/download/js8lib-2.3/js8lib-2.3_Darwin_arm64.tar.gz
+#        ls
 #        wget -q https://fftw.org/fftw-3.3.10.tar.gz
 #        tar zxf fftw-3.3.10.tar.gz
 #        git clone https://github.com/qt/qt5.git qt6
@@ -51,12 +51,21 @@ jobs:
 #        git switch 6.6.3
 #        ./init-repository
 
-    - name: Install AC9KH package
-      run: |
-        cd ~/development
-        pwd
-        tar zxf js8lib-2.3_Darwin_arm64.tar.gz
-        ls js8lib
+    - name: Release AC9KH package
+      uses: robinraju/release-downloader@v1.12
+      with:
+        repository: 'Chris-AC9KH/js8lib'
+        fileName: 'js8lib-2.3_Darwin_arm64.tar.gz'
+        latest: true
+        extract: true
+        out-file-path: '/usr/local/'
+
+#    - name: Install AC9KH package
+#      run: |
+#        cd ~/development
+#        pwd
+#        tar zxf js8lib-2.3_Darwin_arm64.tar.gz
+#        ls js8lib
         
 #    - name: Build and install fftw
 #      run: |
@@ -81,7 +90,7 @@ jobs:
       run: |
         git clone https://github.com/js8call/js8call.git ~/development/js8call
         mkdir -p ~/development/js8call/build && cd ~/development/js8call/build
-        cmake -DCMAKE_PREFIX_PATH="/Users/runner/development/js8lib" ..
+        cmake -DCMAKE_PREFIX_PATH="/usr/local/js8lib" ..
         make
         make install
 
