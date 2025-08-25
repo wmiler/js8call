@@ -17,8 +17,7 @@ env:
 jobs:
   build_windows-2022:
     runs-on: self-hosted
-    permissions:
-      contents: write-all
+    permissions: write-all
 
     steps:
     - run: git config --global core.autocrlf input
