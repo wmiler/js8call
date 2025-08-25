@@ -59,7 +59,7 @@ jobs:
         fileName: 'js8lib-2.3_Darwin_arm64.tar.gz'
         latest: true
         extract: true
-        out-file-path: '~/development/js8call/'
+        out-file-path: '/Users/runner/work/js8call/js8call/'
 
 #    - name: Install AC9KH package
 #      run: |
@@ -87,11 +87,11 @@ jobs:
 #            && cmake --build . --parallel \
 #            && cmake --install .
         
+#        git clone https://github.com/js8call/js8call.git ~/development/js8call
     - name: Build JS8Call 
       run: |
-        git clone https://github.com/js8call/js8call.git ~/development/js8call
-        mkdir -p ~/development/js8call/build && cd ~/development/js8call/build
-        cmake -DCMAKE_PREFIX_PATH="~/development/js8call/js8lib" ..
+        mkdir -p ./build && cd ./build
+        cmake -DCMAKE_PREFIX_PATH="/Users/runner/work/js8call/js8call/js8lib" ..
         make
         make install
 
@@ -99,4 +99,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: js8call_2.3.2-devel_arm64_macos15.app
-        path: ~/development/js8call/build/js8call.app
+        path: /Users/runner/work/js8call/js8call/build/js8call.app
