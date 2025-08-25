@@ -1,6 +1,3 @@
-permissions:
-  contents: read
-
 name: Build for MacOS 15 Arm64 (M1 and higher)
 
 on:
@@ -21,23 +18,6 @@ jobs:
     
     steps:
     - uses: actions/checkout@v4
-    
-#    - name: Install CMake
-#      run: |
-#        brew update
-#        brew install cmake
-        
-#    - name: Install Ninja
-#      run: brew install ninja
-
-#    - name: Install libusb
-#      run: brew install libusb
-
-#    - name: Install Hamlib
-#      run: brew install hamlib
-
-#    - name: Install Boost
-#      run: brew install boost
         
 #    - name: Setup directories
 #      run: |
@@ -52,8 +32,11 @@ jobs:
 #        git switch 6.6.3
 #        ./init-repository
 
-    - name: Work around for /usr/local perms
-      run: sudo chown runner:admin /usr/local
+    - name: Work around for /usr/local perms and grab arch/os info
+      run: |
+        sudo chown runner:admin /usr/local
+        arch
+        sw_vers
       
     - name: Release AC9KH package
       uses: robinraju/release-downloader@v1.12
@@ -64,13 +47,6 @@ jobs:
         extract: true
         out-file-path: '/usr/local/'
 
-#    - name: Install AC9KH package
-#      run: |
-#        cd ~/development
-#        pwd
-#        tar zxf js8lib-2.3_Darwin_arm64.tar.gz
-#        ls js8lib
-        
 #    - name: Build and install fftw
 #      run: |
 #       cd ~/development/fftw-3.3.10 \
@@ -83,14 +59,6 @@ jobs:
 #        && make install \
 #        && make clean
 
-#    - name: Build and install QT6
-#      run: |
-#       mkdir ~/development/qt6-build && cd ~/development/qt6-build \
-#            && ../qt6/configure -prefix ~/development/js8libs \
-#            && cmake --build . --parallel \
-#            && cmake --install .
-        
-#        git clone https://github.com/js8call/js8call.git ~/development/js8call
     - name: Build JS8Call 
       run: |
         mkdir -p ./build && cd ./build
