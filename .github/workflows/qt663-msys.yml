@@ -27,6 +27,7 @@ jobs:
             autoconf 
             libtool 
             pkg-config
+            zip
           pacboy: >-
             toolchain:p
             autotools:p
