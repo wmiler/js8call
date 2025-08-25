@@ -65,15 +65,6 @@ jobs:
 #        extract: true
 #        out-file-path: 'C:/actions-runner/_work/_temp/msys64/mingw64/'
 
-#    - name: Download hamlib-windows-msys2-binaries
-#      uses: actions/download-artifact@v5
-#      with:
-#        repository: wmiler/js8call
-#        run-id: 17136037916
-#        artifact-ids: 3822186802
-#        github-token: ${{ secrets.GITHUB_TOKEN }}
-#        path: "C:/actions-runner/_work/_temp/msys64/mingw64/"
-
     - name: Release download for hamlib
       uses: robinraju/release-downloader@v1.12
       with:
@@ -129,6 +120,7 @@ jobs:
           console.log(`Tag '${tagName}' created.`);
       env:
         SHORT_SHA: ${{ steps.get_sha.outputs.short_sha }}
+      continue-on-error: true
 
     - name: Create zip file to upload to release page
       run: |
