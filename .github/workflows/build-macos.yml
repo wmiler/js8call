@@ -17,7 +17,8 @@ env:
 jobs:
   build_macos-latest:
     runs-on: macos-15
-
+    permissions: write-all
+    
     steps:
     - uses: actions/checkout@v4
     
