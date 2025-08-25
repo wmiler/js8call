@@ -6,6 +6,10 @@ on:
     paths:
       '.github/workflows/qt663-msys.yml'
 
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
 jobs:
   build-qt663-windows-msys2:
     runs-on: windows-2025
@@ -27,6 +31,7 @@ jobs:
             autoconf 
             libtool 
             pkg-config
+            tar
             zip
           pacboy: >-
             toolchain:p
@@ -35,10 +40,11 @@ jobs:
             ninja:p
             libusb:p
 
-      - name: Create zip file to upload to release page
+      - name: Check for directories here, so we fail fast
         run: |
           pwd
           ls -l "D:/a/js8call/"
+          ls -l "D:/a/js8call/js8call"
 
       - name: Checkout QT 6.6.3
         run: |
@@ -63,10 +69,11 @@ jobs:
         run: |
           pwd
           ls -l "D:/a/js8call/"
-          ls -l "D:/a/js8call/qt663-install"
+          ls -l "D:/a/js8call/qt663-install/"
           cd qt6/build
-          zip -r "D:/a/js8call/js8call/qt663-windows-msys2-binaries.zip .
+          zip -r "D:/a/js8call/js8call/qt663-windows-msys2-binaries.zip" "D:/a/js8call/qt663-install/"
           ls -l "D:/a/js8call/js8call/"
+          ls -l "D:/a/js8call/"
 
       - name: Upload QT 6.6.3 binaries
         uses: actions/upload-artifact@v4
@@ -77,7 +84,7 @@ jobs:
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v2.3.2
         with:
-          tag_name: v6.6.3
+          tag_name: qt6-v6.6.3
           name: "QT6 v6.6.3 for Windows MSYS2 CI build"
           prerelease: false
           make-latest: true
