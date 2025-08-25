@@ -56,7 +56,12 @@ jobs:
           submodules: recursive
           lfs: true
           clean: true
-
+          
+      - name: Check for directories here, post QT checkout
+        run: |
+          pwd
+          ls -lR "D:/a/js8call/"
+          
 #      - name: Checkout QT 6.6.3
 #        run: |
 #          git clone https://github.com/qt/qt5.git qt6
