@@ -61,9 +61,9 @@ jobs:
       - name: Create zip file to upload to release page
         run: |
           pwd
-          ls -lR /d/a/js8call/
           cd /d/a/js8call/qt663-install
           zip -r /d/a/js8call/js8call/qt663-windows-msys2-binaries.zip .
+          ls -lh .
 
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v2.3.2
@@ -75,7 +75,7 @@ jobs:
           body: |
             Release created automatically from commit.
             This release is for use in the Windows MSYS2 CI builds for JS8Call. Use at your own risk!
-          files: qt663-windows-msys2-binaries.zip
+          files: /d/a/js8call/js8call/qt663-windows-msys2-binaries.zip
        
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
