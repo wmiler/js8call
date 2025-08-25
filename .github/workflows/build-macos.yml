@@ -60,8 +60,7 @@ jobs:
 #        && make clean
     - name: Look for files that break app building
       run: |
-        find /usr/local/ -name ._* -print
-        find ./ -name ._* -print
+        find /usr/local/js8lib -type f -name ._* -delete
       continue-on-error: true
 
     - name: Build JS8Call 
