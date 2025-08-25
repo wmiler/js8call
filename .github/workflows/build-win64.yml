@@ -70,7 +70,6 @@ jobs:
       with:
         repository: 'wmiler/js8call'
         fileName: 'hamlib-windows-msys2-binaries*.zip'
-        latest: true
         extract: true
         out-file-path: 'C:/actions-runner/_work/_temp/msys64/mingw64/'
        
