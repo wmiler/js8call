@@ -46,12 +46,24 @@ jobs:
           ls -l "D:/a/js8call/"
           ls -l "D:/a/js8call/js8call"
 
-      - name: Checkout QT 6.6.3
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          repository: 'qt/qt5.git'
+          ref: '6.6.3'
+          fetch-depth: 0 
+          persist-credentials: false
+          submodules: recursive
+          lfs: true
+          clean: true
+
+#      - name: Checkout QT 6.6.3
+#        run: |
+#          git clone https://github.com/qt/qt5.git qt6
+#          cd qt6
+#          git switch 6.6.3
+      - name: Configure QT
         run: |
-          pwd
-          git clone https://github.com/qt/qt5.git qt6
-          cd qt6
-          git switch 6.6.3
           ./init-repository --module-subset=essential,qtactiveqt,qtmultimedia,qtserialport,qtsvg,qtshadertools,qttools
           mkdir ./build
           cd build
@@ -59,22 +71,17 @@ jobs:
           
       - name: Build QT 6.6.3
         run: |
-          pwd
           cd qt6/build
           cmake --build . --parallel 4
           cmake --install .
-          ls -lh .
 
       - name: Create zip file to upload to release page
         run: |
           pwd
-          ls -l "D:/a/js8call/"
           ls -l "D:/a/js8call/qt663-install/"
-          cd qt6/build
-          pwd
           zip -r "D:/a/js8call/js8call/qt663-windows-msys2-binaries.zip" "D:/a/js8call/qt663-install/"
           ls -l "D:/a/js8call/js8call/"
-          ls -l "D:/a/js8call/"
+          ls -l /d/a/js8call/
         continue-on-error: true
 
       - name: Upload QT 6.6.3 binaries
@@ -89,7 +96,7 @@ jobs:
           tag_name: qt6-v6.6.3
           name: "QT6 v6.6.3 for Windows MSYS2 CI build"
           prerelease: false
-          make-latest: true
+          make-latest: false
           body: |
             Release created automatically from commit.
             This release is for use in the Windows MSYS2 CI builds for JS8Call. Use at your own risk!
