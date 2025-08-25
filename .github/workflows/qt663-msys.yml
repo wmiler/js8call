@@ -71,9 +71,11 @@ jobs:
           ls -l "D:/a/js8call/"
           ls -l "D:/a/js8call/qt663-install/"
           cd qt6/build
+          pwd
           zip -r "D:/a/js8call/js8call/qt663-windows-msys2-binaries.zip" "D:/a/js8call/qt663-install/"
           ls -l "D:/a/js8call/js8call/"
           ls -l "D:/a/js8call/"
+        continue-on-error: true
 
       - name: Upload QT 6.6.3 binaries
         uses: actions/upload-artifact@v4
