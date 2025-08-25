@@ -85,7 +85,8 @@ jobs:
        
     - name: Install OmniRig
       run: |
-        winget install --id=AfreetSoftware.OmniRig --exact --scope machine --silent --disable-interactivity --accept-package-agreements --accept-source-agreements
+        winget install --id=AfreetSoftware.OmniRig --exact --silent --disable-interactivity --accept-package-agreements --accept-source-agreements
+#        winget install --id=AfreetSoftware.OmniRig --exact --scope machine --silent --disable-interactivity --accept-package-agreements --accept-source-agreements
                 
     - name: Configure JS8Call
       shell: msys2 {0}
