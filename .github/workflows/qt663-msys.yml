@@ -57,6 +57,8 @@ jobs:
       - name: Create zip file to upload to release page
         run: |
           pwd
+          ls -lh /d/a/js8call/
+          ls -lh /d/a/js8call/qt663-install
           cd qt6/build
           zip -r /d/a/js8call/js8call/qt663-windows-msys2-binaries.zip .
           ls -lh .
