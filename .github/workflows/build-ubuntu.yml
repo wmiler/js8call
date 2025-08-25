@@ -30,6 +30,7 @@ jobs:
 
     - name: Build Hamlib
       run: |
+        ldd --version
         git clone https://github.com/Hamlib/Hamlib.git ~/hamlib
         cd ~/hamlib
         git checkout 4.6.4
@@ -113,6 +114,7 @@ jobs:
 
     - name: Build Hamlib
       run: |
+        ldd --version
         git clone https://github.com/Hamlib/Hamlib.git ~/hamlib
         cd ~/hamlib
         git checkout 4.6.4
@@ -210,6 +212,7 @@ jobs:
 
     - name: Build Hamlib
       run: |
+        ldd --version
         git clone https://github.com/Hamlib/Hamlib.git ~/hamlib
         cd ~/hamlib
         git checkout 4.6.4
