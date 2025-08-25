@@ -86,7 +86,6 @@ jobs:
     - name: Install OmniRig
       run: |
         winget install --id=AfreetSoftware.OmniRig --exact --silent --disable-interactivity --accept-package-agreements --accept-source-agreements
-#        winget install --id=AfreetSoftware.OmniRig --exact --scope machine --silent --disable-interactivity --accept-package-agreements --accept-source-agreements
                 
     - name: Configure JS8Call
       shell: msys2 {0}
@@ -103,18 +102,10 @@ jobs:
         cmake --build . --config Release --target package
 
     - name: Upload Artifact (from self-hosted)
-#      if: ${{ contains(runner.labels, 'self-hosted') }}
       uses: actions/upload-artifact@v4
       with:
         name: js8call-2.3.2-devel-win64.exe
         path: "C:/actions-runner/_work/js8call/js8call/build/js8call-2.3.2-devel-win64.exe"
-
-#    - name: Upload Artifact (from Github runner)
-#      if: ${{ !contains(runner.labels, 'self-hosted') }}
-#      uses: actions/upload-artifact@v4
-#      with:
-#        name: js8call-2.3.2-devel-win64.exe
-#        path: /d/a/js8call/js8call/build/js8call-2.3.2-devel-win64.exe"
 
     - name: Create GitHub Release and get short commit SHA
       id: get_sha
@@ -127,7 +118,7 @@ jobs:
       with:
         script: |
           const shortSha = process.env.SHORT_SHA;
-          const tagName = `v2.3.2-devel-${shortSha}`;
+          const tagName = `v2.3.2-devel-ci`;
             
           await github.rest.git.createRef({
             owner: context.repo.owner,
@@ -142,8 +133,7 @@ jobs:
     - name: Create zip file to upload to release page
       run: |
         pwd
-        cd /d/a/js8call/js8call/
-        zip -r "C:/actions-runner/_work/js8call/js8call/js8call-2.3.2-devel-win64.exe-${{ steps.get_sha.outputs.short_sha }}.zip" "C:/actions-runner/_work/js8call/js8call/build/js8call-2.3.2-devel-win64.exe"
+        zip -r "C:/actions-runner/_work/js8call/js8call/js8call-2.3.2-devel-win64.exe-ci.zip" "C:/actions-runner/_work/js8call/js8call/build/js8call-2.3.2-devel-win64.exe"
                   
     - name: Create Changelog
       id: github_release
@@ -181,7 +171,7 @@ jobs:
     - name: Create Release and Upload Assets
       uses: softprops/action-gh-release@v2.3.2
       with:
-        tag_name: v2.3.2-devel-${{ steps.get_sha.outputs.short_sha }}
+        tag_name: v2.3.2-devel-ci
         name: "JS8Call v2.3.2-devel Windows MSYS2 CI build ${{ steps.get_sha.outputs.short_sha }}"
         prerelease: true
         make-latest: true
@@ -189,7 +179,7 @@ jobs:
           Release created automatically from commit ${{ github.sha }}.
           This release is for use in the Windows MSYS2 CI builds for JS8Call. Use at your own risk!
           ${{steps.github_release.outputs.changelog}}
-        files: js8call-2.3.2-devel-win64.exe-${{ steps.get_sha.outputs.short_sha }}.zip
+        files: js8call-2.3.2-devel-win64.exe-ci.zip
        
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
