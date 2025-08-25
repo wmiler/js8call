@@ -52,6 +52,9 @@ jobs:
 #        git switch 6.6.3
 #        ./init-repository
 
+    - name: Work around for /usr/local perms
+      run: sudo chown runner:admin /usr/local
+      
     - name: Release AC9KH package
       uses: robinraju/release-downloader@v1.12
       with:
@@ -59,7 +62,7 @@ jobs:
         fileName: 'js8lib-2.3_Darwin_arm64.tar.gz'
         latest: true
         extract: true
-        out-file-path: '/Users/runner/work/js8call/js8call/'
+        out-file-path: '/usr/local/'
 
 #    - name: Install AC9KH package
 #      run: |
@@ -91,7 +94,7 @@ jobs:
     - name: Build JS8Call 
       run: |
         mkdir -p ./build && cd ./build
-        cmake -DCMAKE_PREFIX_PATH="/Users/runner/work/js8call/js8call/js8lib" ..
+        cmake -DCMAKE_PREFIX_PATH="/usr/local/js8lib" ..
         make
         make install
 
