@@ -46,17 +46,17 @@ jobs:
 #          ls -l "D:/a/js8call/"
 #          ls -l "D:/a/js8call/js8call"
 
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          repository: 'qt/qt5.git'
-          ref: '6.6.3'
-          fetch-depth: 0 
-          persist-credentials: false
-          submodules: recursive
-          lfs: true
-          clean: true
-          
+#      - name: Checkout repository
+#        uses: actions/checkout@v4
+#        with:
+#          repository: 'qt/qt5.git'
+#          ref: '6.6.3'
+#          fetch-depth: 0 
+#          persist-credentials: false
+#          submodules: recursive
+#          lfs: true
+#          clean: true
+
       - name: Checkout QT 6.6.3
         run: |
           git clone https://github.com/qt/qt5.git qt6
@@ -66,14 +66,14 @@ jobs:
 
       - name: Configure QT
         run: |
-          ls -l
+          cd qt6
           mkdir ./build
           cd build
           ../configure --prefix=/d/a/js8call/qt663-install
           
       - name: Build QT 6.6.3
         run: |
-          cd build
+          cd qt6/build
           cmake --build . --parallel 4
           cmake --install .
     
