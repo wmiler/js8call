@@ -93,10 +93,9 @@ jobs:
           pwd
           ls -l "D:/a/js8call/"
           ls -l "D:/a/js8call/js8call"
-          Compress-Archive -Path "${{ github.workspace }}\qt663-windows-msys2-binaries.zip" -DestinationPath "${{ github.workspace }}\Qt\6.6.3\mingw_64\"
+          Compress-Archive -Path "D:\a\js8call\qt663-windows-msys2-binaries.zip" -DestinationPath "D:\a\js8call\js8call\Qt\6.6.3\mingw_64\"
           ls -l "D:/a/js8call/js8call/"
           ls -l "D:/a/js8call/"
-          ls -l "${{ github.workspace }}\Qt\6.6.3\mingw_64"
         continue-on-error: true
 
       - name: Upload QT 6.6.3 binaries
@@ -114,7 +113,7 @@ jobs:
           body: |
             Release created automatically from commit.
             This release is for use in the Windows MSYS2 CI builds for JS8Call. Use at your own risk!
-          files: "${{ github.workspace }}\\qt663-windows-msys2-binaries.zip"
+          files: "D:\\a\\js8call\\qt663-windows-msys2-binaries.zip"
 #          files: "D:/a/js8call/js8call/qt663-windows-msys2-binaries.zip"
        
         env:
