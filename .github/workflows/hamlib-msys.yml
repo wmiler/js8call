@@ -78,7 +78,7 @@ jobs:
         with:
           script: |
             const shortSha = process.env.SHORT_SHA;
-            const tagName = `v4.6.4-ci`;
+            const tagName = `hamlib-v4.6.4-ci`;
             
             await github.rest.git.createRef({
               owner: context.repo.owner,
@@ -89,6 +89,7 @@ jobs:
             console.log(`Tag '${tagName}' created.`);
         env:
           SHORT_SHA: ${{ steps.get_sha.outputs.short_sha }}
+        continue-on-error: true
 
       - name: Create zip file to upload to release page
         run: |
@@ -133,10 +134,10 @@ jobs:
         uses: softprops/action-gh-release@v2.3.2
         with:
           tag_name: hamlib-v4.6.4-ci
-          name: "Hamlib v4.6.4 for Windows MSYS2 CI build ${{ steps.get_sha.outputs.short_sha }}"
+          name: "Hamlib v4.6.4 for Windows MSYS2 CI build"
           prerelease: false
           body: |
-            Release created automatically from commit ${{ github.sha }}.
+            Release created automatically from commit.
             This release is for use in the Windows MSYS2 CI builds for JS8Call. Use at your own risk!
             ${{steps.github_release.outputs.changelog}}
           files: hamlib-windows-msys2-binaries-ci.zip
