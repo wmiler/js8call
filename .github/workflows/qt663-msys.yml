@@ -72,7 +72,7 @@ jobs:
           target: 'desktop'
           arch: 'win64_mingw'
           dir: ${{ github.workspace }}
-          modules: 'essential,qtactiveqt,qtmultimedia,qtserialport'
+          modules: 'qtactiveqt qtmultimedia qtserialport'
           archives: 'qttools qtsvg qtdeclarative qtbase MinGW'
 
 #      - name: Configure QT
