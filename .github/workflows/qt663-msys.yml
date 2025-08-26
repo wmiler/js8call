@@ -40,11 +40,11 @@ jobs:
             ninja:p
             libusb:p
 
-#      - name: Check for directories here, so we fail fast
-#        run: |
-#          pwd
-#          ls -l "D:/a/js8call/"
-#          ls -l "D:/a/js8call/js8call"
+      - name: Check for directories here, so we fail fast
+        run: |
+          pwd
+          dir "D:/a/js8call/"
+          dir "D:/a/js8call/js8call"
 
 #      - name: Checkout repository
 #        uses: actions/checkout@v4
@@ -81,9 +81,11 @@ jobs:
         shell: pwsh
         run: |
           pwd
+          dir "D:/a/js8call/js8call/"
+          dir "D:/a/js8call/"
           Compress-Archive -Path "D:\a\js8call\qt663-install\" -DestinationPath "D:\a\js8call\qt663-windows-msys2-binaries.zip"
-          ls -l "D:/a/js8call/js8call/"
-          ls -l "D:/a/js8call/"
+ #         ls -l "D:/a/js8call/js8call/"
+ #         ls -l "D:/a/js8call/"
         continue-on-error: true
 
       - name: Upload QT 6.6.3 Artifact binaries
