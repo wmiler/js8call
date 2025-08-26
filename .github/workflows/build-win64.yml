@@ -127,7 +127,15 @@ jobs:
       run: |
         pwd
         zip -r "C:/actions-runner/_work/js8call/js8call/js8call-2.3.2-devel-win64.exe-ci.zip" "C:/actions-runner/_work/js8call/js8call/build/js8call-2.3.2-devel-win64.exe"
-                  
+      continue-on-error: true
+
+    - name: Create zip file to upload to release page from powershell
+      shell: pwsh
+      run: |
+         Compress-Archive -Path "C:/actions-runner/_work/js8call/js8call/build/js8call-2.3.2-devel-win64.exe" -DestinationPath "C:/actions-runner/_work/js8call/js8call/js8call-2.3.2-devel-win64.exe-pswh-ci.zip"
+      continue-on-error: true
+
+         
     - name: Create Changelog
       id: github_release
       uses: mikepenz/release-changelog-builder-action@v5
@@ -171,7 +179,7 @@ jobs:
           Release created automatically from commit ${{ github.sha }}.
           This release is for use in the Windows MSYS2 CI builds for JS8Call. Use at your own risk!
           ${{steps.github_release.outputs.changelog}}
-        files: js8call-2.3.2-devel-win64.exe-ci.zip
+        files: js8call-2.3.2-devel-win64.exe*.zip
        
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
