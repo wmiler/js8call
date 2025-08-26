@@ -88,6 +88,13 @@ jobs:
 #          cmake --build . --parallel 4
 #          cmake --install .
 
+      - name: Check for directories here
+        run: |
+          pwd
+          ls -l "D:/a/js8call/"
+          ls -l "D:/a/js8call/js8call"
+          ls -l "D:/a/js8call/js8call/Qt/6.6.3/mingw_64/"
+          
       - name: Create zip file to upload to release page
         run: |
           pwd
