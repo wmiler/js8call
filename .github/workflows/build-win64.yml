@@ -47,23 +47,23 @@ jobs:
         mkdir -p build
         
 # NOTE: So long as these are coming from a branch, the run-id and artifact-ids have to be kept updated.
-    - name: Download qt663-windows-msys2-binaries
-      uses: actions/download-artifact@v5
-      with:
-        repository: wmiler/js8call
-        run-id: 17137490514
-        artifact-ids: 3823059396
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        path: "C:/actions-runner/_work/_temp/msys64/mingw64/"
-
-#    - name: Release download for QT6
-#      uses: robinraju/release-downloader@v1.12
+#    - name: Download qt663-windows-msys2-binaries
+#      uses: actions/download-artifact@v5
 #      with:
-#        repository: 'wmiler/js8call'
-#        fileName: 'qt663-windows-msys2-binaries*.zip'
-#        tag: 'qt6-v6.6.3-ci'
-#        extract: true
-#        out-file-path: 'C:/actions-runner/_work/_temp/msys64/mingw64/'
+#        repository: wmiler/js8call
+#        run-id: 17137490514
+#        artifact-ids: 3823059396
+#        github-token: ${{ secrets.GITHUB_TOKEN }}
+#        path: "C:/actions-runner/_work/_temp/msys64/mingw64/"
+
+    - name: Release download for QT6
+      uses: robinraju/release-downloader@v1.12
+      with:
+        repository: 'wmiler/js8call'
+        fileName: 'qt663-windows-msys2-binaries*.zip'
+        tag: 'qt6-v6.6.3-ci'
+        extract: true
+        out-file-path: 'C:/actions-runner/_work/_temp/msys64/'
 
     - name: Release download for hamlib
       uses: robinraju/release-downloader@v1.12
