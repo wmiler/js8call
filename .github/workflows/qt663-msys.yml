@@ -46,21 +46,16 @@ jobs:
           ls -l "D:/a/js8call/"
           ls -l "D:/a/js8call/js8call"
 
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          repository: 'qt/qt5.git'
-          ref: '6.6.3'
-          fetch-depth: 0 
-          persist-credentials: false
-          submodules: recursive
-          lfs: true
-          clean: true
-          
-      - name: Check for directories here, post QT checkout
-        run: |
-          pwd
-          ls -lR "D:/a/js8call/"
+#      - name: Checkout repository
+#        uses: actions/checkout@v4
+#        with:
+#          repository: 'qt/qt5.git'
+#          ref: '6.6.3'
+#          fetch-depth: 0 
+#          persist-credentials: false
+#          submodules: recursive
+#          lfs: true
+#          clean: true
           
 #      - name: Checkout QT 6.6.3
 #        run: |
@@ -69,24 +64,34 @@ jobs:
 #          git switch 6.6.3
 #          ./init-repository --module-subset=essential,qtactiveqt,qtmultimedia,qtserialport,qtsvg,qtshadertools,qttools
 
-      - name: Configure QT
-        run: |
-          ls -l
-          mkdir ./build
-          cd build
-          ../configure --prefix=/d/a/js8call/qt663-install
+      - name: Install QT6 6.6.3
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.6.3'
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_mingw'
+          dir: ${{ github.workspace }}
+          modules: 'essential,qtactiveqt,qtmultimedia,qtserialport'
+          archives: 'qttools qtsvg qtdeclarative qtbase MinGW'
+
+#      - name: Configure QT
+#        run: |
+#          ls -l
+#          mkdir ./build
+#          cd build
+#          ../configure --prefix=/d/a/js8call/qt663-install
           
-      - name: Build QT 6.6.3
-        run: |
-          cd build
-          cmake --build . --parallel 4
-          cmake --install .
+#      - name: Build QT 6.6.3
+#        run: |
+#          cd build
+#          cmake --build . --parallel 4
+#          cmake --install .
 
       - name: Create zip file to upload to release page
         run: |
           pwd
-          ls -l "D:/a/js8call/qt663-install/"
-          zip -r "D:/a/js8call/js8call/qt663-windows-msys2-binaries.zip" "D:/a/js8call/qt663-install/"
+          zip -r ${{ github.workspace }}/qt663-windows-msys2-binaries.zip ${{ github.workspace }}/Qt/6.6.3/
           ls -l "D:/a/js8call/js8call/"
           ls -l /d/a/js8call/
         continue-on-error: true
@@ -95,8 +100,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: qt663-windows-msys2-binaries
-          path: /d/a/js8call/qt663-install/
-
+          path: ${{ github.workspace }}/Qt/6.6.3/
+#          path: /d/a/js8call/qt663-install/
+          
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v2.3.2
         with:
@@ -107,7 +113,8 @@ jobs:
           body: |
             Release created automatically from commit.
             This release is for use in the Windows MSYS2 CI builds for JS8Call. Use at your own risk!
-          files: "D:/a/js8call/js8call/qt663-windows-msys2-binaries.zip"
+          files: ${{ github.workspace }}/qt663-windows-msys2-binaries.zip
+#          files: "D:/a/js8call/js8call/qt663-windows-msys2-binaries.zip"
        
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
