@@ -15,30 +15,30 @@ jobs:
     runs-on: windows-2025
     permissions: write-all
     
-#    defaults:
-#      run:
-#        shell: msys2 {0}
+    defaults:
+      run:
+        shell: msys2 {0}
 
     steps:
-#      - name: Setup MSYS2
-#        uses: msys2/setup-msys2@v2
-#        with:
-#          update: true 
-#          install: > 
-#            git 
-#            make 
-#            base-devel
-#            autoconf 
-#            libtool 
-#            pkg-config
-#            tar
-#            zip
-#          pacboy: >-
-#            toolchain:p
-#            autotools:p
-#            cmake:p
-#            ninja:p
-#            libusb:p
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true 
+          install: > 
+            git 
+            make 
+            base-devel
+            autoconf 
+            libtool 
+            pkg-config
+            tar
+            zip
+          pacboy: >-
+            toolchain:p
+            autotools:p
+            cmake:p
+            ninja:p
+            libusb:p
 
 #      - name: Check for directories here, so we fail fast
 #        run: |
@@ -46,62 +46,51 @@ jobs:
 #          ls -l "D:/a/js8call/"
 #          ls -l "D:/a/js8call/js8call"
 
-#      - name: Checkout repository
-#        uses: actions/checkout@v4
-#        with:
-#          repository: 'qt/qt5.git'
-#          ref: '6.6.3'
-#          fetch-depth: 0 
-#          persist-credentials: false
-#          submodules: recursive
-#          lfs: true
-#          clean: true
-          
-#      - name: Checkout QT 6.6.3
-#        run: |
-#          git clone https://github.com/qt/qt5.git qt6
-#          cd qt6
-#          git switch 6.6.3
-#          ./init-repository --module-subset=essential,qtactiveqt,qtmultimedia,qtserialport,qtsvg,qtshadertools,qttools
-
-      - name: Install QT6 6.6.3
-        uses: jurplel/install-qt-action@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          version: '6.6.3'
-          host: 'windows'
-          target: 'desktop'
-          arch: 'win64_mingw'
-          dir: ${{ github.workspace }}
-          modules: 'qtactiveqt qtmultimedia qtserialport'
-          archives: 'qttools qtsvg qtdeclarative qtbase MinGW'
-
-#      - name: Configure QT
-#        run: |
-#          ls -l
-#          mkdir ./build
-#          cd build
-#          ../configure --prefix=/d/a/js8call/qt663-install
+          repository: 'qt/qt5.git'
+          ref: '6.6.3'
+          fetch-depth: 0 
+          persist-credentials: false
+          submodules: recursive
+          lfs: true
+          clean: true
           
-#      - name: Build QT 6.6.3
-#        run: |
-#          cd build
-#          cmake --build . --parallel 4
-#          cmake --install .
+      - name: Checkout QT 6.6.3
+        run: |
+          git clone https://github.com/qt/qt5.git qt6
+          cd qt6
+          git switch 6.6.3
+          ./init-repository --module-subset=essential,qtactiveqt,qtmultimedia,qtserialport,qtsvg,qtshadertools,qttools
+
+      - name: Configure QT
+        run: |
+          ls -l
+          mkdir ./build
+          cd build
+          ../configure --prefix=/d/a/js8call/qt663-install
+          
+      - name: Build QT 6.6.3
+        run: |
+          cd build
+          cmake --build . --parallel 4
+          cmake --install .
     
       - name: Create zip file to upload to release page
+        shell: pwsh
         run: |
           pwd
-          Compress-Archive -Path "D:\a\js8call\js8call\Qt\6.6.3\mingw_64\" -DestinationPath "D:\a\js8call\qt663-windows-msys2-binaries.zip"
+          Compress-Archive -Path "D:\a\js8call\qt663-install\" -DestinationPath "D:\a\js8call\qt663-windows-msys2-binaries.zip"
           ls -l "D:/a/js8call/js8call/"
           ls -l "D:/a/js8call/"
         continue-on-error: true
 
-      - name: Upload QT 6.6.3 binaries
+      - name: Upload QT 6.6.3 Artifact binaries
         uses: actions/upload-artifact@v4
         with:
           name: qt663-windows-msys2-binaries
-          path: "${{ github.workspace }}/Qt/6.6.3/"
-#          path: /d/a/js8call/qt663-install/
+          path: /d/a/js8call/qt663-install/
           
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v2.3.2
