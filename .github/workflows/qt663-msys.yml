@@ -111,7 +111,7 @@ jobs:
           body: |
             Release created automatically from commit.
             This release is for use in the Windows MSYS2 CI builds for JS8Call. Use at your own risk!
-          files: "${{ github.workspace }}\qt663-windows-msys2-binaries.zip"
+          files: "${{ github.workspace }}\\qt663-windows-msys2-binaries.zip"
 #          files: "D:/a/js8call/js8call/qt663-windows-msys2-binaries.zip"
        
         env:
