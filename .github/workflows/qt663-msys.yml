@@ -91,7 +91,7 @@ jobs:
       - name: Create zip file to upload to release page
         run: |
           pwd
-          zip -r "${{ github.workspace }}/qt663-windows-msys2-binaries.zip" "${{ github.workspace }}/Qt/6.6.3/"
+          Compress-Archive -Path "${{ github.workspace }}/qt663-windows-msys2-binaries.zip" -DestinationPath "${{ github.workspace }}/Qt/6.6.3/"
           ls -l "D:/a/js8call/js8call/"
           ls -l /d/a/js8call/
         continue-on-error: true
@@ -108,8 +108,6 @@ jobs:
         with:
           tag_name: qt6-v6.6.3-ci
           name: "QT6 v6.6.3 for Windows MSYS2 CI build"
-          prerelease: false
-          make-latest: false
           body: |
             Release created automatically from commit.
             This release is for use in the Windows MSYS2 CI builds for JS8Call. Use at your own risk!
