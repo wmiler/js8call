@@ -78,7 +78,7 @@ jobs:
           
       - name: Build QT 6.6.3
         run: |
-          cd qt6/build
+          cd build
           cmake --build . --parallel 4
           cmake --install .
 
