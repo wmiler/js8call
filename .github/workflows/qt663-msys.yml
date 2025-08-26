@@ -91,9 +91,12 @@ jobs:
       - name: Create zip file to upload to release page
         run: |
           pwd
+          ls -l "D:/a/js8call/"
+          ls -l "D:/a/js8call/js8call"
           Compress-Archive -Path "${{ github.workspace }}\qt663-windows-msys2-binaries.zip" -DestinationPath "${{ github.workspace }}\Qt\6.6.3\mingw_64\"
           ls -l "D:/a/js8call/js8call/"
-          ls -l /d/a/js8call/
+          ls -l "D:/a/js8call/"
+          ls -l "${{ github.workspace }}\Qt\6.6.3\mingw_64"
         continue-on-error: true
 
       - name: Upload QT 6.6.3 binaries
