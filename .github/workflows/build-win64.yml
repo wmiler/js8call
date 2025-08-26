@@ -61,7 +61,7 @@ jobs:
 #      with:
 #        repository: 'wmiler/js8call'
 #        fileName: 'qt663-windows-msys2-binaries*.zip'
-#        latest: true
+#        tag: 'qt6-v6.6.3-ci'
 #        extract: true
 #        out-file-path: 'C:/actions-runner/_work/_temp/msys64/mingw64/'
 
@@ -70,6 +70,7 @@ jobs:
       with:
         repository: 'wmiler/js8call'
         fileName: 'hamlib-windows-msys2-binaries*.zip'
+        tag: 'hamlib-v4.6.4-ci'
         extract: true
         out-file-path: 'C:/actions-runner/_work/_temp/msys64/mingw64/'
        
@@ -166,7 +167,6 @@ jobs:
         tag_name: js8call-v2.3.2-devel-ci
         name: "JS8Call v2.3.2-devel Windows MSYS2 CI build ${{ steps.get_sha.outputs.short_sha }}"
         prerelease: true
-        make-latest: true
         body: |
           Release created automatically from commit ${{ github.sha }}.
           This release is for use in the Windows MSYS2 CI builds for JS8Call. Use at your own risk!
