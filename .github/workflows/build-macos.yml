@@ -18,20 +18,7 @@ jobs:
     
     steps:
     - uses: actions/checkout@v4
-        
-#    - name: Setup directories
-#      run: |
-#        mkdir ~/development && mkdir ~/development/js8libs
-#        cd ~/development
-#        wget -q https://github.com/Chris-AC9KH/js8lib/releases/download/js8lib-2.3/js8lib-2.3_Darwin_arm64.tar.gz
-#        ls
-#        wget -q https://fftw.org/fftw-3.3.10.tar.gz
-#        tar zxf fftw-3.3.10.tar.gz
-#        git clone https://github.com/qt/qt5.git qt6
-#        cd qt6
-#        git switch 6.6.3
-#        ./init-repository
-
+    
     - name: Work around for /usr/local perms and grab arch/os info
       run: |
         sudo chown runner:admin /usr/local
@@ -47,18 +34,7 @@ jobs:
         extract: true
         out-file-path: '/usr/local/'
 
-#    - name: Build and install fftw
-#      run: |
-#       cd ~/development/fftw-3.3.10 \
-#            && ./configure CFLAGS=-mmacosx-version-min=11.0 \
-#                    --prefix=/Users/runner/development/js8libs \
-#                    --enable-single \
-#                    --enable-threads \
-#                    --enable-neon
-#        make \
-#        && make install \
-#        && make clean
-    - name: Look for files that break app building
+    - name: Look for and delete files that break app building
       run: |
         find /usr/local/js8lib -type f -name ._* -delete
       continue-on-error: true
