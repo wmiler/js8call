@@ -15,36 +15,36 @@ jobs:
     runs-on: windows-2025
     permissions: write-all
     
-    defaults:
-      run:
-        shell: msys2 {0}
+#    defaults:
+#      run:
+#        shell: msys2 {0}
 
     steps:
-      - name: Setup MSYS2
-        uses: msys2/setup-msys2@v2
-        with:
-          update: true 
-          install: > 
-            git 
-            make 
-            base-devel
-            autoconf 
-            libtool 
-            pkg-config
-            tar
-            zip
-          pacboy: >-
-            toolchain:p
-            autotools:p
-            cmake:p
-            ninja:p
-            libusb:p
+#      - name: Setup MSYS2
+#        uses: msys2/setup-msys2@v2
+#        with:
+#          update: true 
+#          install: > 
+#            git 
+#            make 
+#            base-devel
+#            autoconf 
+#            libtool 
+#            pkg-config
+#            tar
+#            zip
+#          pacboy: >-
+#            toolchain:p
+#            autotools:p
+#            cmake:p
+#            ninja:p
+#            libusb:p
 
-      - name: Check for directories here, so we fail fast
-        run: |
-          pwd
-          ls -l "D:/a/js8call/"
-          ls -l "D:/a/js8call/js8call"
+#      - name: Check for directories here, so we fail fast
+#        run: |
+#          pwd
+#          ls -l "D:/a/js8call/"
+#          ls -l "D:/a/js8call/js8call"
 
 #      - name: Checkout repository
 #        uses: actions/checkout@v4
@@ -91,7 +91,7 @@ jobs:
       - name: Create zip file to upload to release page
         run: |
           pwd
-          zip -r ${{ github.workspace }}/qt663-windows-msys2-binaries.zip ${{ github.workspace }}/Qt/6.6.3/
+          zip -r "${{ github.workspace }}/qt663-windows-msys2-binaries.zip" "${{ github.workspace }}/Qt/6.6.3/"
           ls -l "D:/a/js8call/js8call/"
           ls -l /d/a/js8call/
         continue-on-error: true
@@ -100,13 +100,13 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: qt663-windows-msys2-binaries
-          path: ${{ github.workspace }}/Qt/6.6.3/
+          path: "${{ github.workspace }}/Qt/6.6.3/"
 #          path: /d/a/js8call/qt663-install/
           
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v2.3.2
         with:
-          tag_name: qt6-v6.6.3
+          tag_name: qt6-v6.6.3-ci
           name: "QT6 v6.6.3 for Windows MSYS2 CI build"
           prerelease: false
           make-latest: false
