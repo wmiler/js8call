@@ -132,10 +132,9 @@ jobs:
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v2.3.2
         with:
-          tag_name: v4.6.4-ci
+          tag_name: hamlib-v4.6.4-ci
           name: "Hamlib v4.6.4 for Windows MSYS2 CI build ${{ steps.get_sha.outputs.short_sha }}"
           prerelease: false
-          make-latest: false
           body: |
             Release created automatically from commit ${{ github.sha }}.
             This release is for use in the Windows MSYS2 CI builds for JS8Call. Use at your own risk!
