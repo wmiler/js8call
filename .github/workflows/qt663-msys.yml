@@ -75,34 +75,51 @@ jobs:
           cd qt6/build
           cmake --build . --parallel 4
           cmake --install .
-
-      - name: Check install directory
-        shell: pwsh
-        run: dir "D:/a/js8call/"
-
-      - name: Create zip file to upload to release page
-        shell: pwsh
-        run: |
-          pwd
-          Compress-Archive -Path "D:\a\js8call\qt663-install\*" -DestinationPath "D:\a\js8call\qt663-windows-msys2-binaries.zip"
-        continue-on-error: true
+          
+#      - name: Create zip file to upload to release page
+#        shell: pwsh
+#        run: |
+#          pwd
+#          Compress-Archive -Path "D:\a\js8call\qt663-install\*" -DestinationPath "D:\a\js8call\qt663-windows-msys2-binaries.zip"
+#        continue-on-error: true
 
       - name: Upload QT 6.6.3 Artifact binaries
         uses: actions/upload-artifact@v4
         with:
           name: qt663-windows-msys2-binaries
           path: /d/a/js8call/qt663-install/
-          
-      - name: Create Release and Upload Assets
-        uses: softprops/action-gh-release@v2.3.2
-        with:
-          tag_name: qt6-v6.6.3-ci
-          name: "QT6 v6.6.3 for Windows MSYS2 CI build"
-          body: |
-            Release created automatically from commit.
-            This release is for use in the Windows MSYS2 CI builds for JS8Call. Use at your own risk!
-          files: "D:\\a\\js8call\\qt663-windows-msys2-binaries.zip"
+
+  release:
+    runs-on: ubuntu-24.04
+    permissions: write-all
+    needs: build-qt663-windows-msys2
+    steps: 
+        - uses: actions/download-artifact@v4
+          with:
+            name: qt663-windows-msys2-binaries
+            path: build
+        - run: zip -r qt663-windows-msys2-binaries.zip build/
+        - uses: softprops/action-gh-release@v2.3.2
+          with:
+            tag_name: qt6-v6.6.3-ci
+            name: "QT6 v6.6.3 for Windows MSYS2 CI build"
+            body: |
+              Release created automatically from commit.
+              This release is for use in the Windows MSYS2 CI builds for JS8Call. Use at your own risk!
+            files: "qt663-windows-msys2-binaries.zip"
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            
+#      - name: Create Release and Upload Assets
+#        uses: softprops/action-gh-release@v2.3.2
+#        with:
+#          tag_name: qt6-v6.6.3-ci
+#          name: "QT6 v6.6.3 for Windows MSYS2 CI build"
+#          body: |
+#            Release created automatically from commit.
+#            This release is for use in the Windows MSYS2 CI builds for JS8Call. Use at your own risk!
+#          files: "qt663-windows-msys2-binaries.zip"
 #          files: "D:/a/js8call/js8call/qt663-windows-msys2-binaries.zip"
        
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        env: 
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
