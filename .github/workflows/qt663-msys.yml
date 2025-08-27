@@ -74,9 +74,11 @@ jobs:
         - uses: actions/download-artifact@v4
           with:
             name: qt663-windows-msys2-binaries
-            path: mingw_64
+            path: mingw64
             
-        - run: zip -r qt663-windows-msys2-binaries.zip mingw_64/
+        - run: |
+            cd mingw64
+            zip -r ../qt663-windows-msys2-binaries.zip .
         
         - uses: softprops/action-gh-release@v2.3.2
           with:
