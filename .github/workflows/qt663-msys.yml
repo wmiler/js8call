@@ -43,7 +43,6 @@ jobs:
       - name: Check for directories here, so we fail fast
         run: |
           pwd
-          dir "D:/a/js8call/"
           dir "D:/a/js8call/js8call"
 
 #      - name: Checkout repository
@@ -76,16 +75,16 @@ jobs:
           cd qt6/build
           cmake --build . --parallel 4
           cmake --install .
-    
+
+      - name: Check install directory
+        shell: pwsh
+        run: dir "D:/a/js8call/"
+
       - name: Create zip file to upload to release page
         shell: pwsh
         run: |
           pwd
-          dir "D:/a/js8call/js8call/"
-          dir "D:/a/js8call/"
-          Compress-Archive -Path "D:\a\js8call\qt663-install\" -DestinationPath "D:\a\js8call\qt663-windows-msys2-binaries.zip"
- #         ls -l "D:/a/js8call/js8call/"
- #         ls -l "D:/a/js8call/"
+          Compress-Archive -Path "D:\a\js8call\qt663-install\*" -DestinationPath "D:\a\js8call\qt663-windows-msys2-binaries.zip"
         continue-on-error: true
 
       - name: Upload QT 6.6.3 Artifact binaries
