@@ -83,7 +83,7 @@ jobs:
       run: |
         pwd
         cd ./build
-        cmake -G "MinGW Makefiles" ..
+        cmake -DCMAKE_FIND_DEBUG_MODE=1 -G "MinGW Makefiles" ..
 
     - name: Build JS8Call
       shell: msys2 {0}
