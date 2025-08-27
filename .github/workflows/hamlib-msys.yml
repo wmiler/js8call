@@ -89,6 +89,7 @@ jobs:
             console.log(`Tag '${tagName}' created.`);
         env:
           SHORT_SHA: ${{ steps.get_sha.outputs.short_sha }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
 
       - name: Create zip file to upload to release page
@@ -96,51 +97,50 @@ jobs:
           pwd
           cd ../hamlib-install/
           zip -r /d/a/js8call/js8call/hamlib-windows-msys2-binaries-ci.zip .
-                  
-      - name: Create Changelog
-        id: github_release
-        uses: mikepenz/release-changelog-builder-action@v5
-        with:
-          mode: "COMMIT"
-          configurationJson: |
-            {
-              "template": "#{{CHANGELOG}}",
-              "categories": [
-                {
-                    "title": "## Feature",
-                    "labels": ["feat", "feature"]
-                },
-                {
-                    "title": "## Fix",
-                    "labels": ["fix", "bug"]
-                },
-                {
-                    "title": "## Other",
-                    "labels": []
-                }
-              ],
-              "label_extractor": [
-                {
-                  "pattern": "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\\([\\w\\-\\.]+\\))?(!)?: ([\\w ])+([\\s\\S]*)",
-                  "on_property": "title",
-                  "target": "$1"
-                }
-              ]
-            }
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+# We don't need a Changelog for this
+#      - name: Create Changelog
+#        id: github_release
+#        uses: mikepenz/release-changelog-builder-action@v5
+#        with:
+#          mode: "COMMIT"
+#          configurationJson: |
+#            {
+#              "template": "#{{CHANGELOG}}",
+#              "categories": [
+#                {
+#                    "title": "## Feature",
+#                    "labels": ["feat", "feature"]
+#                },
+#                {
+#                    "title": "## Fix",
+#                    "labels": ["fix", "bug"]
+#                },
+#                {
+#                    "title": "## Other",
+#                    "labels": []
+#                }
+#              ],
+#              "label_extractor": [
+#                {
+#                  "pattern": "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\\([\\w\\-\\.]+\\))?(!)?: ([\\w ])+([\\s\\S]*)",
+#                  "on_property": "title",
+#                  "target": "$1"
+#                }
+#              ]
+#            }
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v2.3.2
         with:
           tag_name: hamlib-v4.6.4-ci
           name: "Hamlib v4.6.4 for Windows MSYS2 CI build"
-          prerelease: false
           body: |
             Release created automatically from commit.
             This release is for use in the Windows MSYS2 CI builds for JS8Call. Use at your own risk!
-            ${{steps.github_release.outputs.changelog}}
           files: hamlib-windows-msys2-binaries-ci.zip
-       
+#            ${{steps.github_release.outputs.changelog}}  
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
