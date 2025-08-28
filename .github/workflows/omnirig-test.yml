@@ -9,12 +9,13 @@ jobs:
       - name: Download OmniRig
         shell: powershell
         run: |
-          Invoke-WebRequest -Uri "http://dxatlas.com/OmniRig/files/OmniRig_v1.20.exe" -OutFile "OmniRig_Setup.exe"
+          Invoke-WebRequest -Uri "https://dxatlas.com/OmniRig/Files/OmniRig.zip" -OutFile "OmniRig_Setup.zip"
+          Expand-Archive -Path "OmniRig_Setup.zip"
 
       - name: Install OmniRig
         shell: powershell
         run: |
-          Start-Process -FilePath "OmniRig_Setup.exe" -ArgumentList "/S" -Wait
+          Start-Process -FilePath "OmniRigSetup.exe" -ArgumentList "/S" -Wait
 
       - name: Verify OmniRig Installation (Optional)
         shell: powershell
