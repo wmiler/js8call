@@ -16,7 +16,7 @@ jobs:
         shell: powershell
         run: |
           dir
-          Start-Process -FilePath "OmniRig/OmniRigSetup.exe" -ArgumentList "/S" -Wait
+          Start-Process -FilePath "OmniRig_Setup/OmniRigSetup.exe" -ArgumentList "/S" -Wait
 
       - name: Verify OmniRig Installation (Optional)
         shell: powershell
