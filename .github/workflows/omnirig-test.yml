@@ -15,20 +15,25 @@ jobs:
     # This step downloads and runs the OmniRig installer silently.
     - name: Download and install OmniRig
       run: |
-        $omnirig_zip_url = "http://www.dxatlas.com/OmniRig/Files/OmniRig.zip"
-        $install_dir = "$env:TEMP\OmniRigInstaller"
+        $omnirig_zip_url = "https://www.dxatlas.com/OmniRig/Files/OmniRig.zip"
+        $installDir = 'C:\omnirig-install'
+        $installerPath = Join-Path -Path $installDir -ChildPath 'omnirig.exe'
         
-        # Download the ZIP file
-        Invoke-WebRequest -Uri $omnirig_zip_url -OutFile "$env:TEMP\OmniRig.zip"
+        # Download the installer
+        New-Item -ItemType Directory -Force -Path $installDir
+        Write-Host "Downloading OmniRig from $omnirig_zip_url..."
+        Invoke-WebRequest -Uri $omnirig_zip_url -OutFile $installerPath
         
-        # Expand the ZIP file and run the setup
-        Expand-Archive "$env:TEMP\OmniRig.zip" -DestinationPath $install_dir -Force
+        # Run the installer silently with verbose logging
+        Write-Host "Installing OmniRig silently..."
+        Start-Process -FilePath $installerPath -ArgumentList '/S' -Wait
         
-        # Use 7z to run the installer silently
-        # This prevents the setup wizard from opening
-        & "C:\Program Files\7-Zip\7z.exe" x "$install_dir\OmniRigSetup.exe" -o"$env:ProgramFiles(x86)\Afreet\OmniRig" -y
-      shell: pwsh
-      
-    - name: Verify OmniRig installation
-      run: Test-Path -Path "$env:ProgramFiles(x86)\Afreet\OmniRig\OmniRig.exe"
-      shell: pwsh
+        # Verify the installation by checking for the installation directory
+        $programFiles = [System.Environment]::GetFolderPath('ProgramFilesX86')
+        $installFolder = Join-Path -Path $programFiles -ChildPath 'Afreet\OmniRig'
+        if (Test-Path $installFolder) {
+            Write-Host "OmniRig installation verified at $installFolder"
+        } else {
+            Write-Error "OmniRig installation failed or could not be found."
+            exit 1
+        }
