@@ -39,12 +39,26 @@ jobs:
         find /usr/local/js8lib -type f -name ._* -delete
       continue-on-error: true
 
-    - name: Build JS8Call 
+    - name: Build JS8Call and tar.gz the app
       run: |
         mkdir -p ./build && cd ./build
         cmake -DCMAKE_PREFIX_PATH="/usr/local/js8lib" ..
         make
         make install
+        tar zcf js8call_2.3.2-devel_arm64_macos15.app.tar.gz js8call.app
+
+    - name: CI Release
+      uses: softprops/action-gh-release@v2.3.2
+      with:
+        tag_name: js8call-arm64_macos15-ci
+        name: "JS8Call CI build for MacOS 15"
+        body: |
+          Release created automatically from commit.
+          This release is the CI build of JS8Call for MacOS 15 (M1+ cpus). Use at your own risk!
+        files: |
+          js8call_2.3.2-devel_arm64_macos15.app.tar.gz
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload Artifact (app)
       uses: actions/upload-artifact@v4
@@ -52,29 +66,29 @@ jobs:
         name: js8call_2.3.2-devel_arm64_macos15.app
         path: /Users/runner/work/js8call/js8call/build/
 
-  release:
-    runs-on: ubuntu-24.04
-    permissions: write-all
-    needs: build_macos-latest
-    steps: 
-        - uses: actions/download-artifact@v4
-          with:
-            name: js8call_2.3.2-devel_arm64_macos15.app
-            path: js8call
-            
-        - run: |
-            zip -r js8call_2.3.2-devel_arm64_macos15.app.zip js8call/js8call.app
-            tar zcf js8call_2.3.2-devel_arm64_macos15.app.tar.gz js8call/js8call.app
-        
-        - uses: softprops/action-gh-release@v2.3.2
-          with:
-            tag_name: js8call-arm64_macos15-ci
-            name: "JS8Call CI build for MacOS 15"
-            body: |
-              Release created automatically from commit.
-              This release is the CI build of JS8Call for MacOS 15 (M1+ cpus). Use at your own risk!
-            files: |
-              js8call_2.3.2-devel_arm64_macos15.app.zip
-              js8call_2.3.2-devel_arm64_macos15.app.tar.gz
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#  release:
+#    runs-on: ubuntu-24.04
+#    permissions: write-all
+#    needs: build_macos-latest
+#    steps: 
+#        - uses: actions/download-artifact@v4
+#          with:
+#            name: js8call_2.3.2-devel_arm64_macos15.app
+#            path: js8call
+#            
+#        - run: |
+#            zip -r js8call_2.3.2-devel_arm64_macos15.app.zip js8call/js8call.app
+#            tar zcf js8call_2.3.2-devel_arm64_macos15.app.tar.gz js8call/js8call.app
+#        
+#        - uses: softprops/action-gh-release@v2.3.2
+#          with:
+#            tag_name: js8call-arm64_macos15-ci
+#            name: "JS8Call CI build for MacOS 15"
+#            body: |
+#              Release created automatically from commit.
+#              This release is the CI build of JS8Call for MacOS 15 (M1+ cpus). Use at your own risk!
+#            files: |
+#              js8call_2.3.2-devel_arm64_macos15.app.zip
+#              js8call_2.3.2-devel_arm64_macos15.app.tar.gz
+#          env:
+#            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
