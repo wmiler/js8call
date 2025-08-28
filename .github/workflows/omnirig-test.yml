@@ -1,25 +1,34 @@
 name: Install OmniRig
-
-on: [push]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  install-omnirig:
+  build:
     runs-on: windows-2025
+
     steps:
-      - name: Download OmniRig
-        shell: powershell
-        run: |
-          Invoke-WebRequest -Uri "https://dxatlas.com/OmniRig/Files/OmniRig.zip" -OutFile "OmniRig_Setup.zip"
-          Expand-Archive -Path "OmniRig_Setup.zip"
+    - uses: actions/checkout@v4
 
-      - name: Install OmniRig
-        shell: powershell
-        run: |
-          dir
-          7z.exe x "OmniRig_Setup\OmniRigSetup.exe" -o"$env:ProgramFiles(x86)\Afreet\OmniRig" -y
-#          Start-Process -FilePath "OmniRig_Setup/OmniRigSetup.exe" -ArgumentList "/S" -Wait
-
-      - name: Verify OmniRig Installation (Optional)
-        shell: powershell
-        run: |
-          Get-Item "C:\Program Files (x86)\Afreet\OmniRig\OmniRig.exe"
+    # This step downloads and runs the OmniRig installer silently.
+    - name: Download and install OmniRig
+      run: |
+        $omnirig_zip_url = "http://www.dxatlas.com/OmniRig/Files/OmniRig.zip"
+        $install_dir = "$env:TEMP\OmniRigInstaller"
+        
+        # Download the ZIP file
+        Invoke-WebRequest -Uri $omnirig_zip_url -OutFile "$env:TEMP\OmniRig.zip"
+        
+        # Expand the ZIP file and run the setup
+        Expand-Archive "$env:TEMP\OmniRig.zip" -DestinationPath $install_dir -Force
+        
+        # Use 7z to run the installer silently
+        # This prevents the setup wizard from opening
+        & "C:\Program Files\7-Zip\7z.exe" x "$install_dir\OmniRigSetup.exe" -o"$env:ProgramFiles(x86)\Afreet\OmniRig" -y
+      shell: pwsh
+      
+    - name: Verify OmniRig installation
+      run: Test-Path -Path "$env:ProgramFiles(x86)\Afreet\OmniRig\OmniRig.exe"
+      shell: pwsh
