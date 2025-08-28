@@ -45,16 +45,6 @@ jobs:
         pwd
         mkdir -p js8libs
         mkdir -p build
-        
-# NOTE: So long as these are coming from a branch, the run-id and artifact-ids have to be kept updated.
-#    - name: Download qt663-windows-msys2-binaries
-#      uses: actions/download-artifact@v5
-#      with:
-#        repository: wmiler/js8call
-#        run-id: 17137490514
-#        artifact-ids: 3823059396
-#        github-token: ${{ secrets.GITHUB_TOKEN }}
-#        path: "C:/actions-runner/_work/_temp/msys64/mingw64/"
 
     - name: Release download for QT6
       uses: robinraju/release-downloader@v1.12
@@ -98,30 +88,30 @@ jobs:
         name: js8call-2.3.2-devel-win64.exe
         path: "C:/actions-runner/_work/js8call/js8call/build/js8call-2.3.2-devel-win64.exe"
 
-# This doesn't work if we keep commiting to the same tag
+# This doesn't work if we keep commiting to the same tag, need to add a bit of if/else
 #    - name: Create GitHub Release and get short commit SHA
 #      id: get_sha
 #      run: |
 #        echo "short_sha=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
 #
-#    - name: Create Git Tag
-#      id: create_tag
-#      uses: actions/github-script@v7
-#      with:
-#        script: |
-#          const shortSha = process.env.SHORT_SHA;
-#          const tagName = `js8call-v2.3.2-devel-ci`;
-#            
-#          await github.rest.git.createRef({
-#            owner: context.repo.owner,
-#            repo: context.repo.repo,
-#            ref: `refs/tags/${tagName}`,
-#            sha: context.sha,
-#          });
-#          console.log(`Tag '${tagName}' created.`);
-#      env:
-#        SHORT_SHA: ${{ steps.get_sha.outputs.short_sha }}
-#      continue-on-error: true
+    - name: Create Git Tag
+      id: create_tag
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const shortSha = process.env.SHORT_SHA;
+          const tagName = `js8call-v2.3.2-devel-ci`;
+            
+          await github.rest.git.createRef({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: `refs/tags/${tagName}`,
+            sha: context.sha,
+          });
+          console.log(`Tag '${tagName}' created.`);
+      env:
+        SHORT_SHA: ${{ steps.get_sha.outputs.short_sha }}
+      continue-on-error: true
 
     - name: Create zip file to upload to release page
       shell: msys2 {0}
