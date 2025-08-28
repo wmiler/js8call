@@ -42,7 +42,6 @@ jobs:
     - name: Setup build directories
       shell: msys2 {0}
       run: |
-        pwd
         mkdir -p js8libs
         mkdir -p build
 
@@ -71,14 +70,12 @@ jobs:
     - name: Configure JS8Call
       shell: msys2 {0}
       run: |
-        pwd
         cd ./build
         cmake -DCMAKE_FIND_DEBUG_MODE=1 -G "MinGW Makefiles" ..
 
     - name: Build JS8Call
       shell: msys2 {0}
       run: |
-        pwd
         cd ./build
         cmake --build . --config Release --target package
 
@@ -116,17 +113,9 @@ jobs:
     - name: Create zip file to upload to release page
       shell: msys2 {0}
       run: |
-        pwd
         cd "C:/actions-runner/_work/js8call/js8call/build/"
         zip -r "C:/actions-runner/_work/js8call/js8call/js8call-2.3.2-devel-win64.exe-ci.zip" "js8call-2.3.2-devel-win64.exe"
       continue-on-error: true
-
-#    - name: Create zip file to upload to release page from powershell
-#      shell: pwsh
-#      run: |
-#         cd "C:/actions-runner/_work/js8call/js8call/build/"
-#         Compress-Archive -Path "js8call-2.3.2-devel-win64.exe" -DestinationPath "C:/actions-runner/_work/js8call/js8call/js8call-2.3.2-devel-win64.exe-pswh-ci.zip"
-#      continue-on-error: true
          
     - name: Create Changelog
       id: github_release
@@ -172,9 +161,6 @@ jobs:
           Release created automatically from commit ${{ github.sha }}.
           This release is from the Windows MSYS2 CI builds for JS8Call. Use at your own risk!
           ${{steps.github_release.outputs.changelog}}
-        files: js8call-2.3.2-devel-win64.exe*.zip
+        files: js8call-2.3.2-devel-win64.exe-ci.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-# Add back to last line of body above if you want the changelog include
-#          ${{steps.github_release.outputs.changelog}}
