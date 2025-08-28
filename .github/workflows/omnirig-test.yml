@@ -32,7 +32,7 @@ jobs:
         Write-Host "Installing OmniRig silently..."
         cd 'C:\omnirig-install'
         dir
-        Start-Process -FilePath $installerPath -ArgumentList '/S' -Wait
+        Start-Process -FilePath 'C:\omnirig-install\omnirig.exe' -ArgumentList '/S' -Wait
         
         # Verify the installation by checking for the installation directory
         $programFiles = [System.Environment]::GetFolderPath('ProgramFilesX86')
