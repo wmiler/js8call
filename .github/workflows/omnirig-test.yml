@@ -1,0 +1,22 @@
+name: Install OmniRig
+
+on: [push]
+
+jobs:
+  install-omnirig:
+    runs-on: windows-2025
+    steps:
+      - name: Download OmniRig
+        shell: powershell
+        run: |
+          Invoke-WebRequest -Uri "http://dxatlas.com/OmniRig/files/OmniRig_v1.20.exe" -OutFile "OmniRig_Setup.exe"
+
+      - name: Install OmniRig
+        shell: powershell
+        run: |
+          Start-Process -FilePath "OmniRig_Setup.exe" -ArgumentList "/S" -Wait
+
+      - name: Verify OmniRig Installation (Optional)
+        shell: powershell
+        run: |
+          Get-Item "C:\Program Files (x86)\Afreet\OmniRig\OmniRig.exe"
