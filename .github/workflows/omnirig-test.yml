@@ -16,7 +16,8 @@ jobs:
         shell: powershell
         run: |
           dir
-          Start-Process -FilePath "OmniRig_Setup/OmniRigSetup.exe" -ArgumentList "/S" -Wait
+          7z.exe x "OmniRig_Setup\OmniRigSetup.exe" -o"$env:ProgramFiles(x86)\Afreet\OmniRig" -y
+#          Start-Process -FilePath "OmniRig_Setup/OmniRigSetup.exe" -ArgumentList "/S" -Wait
 
       - name: Verify OmniRig Installation (Optional)
         shell: powershell
