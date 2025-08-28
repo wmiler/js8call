@@ -62,15 +62,19 @@ jobs:
             name: js8call_2.3.2-devel_arm64_macos15.app
             path: js8call
             
-        - run: zip -r js8call_2.3.2-devel_arm64_macos15.app.zip js8call/js8call.app
+        - run: |
+            zip -r js8call_2.3.2-devel_arm64_macos15.app.zip js8call/js8call.app
+            tar zcf js8call_2.3.2-devel_arm64_macos15.app.tar.gz js8call/js8call.app
         
         - uses: softprops/action-gh-release@v2.3.2
           with:
             tag_name: js8call-arm64_macos15-ci
-            name: "JS8Call CI build for MacOS15"
+            name: "JS8Call CI build for MacOS 15"
             body: |
               Release created automatically from commit.
               This release is the CI build of JS8Call for MacOS 15 (M1+ cpus). Use at your own risk!
-            files: js8call_2.3.2-devel_arm64_macos15.app.zip
+            files: |
+              js8call_2.3.2-devel_arm64_macos15.app.zip
+              js8call_2.3.2-devel_arm64_macos15.app.tar.gz
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
