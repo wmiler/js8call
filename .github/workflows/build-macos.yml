@@ -45,7 +45,7 @@ jobs:
         cmake -DCMAKE_PREFIX_PATH="/usr/local/js8lib" ..
         make
         make install
-        tar zcf js8call_2.3.2-devel_arm64_macos15.app.tar.gz js8call.app
+        tar zcf ../js8call_2.3.2-devel_arm64_macos15.app.tar.gz js8call.app
 
     - name: CI Release
       uses: softprops/action-gh-release@v2.3.2
