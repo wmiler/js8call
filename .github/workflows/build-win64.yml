@@ -181,7 +181,6 @@ jobs:
           This release is for use in the Windows MSYS2 CI builds for JS8Call. Use at your own risk!
           ${{steps.github_release.outputs.changelog}}
         files: js8call-2.3.2-devel-win64.exe*.zip
-       
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
