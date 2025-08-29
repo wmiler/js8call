@@ -76,8 +76,8 @@ jobs:
       run: |
         reg import .\OmniRig120.reg
 
-    - name: Check that dumpcpp can find stuff
-      run: D:/a/_temp/msys64/mingw64/bin/dumpcpp.exe -getfile {4FE359C5-A58F-459D-BE95-CA559FB4F270}
+#    - name: Check that dumpcpp can find stuff
+#      run: D:/a/_temp/msys64/mingw64/bin/dumpcpp.exe -getfile {4FE359C5-A58F-459D-BE95-CA559FB4F270}
 
 # For self-hosted runner
 #    - name: Install OmniRig
