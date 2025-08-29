@@ -65,10 +65,16 @@ jobs:
        
 # Below is the workaround for installing OmniRig on the Github runners
     - name: Fetch OmniRig.tar.gz from my site
-      run: Invoke-WebRequest -Uri "https://www.spacemonitoring.com/OmniRig120.tar.gz" -OutFile ".\OmniRig120.tar.gz"
+      run: |
+        Invoke-WebRequest -Uri "https://www.spacemonitoring.com/OmniRig120.tar.gz" -OutFile ".\OmniRig120.tar.gz"
+        Invoke-WebRequest -Uri "https://www.spacemonitoring.com/OmniRig120.reg" -OutFile ".\OmniRig120.reg"
 
     - name: Untar to Program Files (x86)
       run: tar -xzf ".\OmniRig120.tar.gz" -C "C:\"
+
+    - name: Add registry entries so OmniRig cmake crap works
+      run: |
+        reg import .\OmniRig120.reg
 
     - name: Check that dumpcpp can find stuff
       run: D:/a/_temp/msys64/mingw64/bin/dumpcpp.exe -getfile {4FE359C5-A58F-459D-BE95-CA559FB4F270}
