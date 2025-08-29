@@ -17,6 +17,7 @@ env:
 
 jobs:
   build_amd64_2404:
+    permissions: write-all
     runs-on: ubuntu-24.04
 
     steps:
@@ -99,7 +100,24 @@ jobs:
       with:
         name: js8call_2.3.2-devel_x86_64_ubuntu-24.04.AppImage
         path: ~/appimage/js8call-x86_64.AppImage
+
+    - name: Create zip file to upload to release page
+      run: |
+        cd ~/appimage/
+        tar zcf ~/js8call_2.3.2-devel_ubuntu-24.04-amd64-ci.tar.gz js8call-x86_64.AppImage
         
+    - name: Create Release and Upload Assets
+      uses: softprops/action-gh-release@v2.3.2
+      with:
+        tag_name: js8call_2.3.2-devel_ubuntu-24.04-amd64-ci
+        name: "Ubuntu 24.04 amd64 CI build"
+        body: |
+          Release created automatically from commit.
+          This release is from the Ubuntu 24.04 amd64 CI build for JS8Call. Use at your own risk!
+        files: ~/js8call_2.3.2-devel_ubuntu-24.04-amd64-ci.tar.gz
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  
   build_arm64_2404:
     runs-on: ubuntu-24.04-arm
 
@@ -183,6 +201,24 @@ jobs:
       with:
         name: js8call_2.3.2-devel_aarch64_ubuntu-24.04.AppImage
         path: ~/appimage/js8call-aarch64.AppImage
+        
+    - name: Create zip file to upload to release page
+      run: |
+        cd ~/appimage/
+        tar zcf ~/js8call_2.3.2-devel_ubuntu-24.04-aarch64-ci.tar.gz js8call-aarch64.AppImage
+        
+    - name: Create Release and Upload Assets
+      uses: softprops/action-gh-release@v2.3.2
+      with:
+        tag_name: js8call_2.3.2-devel_ubuntu-24.04-aarch64-ci
+        name: "Ubuntu 24.04 aarch64/arm64 CI build"
+        body: |
+          Release created automatically from commit.
+          This release is from the Ubuntu 24.04 aarch64/arm64 CI build for JS8Call. Use at your own risk!
+        files: ~/js8call_2.3.2-devel_ubuntu-24.04-aarch64-ci.tar.gz
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  
         
 # ### Beware! Monsters live here! ###
   build_x86_64_Debian12:
@@ -299,6 +335,23 @@ jobs:
       with:
         name: js8call_2.3.2-devel_x86_64_debian-12.AppImage
         path: ~/appimage/js8call-x86_64.AppImage
+        
+    - name: Create zip file to upload to release page
+      run: |
+        cd ~/appimage/
+        tar zcf ~/js8call_2.3.2-devel_debian-12-x86_64-ci.tar.gz js8call-x86_64.AppImage
+        
+    - name: Create Release and Upload Assets
+      uses: softprops/action-gh-release@v2.3.2
+      with:
+        tag_name: js8call_2.3.2-devel_debian-12-x86_64-ci
+        name: "Debian 12 x86_64 CI build"
+        body: |
+          Release created automatically from commit.
+          This release is from the Debian 12 x86_64 CI build for JS8Call. Use at your own risk!
+        files: ~/js8call_2.3.2-devel_debian-12-x86_64-ci.tar.gz
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 # Arm64
   build_arm64_Debian12:
@@ -354,9 +407,9 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: js8call_2.3.2-devel_aarch64_debian-12.deb
-        path: ~/js8call/build/js8call_2.3.2-devel_aarch64.deb
+        path: ~/js8call/build/js8call_2.3.2-devel_arm64.deb
 
-    - name: Package JS8Call Debian 12 AppImage aarch64)
+    - name: Package JS8Call Debian 12 AppImage (arm64)
       run: |
         mkdir -p ~/appimage/AppDir
         cd ~/js8call/build
@@ -397,3 +450,20 @@ jobs:
       with:
         name: js8call_2.3.2-devel_aarch64_debian-12.AppImage
         path: ~/appimage/js8call-aarch64.AppImage
+
+    - name: Create zip file to upload to release page
+      run: |
+        cd ~/appimage/
+        tar zcf ~/js8call_2.3.2-devel_debian-12-aarch64-ci.tar.gz js8call-aarch64.AppImage
+        
+    - name: Create Release and Upload Assets
+      uses: softprops/action-gh-release@v2.3.2
+      with:
+        tag_name: js8call_2.3.2-devel_debian-12-aarch64-ci
+        name: "Debian 12 aarch64/arm64 CI build"
+        body: |
+          Release created automatically from commit.
+          This release is from the Debian 12 aarch64/arm64 CI build for JS8Call. Use at your own risk!
+        files: ~/js8call_2.3.2-devel_debian-12-aarch64-ci.tar.gz
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
