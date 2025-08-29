@@ -27,8 +27,9 @@ jobs:
         uname -a
         apt-get update
         apt-get install -y build-essential git cmake  ninja-build curl wget automake libtool libfuse2 imagemagick \
+          qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
           libusb-1.0-0-dev libfftw3-dev libudev-dev libxkbcommon-dev \
-          libhamlib-dev python3
+          libhamlib-dev python3 libclang-dev libopengl-dev
 
     - name: Checkout QT 6.4.2
       run: |
