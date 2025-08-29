@@ -222,23 +222,23 @@ jobs:
         make install-strip
         ldconfig
 
-    - name: Checkout QT 6.4.2
-      run: |
-        pwd
-        git clone https://github.com/qt/qt5.git qt6
-        cd qt6
-        git switch 6.4.2
-        ./init-repository --module-subset=essential,qtmultimedia,qtserialport,qtsvg,qtshadertools,qttools
-        mkdir ./build
-        cd build
-        ../configure
-          
-    - name: Build QT 6.4.2
-      run: |
-        pwd
-        cd qt6/build
-        cmake --build . --parallel 4
-        cmake --install .
+#    - name: Checkout QT 6.4.2
+#      run: |
+#        pwd
+#        git clone https://github.com/qt/qt5.git qt6
+#        cd qt6
+#        git switch 6.4.2
+#        ./init-repository --module-subset=essential,qtmultimedia,qtserialport,qtsvg,qtshadertools,qttools
+#        mkdir ./build
+#        cd build
+#        ../configure
+#          
+#    - name: Build QT 6.4.2
+#      run: |
+#        pwd
+#        cd qt6/build
+#        cmake --build . --parallel 4
+#        cmake --install .
 
     - name: Build JS8Call 
       run: |
