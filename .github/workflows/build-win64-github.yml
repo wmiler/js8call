@@ -131,7 +131,7 @@ jobs:
       shell: msys2 {0}
       run: |
         cd build
-        zip -r "js8call-2.3.2-devel-win64.exe-ci-github.zip" "js8call-2.3.2-devel-win64.exe"
+        zip -r "../js8call-2.3.2-devel-win64.exe-ci-github.zip" "js8call-2.3.2-devel-win64.exe"
       continue-on-error: true
          
     - name: Create Changelog
@@ -172,11 +172,11 @@ jobs:
       uses: softprops/action-gh-release@v2.3.2
       with:
         tag_name: js8call-v2.3.2-devel-ci-github
-        name: "JS8Call v2.3.2-devel Windows MSYS2 CI build ${{ steps.get_sha.outputs.short_sha }}"
+        name: "JS8Call v2.3.2-devel Windows MSYS2 CI Github runner build ${{ steps.get_sha.outputs.short_sha }}"
         prerelease: true
         body: |
           Release created automatically from commit ${{ github.sha }}.
-          This release is from the Windows MSYS2 CI builds for JS8Call. Use at your own risk!
+          This release is from the Windows MSYS2 CI builds via Github runner for JS8Call. Use at your own risk!
           ${{steps.github_release.outputs.changelog}}
         files: js8call-2.3.2-devel-win64.exe-ci-github.zip
       env:
