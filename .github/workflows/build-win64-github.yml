@@ -1,4 +1,4 @@
-name: Build for Windows 10+ amd64
+name: Build for Windows 10+ amd64 Github
 
 on:
   push:
@@ -64,6 +64,7 @@ jobs:
         out-file-path: 'D:/a/_temp/msys64/mingw64/'
        
 # Below is the workaround for installing OmniRig on the Github runners
+# which is just everything in Program Files (86)\Afreet directory plus the reg file.
     - name: Fetch OmniRig.tar.gz from my site
       run: |
         Invoke-WebRequest -Uri "https://www.spacemonitoring.com/OmniRig120.tar.gz" -OutFile ".\OmniRig120.tar.gz"
@@ -72,23 +73,15 @@ jobs:
     - name: Untar to Program Files (x86)
       run: tar -xzf ".\OmniRig120.tar.gz" -C "C:\"
 
-    - name: Add registry entries so OmniRig cmake crap works
+    - name: Add registry entries so OmniRig cmake works
       run: |
         reg import .\OmniRig120.reg
-
-#    - name: Check that dumpcpp can find stuff
-#      run: D:/a/_temp/msys64/mingw64/bin/dumpcpp.exe -getfile {4FE359C5-A58F-459D-BE95-CA559FB4F270}
-
-# For self-hosted runner
-#    - name: Install OmniRig
-#      run: |
-#        winget install --id=AfreetSoftware.OmniRig --exact --silent --disable-interactivity --accept-package-agreements --accept-source-agreements
                 
     - name: Configure JS8Call
       shell: msys2 {0}
       run: |
         cd ./build
-        cmake -DCMAKE_FIND_DEBUG_MODE=1 -G "MinGW Makefiles" ..
+        cmake -G "MinGW Makefiles" ..
 
     - name: Build JS8Call
       shell: msys2 {0}
@@ -102,7 +95,9 @@ jobs:
         name: js8call-2.3.2-devel-win64-github.exe
         path: "build/js8call-2.3.2-devel-win64.exe"
 
-# This doesn't work if we keep commiting to the same tag, need to add a bit of if/else
+# This doesn't work if we keep commiting to the same tag, need to add a bit of if/else.
+# For now, continue-on-error is enabled. This should be able to go away on the 
+# main js8call/js8call repo and work with regular commit sha.
     - name: Create GitHub Release and get short commit SHA
       id: get_sha
       run: |
