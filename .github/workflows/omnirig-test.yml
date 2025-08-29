@@ -15,8 +15,10 @@ jobs:
 
     steps:
       - name: Fetch OmniRig.tar.gz from my site
-        run: |
-          Invoke-WebRequest -Uri "https://www.spacemonitoring.com/OmniRig120.tar.gz"
+        run: Invoke-WebRequest -Uri "https://www.spacemonitoring.com/OmniRig120.tar.gz"
+
+      - name: Directory
+        run:
           dir
 
       - name: Untar to Program Files (x86)
