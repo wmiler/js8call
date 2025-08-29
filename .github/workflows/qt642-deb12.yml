@@ -22,6 +22,14 @@ jobs:
       image: debian:bookworm
     steps:
 
+    - name: Install dependencies
+      run: |
+        uname -a
+        apt-get update
+        apt-get install -y build-essential git cmake curl wget automake libtool libfuse2 imagemagick \
+          libusb-1.0-0-dev libfftw3-dev libudev-dev libxkbcommon-dev \
+          libhamlib-dev
+
     - name: Checkout QT 6.4.2
       run: |
         pwd
@@ -39,12 +47,16 @@ jobs:
         cd qt6/build
         cmake --build . --parallel 4
         cmake --install .
-        
+
+    - name: Build directory listing
+      run: ls -l qt6/build/
+      
     - name: Upload QT 6.6.3 Artifact binaries
       uses: actions/upload-artifact@v4
       with:
         name: qt642-debian12-x86_64-binaries
-
+        path: qt6/build/
+        
   release:
     runs-on: ubuntu-24.04
     permissions: write-all
