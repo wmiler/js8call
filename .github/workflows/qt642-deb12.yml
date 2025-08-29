@@ -1,7 +1,7 @@
 permissions:
   contents: read
 
-name: Build for Debian x86_64 and Arm64
+name: Build QT 6.4.2 for Debian12 x86_64 and Arm64
 
 on:
   push:
@@ -28,7 +28,7 @@ jobs:
         apt-get update
         apt-get install -y build-essential git cmake  ninja-build curl wget automake libtool libfuse2 imagemagick \
           libusb-1.0-0-dev libfftw3-dev libudev-dev libxkbcommon-dev \
-          libhamlib-dev
+          libhamlib-dev python3
 
     - name: Checkout QT 6.4.2
       run: |
