@@ -14,32 +14,8 @@ jobs:
     runs-on: windows-2025
 
     steps:
-    - uses: actions/checkout@v4
+      - name: Fetch OmniRig.tar.gz from my site
+        run: wget -q https://www.spacemonitoring.com/OmniRig120.tar.gz
 
-    # This step downloads and runs the OmniRig installer silently.
-    - name: Download and install OmniRig
-      run: |
-        $omnirig_zip_url = "https://www.dxatlas.com/OmniRig/Files/OmniRig.zip"
-        $installDir = 'C:\omnirig-install'
-        $installerPath = Join-Path -Path $installDir -ChildPath 'omnirig.exe'
-        
-        # Download the installer
-        New-Item -ItemType Directory -Force -Path $installDir
-        Write-Host "Downloading OmniRig from $omnirig_zip_url..."
-        Invoke-WebRequest -Uri $omnirig_zip_url -OutFile $installerPath
-        
-        # Run the installer silently with verbose logging
-        Write-Host "Installing OmniRig silently..."
-        cd 'C:\omnirig-install'
-        dir
-        Start-Process -FilePath 'C:\omnirig-install\omnirig.exe' -ArgumentList '/S' -Wait
-        
-        # Verify the installation by checking for the installation directory
-        $programFiles = [System.Environment]::GetFolderPath('ProgramFilesX86')
-        $installFolder = Join-Path -Path $programFiles -ChildPath 'Afreet\OmniRig'
-        if (Test-Path $installFolder) {
-            Write-Host "OmniRig installation verified at $installFolder"
-        } else {
-            Write-Error "OmniRig installation failed or could not be found."
-            exit 1
-        }
+      - name: Untar to Program Files (x86)
+        run: Expand-Archive -Path "OmniRig120.tar.gz" -DestinationPath "C:\" -Force
