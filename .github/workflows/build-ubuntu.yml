@@ -302,7 +302,7 @@ jobs:
 
 # Arm64
   build_arm64_Debian12:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-arm
     container:
       image: arm64v8/debian:bookworm
     steps:
