@@ -43,8 +43,10 @@ jobs:
 
     - name: Build JS8Call 
       run: |
+        pwd
         git clone https://github.com/js8call/js8call.git ~/js8call
         mkdir -p ~/js8call/build && cd ~/js8call/build
+        pwd
         cmake ..
         make -j 4
 
@@ -103,10 +105,7 @@ jobs:
 
     - name: Create zip file to upload to release page (ubuntu-24.04-amd64)
       run: |
-        ls -l
-        cd ~/appimage
-        ls -l
-        tar zcf ../js8call_2.3.2-devel_ubuntu-24.04-amd64-ci.tar.gz js8call-x86_64.AppImage
+        tar zcf js8call_2.3.2-devel_ubuntu-24.04-amd64-ci.tar.gz ~/appimage/js8call-x86_64.AppImage
         
     - name: Create Release and Upload Assets
       uses: softprops/action-gh-release@v2.3.2
