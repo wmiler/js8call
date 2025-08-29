@@ -22,4 +22,4 @@ jobs:
           dir
 
       - name: Untar to Program Files (x86)
-        run: Expand-Archive -Path ".\OmniRig120.tar.gz" -DestinationPath "C:\" -Force
+        run: tar -xzf ".\OmniRig120.tar.gz" -C "C:\"
