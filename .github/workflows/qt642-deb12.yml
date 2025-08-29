@@ -1,0 +1,71 @@
+permissions:
+  contents: read
+
+name: Build for Debian x86_64 and Arm64
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      '.github/workflows/qt642-deb12.yml'
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+  build_qt642_x86_64_Debian12:
+    runs-on: ubuntu-latest
+    container:
+      image: debian:bookworm
+    steps:
+
+    - name: Checkout QT 6.4.2
+      run: |
+        pwd
+        git clone https://github.com/qt/qt5.git qt6
+        cd qt6
+        git switch 6.4.2
+        ./init-repository --module-subset=essential,qtmultimedia,qtserialport,qtsvg,qtshadertools,qttools
+        mkdir ./build
+        cd build
+        ../configure
+          
+    - name: Build QT 6.4.2
+      run: |
+        pwd
+        cd qt6/build
+        cmake --build . --parallel 4
+        cmake --install .
+        
+    - name: Upload QT 6.6.3 Artifact binaries
+      uses: actions/upload-artifact@v4
+      with:
+        name: qt642-debian12-x86_64-binaries
+
+  release:
+    runs-on: ubuntu-24.04
+    permissions: write-all
+    needs: build_qt642_x86_64_Debian12
+    steps: 
+        - uses: actions/download-artifact@v4
+          with:
+            name: qt642-debian12-x86_64-binaries
+            path: .
+            
+        - run: |
+            cd mingw64
+            tar zcf qt642-debian12-x86_64-binaries.tar.gz .
+        
+        - uses: softprops/action-gh-release@v2.3.2
+          with:
+            tag_name: qt6-v6.4.2-ci
+            name: "QT6 v6.4.2 for Debian 12 CI build"
+            body: |
+              Release created automatically from commit.
+              This release is for use in the Debian 12 CI builds for JS8Call. Use at your own risk!
+            files: qt642-debian12-x86_64-binaries.tar.gz
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
