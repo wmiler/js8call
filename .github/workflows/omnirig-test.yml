@@ -15,7 +15,9 @@ jobs:
 
     steps:
       - name: Fetch OmniRig.tar.gz from my site
-        run: Invoke-WebRequest -Uri "https://www.spacemonitoring.com/OmniRig120.tar.gz"
+        run: |
+          Invoke-WebRequest -Uri "https://www.spacemonitoring.com/OmniRig120.tar.gz"
+          dir
 
       - name: Untar to Program Files (x86)
-        run: Expand-Archive -Path "OmniRig120.tar.gz" -DestinationPath "C:\" -Force
+        run: Expand-Archive -Path ".\OmniRig120.tar.gz" -DestinationPath "C:\" -Force
