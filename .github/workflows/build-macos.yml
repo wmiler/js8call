@@ -17,7 +17,7 @@ jobs:
     permissions: write-all
     
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     
     - name: Work around for /usr/local perms and grab arch/os info
       run: |
