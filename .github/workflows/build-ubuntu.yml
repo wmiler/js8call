@@ -112,7 +112,7 @@ jobs:
       uses: softprops/action-gh-release@v2.3.2
       with:
         tag_name: js8call_2.3.2-devel_ubuntu-24.04-amd64-ci
-        name: "Ubuntu 24.04 amd64 CI AppImage build"
+        name: "JS8Call v2.3.2-devel Ubuntu 24.04 amd64 CI AppImage build"
         body: |
           Release created automatically from commit.
           This AppImage release is from the Ubuntu 24.04 amd64 CI build for JS8Call. Use at your own risk!
@@ -214,7 +214,7 @@ jobs:
       uses: softprops/action-gh-release@v2.3.2
       with:
         tag_name: js8call_2.3.2-devel_ubuntu-24.04-aarch64-ci
-        name: "Ubuntu 24.04 aarch64/arm64 CI AppImage build"
+        name: "JS8Call v2.3.2-devel Ubuntu 24.04 aarch64/arm64 CI AppImage build"
         body: |
           Release created automatically from commit.
           This AppImage release is from the Ubuntu 24.04 aarch64/arm64 CI build for JS8Call. Use at your own risk!
@@ -325,12 +325,13 @@ jobs:
       run: |
         cd ~/appimage/
         tar zcf ~/js8call_2.3.2-devel_debian-12-x86_64-ci.tar.gz js8call-x86_64.AppImage
+        ls -l ~
         
     - name: Create Release and Upload Assets
       uses: softprops/action-gh-release@v2.3.2
       with:
         tag_name: js8call_2.3.2-devel_debian-12-x86_64-ci
-        name: "Debian 12 x86_64 CI AppImage build"
+        name: "JS8Call v2.3.2-devel Debian 12 x86_64 CI AppImage build"
         body: |
           Release created automatically from commit.
           This AppImage release is from the Debian 12 x86_64 CI build for JS8Call. Use at your own risk!
@@ -441,12 +442,13 @@ jobs:
       run: |
         cd ~/appimage/
         tar zcf ~/js8call_2.3.2-devel_debian-12-aarch64-ci.tar.gz js8call-aarch64.AppImage
+        ls -l ~/js8call_2.3.2-devel_debian-12-aarch64-ci.tar.gz
         
     - name: Create Release and Upload Assets
       uses: softprops/action-gh-release@v2.3.2
       with:
         tag_name: js8call_2.3.2-devel_debian-12-aarch64-ci
-        name: "Debian 12 aarch64/arm64 CI AppImage build"
+        name: "JS8Call v2.3.2-devel Debian 12 aarch64/arm64 CI AppImage build"
         body: |
           Release created automatically from commit.
           This AppImage release is from the Debian 12 aarch64/arm64 CI build for JS8Call. Use at your own risk!
