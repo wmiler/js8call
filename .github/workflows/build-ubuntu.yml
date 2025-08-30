@@ -105,17 +105,8 @@ jobs:
 
     - name: Create zip file to upload to release page (ubuntu-24.04-amd64)
       run: |
-        pwd
-        cd ~
-        pwd
-        ls -l
         cd ~/appimage/
-        pwd
-        ls -l
-        tar zcf ~/js8call_2.3.2-devel_24.04-amd64-ci.tar.gz js8call-x86_64.AppImage
-        cd ~
-        pwd
-        ls -l
+        tar zcf /home/runner/work/js8call/js8call/js8call_2.3.2-devel_24.04-amd64-ci.tar.gz js8call-x86_64.AppImage
         tar tvf ~/js8call_2.3.2-devel_24.04-amd64-ci.tar.gz
         
     - name: Create Release and Upload Assets
@@ -126,7 +117,7 @@ jobs:
         body: |
           Release created automatically from commit.
           This AppImage release is from the Ubuntu 24.04 amd64 CI build for JS8Call. Use at your own risk!
-        files: js8call_2.3.2-devel*tar.gz
+        files: /home/runner/work/js8call/js8call/js8call_2.3.2-devel_24.04-amd64-ci.tar.gz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   
