@@ -105,8 +105,11 @@ jobs:
 
     - name: Create zip file to upload to release page (ubuntu-24.04-amd64)
       run: |
+        pwd
         cd ~/appimage/
+        ls -l
         tar zcf ~/js8call_2.3.2-devel_24.04-amd64-ci.tar.gz js8call-x86_64.AppImage
+        ls -l ~
         
     - name: Create Release and Upload Assets
       uses: softprops/action-gh-release@v2.3.2
