@@ -107,7 +107,7 @@ jobs:
       run: |
         cd ~/appimage/
         tar zcf /home/runner/work/js8call/js8call/js8call_2.3.2-devel_24.04-amd64-ci.tar.gz js8call-x86_64.AppImage
-        tar tvf ~/js8call_2.3.2-devel_24.04-amd64-ci.tar.gz
+        tar tvf /home/runner/work/js8call/js8call/js8call_2.3.2-devel_24.04-amd64-ci.tar.gz
         
     - name: Create Release and Upload Assets
       uses: softprops/action-gh-release@v2.3.2
