@@ -112,17 +112,18 @@ jobs:
       uses: softprops/action-gh-release@v2.3.2
       with:
         tag_name: js8call_2.3.2-devel_ubuntu-24.04-amd64-ci
-        name: "Ubuntu 24.04 amd64 CI build"
+        name: "Ubuntu 24.04 amd64 CI AppImage build"
         body: |
           Release created automatically from commit.
-          This release is from the Ubuntu 24.04 amd64 CI build for JS8Call. Use at your own risk!
+          This AppImage release is from the Ubuntu 24.04 amd64 CI build for JS8Call. Use at your own risk!
         files: js8call_2.3.2-devel_ubuntu-24.04-amd64-ci.tar.gz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   
   build_arm64_2404:
     runs-on: ubuntu-24.04-arm
-
+    permissions: write-all
+    
     steps:
     - uses: actions/checkout@v5
 
@@ -213,18 +214,18 @@ jobs:
       uses: softprops/action-gh-release@v2.3.2
       with:
         tag_name: js8call_2.3.2-devel_ubuntu-24.04-aarch64-ci
-        name: "Ubuntu 24.04 aarch64/arm64 CI build"
+        name: "Ubuntu 24.04 aarch64/arm64 CI AppImage build"
         body: |
           Release created automatically from commit.
-          This release is from the Ubuntu 24.04 aarch64/arm64 CI build for JS8Call. Use at your own risk!
+          This AppImage release is from the Ubuntu 24.04 aarch64/arm64 CI build for JS8Call. Use at your own risk!
         files: js8call_2.3.2-devel_ubuntu-24.04-aarch64-ci.tar.gz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  
-        
-# ### Beware! Monsters live here! ###
+  
   build_x86_64_Debian12:
     runs-on: ubuntu-latest
+    permissions: write-all
+    
     container:
       image: debian:bookworm
     steps:
@@ -259,24 +260,6 @@ jobs:
         make -j 4
         make install-strip
         ldconfig
-
-#    - name: Checkout QT 6.4.2
-#      run: |
-#        pwd
-#        git clone https://github.com/qt/qt5.git qt6
-#        cd qt6
-#        git switch 6.4.2
-#        ./init-repository --module-subset=essential,qtmultimedia,qtserialport,qtsvg,qtshadertools,qttools
-#        mkdir ./build
-#        cd build
-#        ../configure
-#          
-#    - name: Build QT 6.4.2
-#      run: |
-#        pwd
-#        cd qt6/build
-#        cmake --build . --parallel 4
-#        cmake --install .
 
     - name: Build JS8Call 
       run: |
@@ -347,17 +330,18 @@ jobs:
       uses: softprops/action-gh-release@v2.3.2
       with:
         tag_name: js8call_2.3.2-devel_debian-12-x86_64-ci
-        name: "Debian 12 x86_64 CI build"
+        name: "Debian 12 x86_64 CI AppImage build"
         body: |
           Release created automatically from commit.
-          This release is from the Debian 12 x86_64 CI build for JS8Call. Use at your own risk!
+          This AppImage release is from the Debian 12 x86_64 CI build for JS8Call. Use at your own risk!
         files: js8call_2.3.2-devel_debian-12-x86_64-ci.tar.gz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-# Arm64
   build_arm64_Debian12:
     runs-on: ubuntu-24.04-arm
+    permissions: write-all
+    
     container:
       image: arm64v8/debian:bookworm
     steps:
@@ -462,10 +446,10 @@ jobs:
       uses: softprops/action-gh-release@v2.3.2
       with:
         tag_name: js8call_2.3.2-devel_debian-12-aarch64-ci
-        name: "Debian 12 aarch64/arm64 CI build"
+        name: "Debian 12 aarch64/arm64 CI AppImage build"
         body: |
           Release created automatically from commit.
-          This release is from the Debian 12 aarch64/arm64 CI build for JS8Call. Use at your own risk!
+          This AppImage release is from the Debian 12 aarch64/arm64 CI build for JS8Call. Use at your own risk!
         files: js8call_2.3.2-devel_debian-12-aarch64-ci.tar.gz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
