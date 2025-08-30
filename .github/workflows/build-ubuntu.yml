@@ -107,7 +107,6 @@ jobs:
       run: |
         cd ~/appimage/
         tar zcf /home/runner/work/js8call/js8call/js8call_2.3.2-devel_24.04-amd64-ci.tar.gz js8call-x86_64.AppImage
-        tar tvf /home/runner/work/js8call/js8call/js8call_2.3.2-devel_24.04-amd64-ci.tar.gz
         
     - name: Create Release and Upload Assets
       uses: softprops/action-gh-release@v2.3.2
@@ -209,7 +208,7 @@ jobs:
     - name: Create zip file to upload to release page (ubuntu-24.04-aarch64)
       run: |
         cd ~/appimage/
-        tar zcf ~/js8call_2.3.2-devel_24.04-aarch64-ci.tar.gz js8call-aarch64.AppImage
+        tar zcf /home/runner/work/js8call/js8call/js8call_2.3.2-devel_24.04-aarch64-ci.tar.gz js8call-aarch64.AppImage
         
     - name: Create Release and Upload Assets
       uses: softprops/action-gh-release@v2.3.2
@@ -219,7 +218,7 @@ jobs:
         body: |
           Release created automatically from commit.
           This AppImage release is from the Ubuntu 24.04 aarch64/arm64 CI build for JS8Call. Use at your own risk!
-        files: js8call_2.3.2-devel_24.04-aarch64-ci.tar.gz
+        files: /home/runner/work/js8call/js8call/js8call_2.3.2-devel_24.04-aarch64-ci.tar.gz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
@@ -325,7 +324,7 @@ jobs:
     - name: Create zip file to upload to release page (debian-12-x86_64)
       run: |
         cd ~/appimage/
-        tar zcf ~/js8call_2.3.2-devel_deb12-x86_64-ci.tar.gz js8call-x86_64.AppImage
+        tar zcf /home/runner/work/js8call/js8call/js8call_2.3.2-devel_deb12-x86_64-ci.tar.gz js8call-x86_64.AppImage
         ls -l ~
         
     - name: Create Release and Upload Assets
@@ -336,7 +335,7 @@ jobs:
         body: |
           Release created automatically from commit.
           This AppImage release is from the Debian 12 x86_64 CI build for JS8Call. Use at your own risk!
-        files: js8call_2.3.2-devel_deb12-x86_64-ci.tar.gz
+        files: /home/runner/work/js8call/js8call/js8call_2.3.2-devel_deb12-x86_64-ci.tar.gz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -442,8 +441,7 @@ jobs:
     - name: Create zip file to upload to release page (debian-12-aarch64)
       run: |
         cd ~/appimage/
-        tar zcf ~/js8call_2.3.2-devel_debian-12-aarch64-ci.tar.gz js8call-aarch64.AppImage
-        ls -l ~/js8call_2.3.2-devel_deb12-aarch64-ci.tar.gz
+        tar zcf /home/runner/work/js8call/js8call/js8call_2.3.2-devel_debian-12-aarch64-ci.tar.gz js8call-aarch64.AppImage
         
     - name: Create Release and Upload Assets
       uses: softprops/action-gh-release@v2.3.2
@@ -453,6 +451,6 @@ jobs:
         body: |
           Release created automatically from commit.
           This AppImage release is from the Debian 12 aarch64/arm64 CI build for JS8Call. Use at your own risk!
-        files: js8call_2.3.2-devel_deb12-aarch64-ci.tar.gz
+        files: /home/runner/work/js8call/js8call/js8call_2.3.2-devel_deb12-aarch64-ci.tar.gz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
