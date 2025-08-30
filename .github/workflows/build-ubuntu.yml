@@ -105,7 +105,8 @@ jobs:
 
     - name: Create zip file to upload to release page (ubuntu-24.04-amd64)
       run: |
-        tar zcf js8call_2.3.2-devel_ubuntu-24.04-amd64-ci.tar.gz ~/appimage/js8call-x86_64.AppImage
+        cd ~/appimage/
+        tar zcf ~/js8call_2.3.2-devel_ubuntu-24.04-amd64-ci.tar.gz js8call-x86_64.AppImage
         
     - name: Create Release and Upload Assets
       uses: softprops/action-gh-release@v2.3.2
@@ -205,7 +206,7 @@ jobs:
         
     - name: Create zip file to upload to release page (ubuntu-24.04-aarch64)
       run: |
-        cd appimage
+        cd ~/appimage/
         tar zcf ~/js8call_2.3.2-devel_ubuntu-24.04-aarch64-ci.tar.gz js8call-aarch64.AppImage
         
     - name: Create Release and Upload Assets
@@ -339,8 +340,8 @@ jobs:
         
     - name: Create zip file to upload to release page (debian-12-x86_64)
       run: |
-        cd appimage
-        tar zcf ../js8call_2.3.2-devel_debian-12-x86_64-ci.tar.gz js8call-x86_64.AppImage
+        cd ~/appimage/
+        tar zcf ~/js8call_2.3.2-devel_debian-12-x86_64-ci.tar.gz js8call-x86_64.AppImage
         
     - name: Create Release and Upload Assets
       uses: softprops/action-gh-release@v2.3.2
@@ -454,8 +455,8 @@ jobs:
 
     - name: Create zip file to upload to release page (debian-12-aarch64)
       run: |
-        cd appimage
-        tar zcf ../js8call_2.3.2-devel_debian-12-aarch64-ci.tar.gz js8call-aarch64.AppImage
+        cd ~/appimage/
+        tar zcf ~/js8call_2.3.2-devel_debian-12-aarch64-ci.tar.gz js8call-aarch64.AppImage
         
     - name: Create Release and Upload Assets
       uses: softprops/action-gh-release@v2.3.2
