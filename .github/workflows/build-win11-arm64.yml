@@ -45,6 +45,11 @@ jobs:
         mkdir -p js8libs
         mkdir -p build
 
+    - name: See what is where
+      run: |
+        pwd
+        ls
+
     - name: Release download for QT6
       uses: robinraju/release-downloader@v1.12
       with:
@@ -52,7 +57,7 @@ jobs:
         fileName: 'qt663-windows-msys2-binaries*.zip'
         tag: 'qt6-v6.6.3-ci'
         extract: true
-        out-file-path: 'D:/a/_temp/msys64/mingw64/'
+        out-file-path: 'C:/a/_temp/msys64/mingw64/'
 
     - name: Release download for hamlib
       uses: robinraju/release-downloader@v1.12
@@ -61,7 +66,7 @@ jobs:
         fileName: 'hamlib-windows-msys2-binaries*.zip'
         tag: 'hamlib-v4.6.4-ci'
         extract: true
-        out-file-path: 'D:/a/_temp/msys64/mingw64/'
+        out-file-path: 'C:/a/_temp/msys64/mingw64/'
        
 # Below is the workaround for installing OmniRig on the Github runners
 # which is just everything in Program Files (86)\Afreet directory plus the reg file.
@@ -109,7 +114,7 @@ jobs:
       with:
         script: |
           const shortSha = process.env.SHORT_SHA;
-          const tagName = `js8call-v2.3.2-devel-ci`;
+          const tagName = `js8call-v2.3.2-devel-win11-arm-ci`;
             
           await github.rest.git.createRef({
             owner: context.repo.owner,
@@ -126,7 +131,7 @@ jobs:
       shell: msys2 {0}
       run: |
         cd build
-        zip -r "../js8call-2.3.2-devel-win64.exe-ci-github.zip" "js8call-2.3.2-devel-win64.exe"
+        zip -r "../js8call-2.3.2-devel-win11-arm64-ci-github.zip" "js8call-2.3.2-devel-win64.exe"
       continue-on-error: true
          
     - name: Create Changelog
@@ -166,13 +171,13 @@ jobs:
     - name: Create Release and Upload Assets
       uses: softprops/action-gh-release@v2.3.2
       with:
-        tag_name: js8call-v2.3.2-devel-ci-github
+        tag_name: js8call-v2.3.2-devel-win11-arm-ci
         name: "JS8Call v2.3.2-devel Windows MSYS2 CI Github runner build ${{ steps.get_sha.outputs.short_sha }}"
         prerelease: true
         body: |
           Release created automatically from commit ${{ github.sha }}.
           This release is from the Windows MSYS2 CI builds via Github runner for JS8Call. Use at your own risk!
           ${{steps.github_release.outputs.changelog}}
-        files: js8call-2.3.2-devel-win64.exe-ci-github.zip
+        files: js8call-2.3.2-devel-win11-arm64-ci-github.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
