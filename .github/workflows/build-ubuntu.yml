@@ -334,7 +334,7 @@ jobs:
         body: |
           Release created automatically from commit.
           This AppImage release is from the Debian 12 x86_64 CI build for JS8Call. Use at your own risk!
-        files: /__w/js8call/js8call/js8call/js8call_2.3.2-devel_deb12-x86_64-ci.tar.gz
+        files: /__w/js8call/js8call/js8call_2.3.2-devel_deb12-x86_64-ci.tar.gz
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
