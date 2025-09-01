@@ -71,7 +71,7 @@ jobs:
     permissions: write-all
     needs: build-qt663-windows-msys2
     steps: 
-        - uses: actions/download-artifact@v4
+        - uses: actions/download-artifact@v5
           with:
             name: qt663-windows-msys2-binaries
             path: mingw64
