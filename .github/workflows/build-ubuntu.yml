@@ -103,6 +103,11 @@ jobs:
         name: js8call_2.3.2-devel_x86_64_ubuntu-24.04.AppImage
         path: ~/appimage/js8call-x86_64.AppImage
 
+    - name: Create GitHub Release and get short commit SHA
+      id: get_sha
+      run: |
+        echo "short_sha=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
+
     - name: Create zip file to upload to release page (ubuntu-24.04-amd64)
       run: |
         cd ~/appimage/
@@ -114,7 +119,7 @@ jobs:
         tag_name: js8call_2.3.2-devel_ubuntu-24.04-amd64-ci
         name: "JS8Call v2.3.2-devel Ubuntu 24.04 amd64 CI AppImage build"
         body: |
-          Release created automatically from commit.
+          Release created automatically from commit ${{ steps.get_sha.outputs.short_sha }}.
           This AppImage release is from the Ubuntu 24.04 amd64 CI build for JS8Call. Use at your own risk!
         files: /home/runner/work/js8call/js8call/js8call_2.3.2-devel_24.04-amd64-ci.tar.gz
       env:
@@ -205,6 +210,11 @@ jobs:
         name: js8call_2.3.2-devel_aarch64_ubuntu-24.04.AppImage
         path: ~/appimage/js8call-aarch64.AppImage
         
+    - name: Create GitHub Release and get short commit SHA
+      id: get_sha
+      run: |
+        echo "short_sha=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
+        
     - name: Create zip file to upload to release page (ubuntu-24.04-aarch64)
       run: |
         cd ~/appimage/
@@ -216,7 +226,7 @@ jobs:
         tag_name: js8call_2.3.2-devel_ubuntu-24.04-aarch64-ci
         name: "JS8Call v2.3.2-devel Ubuntu 24.04 aarch64/arm64 CI AppImage build"
         body: |
-          Release created automatically from commit.
+          Release created automatically from commit ${{ steps.get_sha.outputs.short_sha }}.
           This AppImage release is from the Ubuntu 24.04 aarch64/arm64 CI build for JS8Call. Use at your own risk!
         files: /home/runner/work/js8call/js8call/js8call_2.3.2-devel_24.04-aarch64-ci.tar.gz
       env:
@@ -321,6 +331,11 @@ jobs:
         name: js8call_2.3.2-devel_x86_64_debian-12.AppImage
         path: ~/appimage/js8call-x86_64.AppImage
         
+    - name: Create GitHub Release and get short commit SHA
+      id: get_sha
+      run: |
+        echo "short_sha=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
+        
     - name: Create zip file to upload to release page (debian-12-x86_64)
       run: |
         cd ~/appimage/
@@ -332,7 +347,7 @@ jobs:
         tag_name: js8call_2.3.2-devel_debian-12-x86_64-ci
         name: "JS8Call v2.3.2-devel Debian 12 x86_64 CI AppImage build"
         body: |
-          Release created automatically from commit.
+          Release created automatically from commit ${{ steps.get_sha.outputs.short_sha }}.
           This AppImage release is from the Debian 12 x86_64 CI build for JS8Call. Use at your own risk!
         files: /__w/js8call/js8call/js8call_2.3.2-devel_deb12-x86_64-ci.tar.gz
       env:
@@ -394,6 +409,11 @@ jobs:
       with:
         name: js8call_2.3.2-devel_aarch64_debian-12.deb
         path: ~/js8call/build/js8call_2.3.2-devel_arm64.deb
+        
+    - name: Create GitHub Release and get short commit SHA
+      id: get_sha
+      run: |
+        echo "short_sha=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
 
     - name: Package JS8Call Debian 12 AppImage (arm64)
       run: |
@@ -448,7 +468,7 @@ jobs:
         tag_name: js8call_2.3.2-devel_debian-12-aarch64-ci
         name: "JS8Call v2.3.2-devel Debian 12 aarch64/arm64 CI AppImage build"
         body: |
-          Release created automatically from commit.
+          Release created automatically from commit ${{ steps.get_sha.outputs.short_sha }}.
           This AppImage release is from the Debian 12 aarch64/arm64 CI build for JS8Call. Use at your own risk!
         files: /__w/js8call/js8call/js8call_2.3.2-devel_debian-12-aarch64-ci.tar.gz
       env:

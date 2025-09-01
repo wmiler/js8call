@@ -29,7 +29,7 @@ jobs:
       uses: robinraju/release-downloader@v1.12
       with:
         repository: 'Chris-AC9KH/js8lib'
-        fileName: 'js8lib-2.3_Darwin_arm64.tar.gz'
+        fileName: 'js8lib-2.3_Darwin_arm64_Qt6.6.3.tar.gz'
         latest: true
         extract: true
         out-file-path: '/usr/local/'
@@ -54,7 +54,8 @@ jobs:
         name: "JS8Call CI build for MacOS 15"
         body: |
           Release created automatically from commit.
-          This release is the CI build of JS8Call for MacOS 15 (M1+ cpus). Use at your own risk!
+          This release is the CI build of JS8Call for MacOS 15 (M1+ cpus), with QT 6.6.3. 
+          Use at your own risk!
         files: |
           js8call_2.3.2-devel_arm64_macos15.app.tar.gz
           env:
