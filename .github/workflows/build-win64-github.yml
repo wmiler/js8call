@@ -92,7 +92,7 @@ jobs:
     - name: Upload Artifact (from github runner)
       uses: actions/upload-artifact@v4
       with:
-        name: js8call-2.3.2-devel-win64-github.exe
+        name: js8call-2.3.2-devel-win64.exe
         path: "build/js8call-2.3.2-devel-win64.exe"
 
 # This doesn't work if we keep commiting to the same tag, need to add a bit of if/else.
@@ -126,7 +126,7 @@ jobs:
       shell: msys2 {0}
       run: |
         cd build
-        zip -r "../js8call-2.3.2-devel-win64.exe-ci-github.zip" "js8call-2.3.2-devel-win64.exe"
+        zip -r "../js8call-2.3.2-devel-win64.exe-ci.zip" "js8call-2.3.2-devel-win64.exe"
       continue-on-error: true
          
     - name: Create Changelog
@@ -166,13 +166,12 @@ jobs:
     - name: Create Release and Upload Assets
       uses: softprops/action-gh-release@v2.3.2
       with:
-        tag_name: js8call-v2.3.2-devel-ci-github
+        tag_name: js8call-v2.3.2-devel-ci
         name: "JS8Call v2.3.2-devel Windows MSYS2 CI Github runner build ${{ steps.get_sha.outputs.short_sha }}"
-        prerelease: true
         body: |
           Release created automatically from commit ${{ github.sha }}.
           This release is from the Windows MSYS2 CI builds via Github runner for JS8Call. Use at your own risk!
           ${{steps.github_release.outputs.changelog}}
-        files: js8call-2.3.2-devel-win64.exe-ci-github.zip
+        files: js8call-2.3.2-devel-win64.exe-ci.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
