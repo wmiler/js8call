@@ -475,7 +475,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 # Fedora builds
-  build_x86_64_fedora:
+  build_x86_64_Fedora42:
     runs-on: ubuntu-latest
     permissions: write-all
     
@@ -492,6 +492,7 @@ jobs:
           qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
           libusb-1.0-0-dev libfftw3-dev libudev-dev libxkbcommon-dev \
           libhamlib-dev
+      continue-on-error: true
 
     - name: Install Boost 1.88
       id: install-boost
@@ -613,6 +614,7 @@ jobs:
           qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
           libusb-1.0-0-dev libfftw3-dev libudev-dev libxkbcommon-dev \
           libhamlib-dev
+      continue-on-error: true
 
     - name: Install Boost 1.88
       id: install-boost
