@@ -487,11 +487,11 @@ jobs:
     - name: Install dependencies
       run: |
         uname -a
-        dnf upgrade --refresh
-        dnf install -y build-essential git cmake curl wget automake libtool libfuse2 imagemagick \
-          qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
-          libusb-1.0-0-dev libfftw3-dev libudev-dev libxkbcommon-dev \
-          libhamlib-dev
+        dnf upgrade -y --refresh
+        dnf install -y gcc git which fuse ImageMagick cmake curl wget automake libtool \
+          qt6-qtbase-devel qt6-qtmultimedia-devel qt6-qtserialport-devel \
+          libusb1-devel fftw-devel libxkbcommon-devel hamlib-devel
+
       continue-on-error: true
 
     - name: Install Boost 1.88
@@ -609,11 +609,10 @@ jobs:
     - name: Install dependencies
       run: |
         uname -a
-        dnf upgrade --refresh
-        dnf install -y build-essential git cmake curl wget automake libtool libfuse2 imagemagick \
-          qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
-          libusb-1.0-0-dev libfftw3-dev libudev-dev libxkbcommon-dev \
-          libhamlib-dev
+        dnf upgrade -y --refresh
+        dnf install -y gcc git which fuse ImageMagick cmake curl wget automake libtool \
+          qt6-qtbase-devel qt6-qtmultimedia-devel qt6-qtserialport-devel \
+          libusb1-devel fftw-devel libxkbcommon-devel hamlib-devel
       continue-on-error: true
 
     - name: Install Boost 1.88
