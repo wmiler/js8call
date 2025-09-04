@@ -490,7 +490,7 @@ jobs:
         dnf upgrade -y --refresh
         dnf install -y gcc git clang which fuse ImageMagick cmake curl wget automake libtool \
           qt6-qtbase-devel qt6-qtmultimedia-devel qt6-qtserialport-devel libudev-devel \
-          libusb1-devel fftw-devel libxkbcommon-devel hamlib-devel rpm-build boost
+          libusb1-devel fftw-devel libxkbcommon-devel hamlib-devel rpm-build boost-devel
 
 # Use Boost 1.83 from package repo
 #    - name: Install Boost 1.88
@@ -616,7 +616,7 @@ jobs:
         dnf upgrade -y --refresh
         dnf install -y gcc git clang which fuse ImageMagick cmake curl wget automake libtool \
           qt6-qtbase-devel qt6-qtmultimedia-devel qt6-qtserialport-devel \
-          libusb1-devel fftw-devel libxkbcommon-devel hamlib-devel rpm-build libudev-devel boost
+          libusb1-devel fftw-devel libxkbcommon-devel hamlib-devel rpm-build libudev-devel boost-devel
 
 # Use Boost 1.83 from package repo
 #    - name: Install Boost 1.88
