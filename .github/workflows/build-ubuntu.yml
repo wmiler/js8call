@@ -534,7 +534,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: js8call_2.3.2-devel_x86_64_fedora-42.rpm
-        path: ~/js8call/build/js8call_2.3.2-devel.x86_64.rpm
+        path: ~/js8call/build/js8call-2.3.2-devel.x86_64.rpm
       continue-on-error: true
       
     - name: Package JS8Call Fedora 42 AppImage (x86_64)
@@ -556,7 +556,7 @@ jobs:
           cp ~/js8call/js8call.desktop ~/appimage/AppDir/usr/share/applications/ && \
         if [ ! -f ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png ]; then \
         mkdir -p ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps && \
-        convert ~/js8call/artwork/js8call_icon.png -resize 128x128 \
+        magick ~/js8call/artwork/js8call_icon.png -resize 128x128 \
             ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png; \
         fi
         cd ~/appimage
@@ -574,12 +574,14 @@ jobs:
           --output appimage \
           --desktop-file AppDir/usr/share/applications/js8call.desktop \
           --icon-file AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png
+      continue-on-error: true
         
     - name: Upload AppImage Artifact
       uses: actions/upload-artifact@v4
       with:
         name: js8call_2.3.2-devel_x86_64_fedora-42.AppImage
         path: ~/appimage/js8call-x86_64.AppImage
+      continue-on-error: true
         
     - name: Create GitHub Release and get short commit SHA
       id: get_sha
@@ -590,6 +592,7 @@ jobs:
       run: |
         cd ~/appimage/
         tar zcf /__w/js8call/js8call/js8call_2.3.2-devel_fed42-x86_64-ci.tar.gz js8call-x86_64.AppImage
+      continue-on-error: true
         
     - name: Create Release and Upload Assets
       uses: softprops/action-gh-release@v2.3.2
@@ -662,7 +665,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: js8call_2.3.2-devel_aarch64_fedora-42.rpm
-        path: ~/js8call/build/js8call_2.3.2-devel_arm64.rpm
+        path: ~/js8call/build/js8call-2.3.2-devel_arm64.rpm
       continue-on-error: true
       
     - name: Create GitHub Release and get short commit SHA
@@ -689,7 +692,7 @@ jobs:
           cp ~/js8call/js8call.desktop ~/appimage/AppDir/usr/share/applications/ && \
         if [ ! -f ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png ]; then \
         mkdir -p ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps && \
-        convert ~/js8call/artwork/js8call_icon.png -resize 128x128 \
+        magick ~/js8call/artwork/js8call_icon.png -resize 128x128 \
             ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png; \
         fi
         cd ~/appimage
@@ -707,17 +710,20 @@ jobs:
           --output appimage \
           --desktop-file AppDir/usr/share/applications/js8call.desktop \
           --icon-file AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png
+      continue-on-error: true
         
     - name: Upload AppImage Artifact
       uses: actions/upload-artifact@v4
       with:
         name: js8call_2.3.2-devel_aarch64_fedora-12.AppImage
         path: ~/appimage/js8call-aarch64.AppImage
+      continue-on-error: true
 
     - name: Create zip file to upload to release page (fedora-42-aarch64)
       run: |
         cd ~/appimage/
         tar zcf /__w/js8call/js8call/js8call_2.3.2-devel_fedora-42-aarch64-ci.tar.gz js8call-aarch64.AppImage
+      continue-on-error: true
         
     - name: Create Release and Upload Assets
       uses: softprops/action-gh-release@v2.3.2
