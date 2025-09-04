@@ -490,28 +490,30 @@ jobs:
         dnf upgrade -y --refresh
         dnf install -y gcc git clang which fuse ImageMagick cmake curl wget automake libtool \
           qt6-qtbase-devel qt6-qtmultimedia-devel qt6-qtserialport-devel libudev-devel \
-          libusb1-devel fftw-devel libxkbcommon-devel hamlib-devel rpm-build
+          libusb1-devel fftw-devel libxkbcommon-devel hamlib-devel rpm-build boost
 
-    - name: Install Boost 1.88
-      id: install-boost
-      run: |
-        curl --location --output ./boost-1.88.0.tar.gz https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.gz
-        tar zxf boost-1.88.0.tar.gz
-        cd boost_1_88_0
-        ./bootstrap.sh
-        ./b2 install
+# Use Boost 1.83 from package repo
+#    - name: Install Boost 1.88
+#      id: install-boost
+#      run: |
+#        curl --location --output ./boost-1.88.0.tar.gz https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.gz
+#        tar zxf boost-1.88.0.tar.gz
+#        cd boost_1_88_0
+#        ./bootstrap.sh
+#        ./b2 install
 
-    - name: Build Hamlib
-      run: |
-        ldd --version
-        git clone https://github.com/Hamlib/Hamlib.git ~/hamlib
-        cd ~/hamlib
-        git checkout 4.6.4
-        ./bootstrap
-        ./configure
-        make -j 4
-        make install-strip
-        ldconfig
+# Use Hamlib 4.6.4 from package repo
+#    - name: Build Hamlib
+#      run: |
+#        ldd --version
+#        git clone https://github.com/Hamlib/Hamlib.git ~/hamlib
+#        cd ~/hamlib
+#        git checkout 4.6.4
+#        ./bootstrap
+#        ./configure
+#        make -j 4
+#        make install-strip
+#        ldconfig
 
     - name: Build JS8Call 
       run: |
@@ -614,28 +616,30 @@ jobs:
         dnf upgrade -y --refresh
         dnf install -y gcc git clang which fuse ImageMagick cmake curl wget automake libtool \
           qt6-qtbase-devel qt6-qtmultimedia-devel qt6-qtserialport-devel \
-          libusb1-devel fftw-devel libxkbcommon-devel hamlib-devel rpm-build libudev-devel
+          libusb1-devel fftw-devel libxkbcommon-devel hamlib-devel rpm-build libudev-devel boost
 
-    - name: Install Boost 1.88
-      id: install-boost
-      run: |
-        curl --location --output ./boost-1.88.0.tar.gz https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.gz
-        tar zxf boost-1.88.0.tar.gz
-        cd boost_1_88_0
-        ./bootstrap.sh
-        ./b2 install
+# Use Boost 1.83 from package repo
+#    - name: Install Boost 1.88
+#      id: install-boost
+#      run: |
+#        curl --location --output ./boost-1.88.0.tar.gz https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.gz
+#        tar zxf boost-1.88.0.tar.gz
+#        cd boost_1_88_0
+#        ./bootstrap.sh
+#        ./b2 install
 
-    - name: Build Hamlib
-      run: |
-        ldd --version
-        git clone https://github.com/Hamlib/Hamlib.git ~/hamlib
-        cd ~/hamlib
-        git checkout 4.6.4
-        ./bootstrap
-        ./configure
-        make -j 4
-        make install-strip
-        ldconfig
+# Use Hamlib 4.6.4 from package repo
+#    - name: Build Hamlib
+#      run: |
+#        ldd --version
+#        git clone https://github.com/Hamlib/Hamlib.git ~/hamlib
+#        cd ~/hamlib
+#        git checkout 4.6.4
+#        ./bootstrap
+#        ./configure
+#        make -j 4
+#        make install-strip
+#        ldconfig
 
     - name: Build JS8Call 
       run: |
