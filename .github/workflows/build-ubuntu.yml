@@ -5,11 +5,11 @@ name: Build for Debian x86_64 and Arm64
 
 on:
   push:
-    branches: [ "fedora" ]
+    branches: [ "main" ]
     paths:
       '.github/workflows/build-ubuntu.yml'
   pull_request:
-    branches: [ "fedora" ]
+    branches: [ "main" ]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
