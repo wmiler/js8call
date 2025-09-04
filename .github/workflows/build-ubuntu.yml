@@ -488,11 +488,9 @@ jobs:
       run: |
         uname -a
         dnf upgrade -y --refresh
-        dnf install -y gcc git which fuse ImageMagick cmake curl wget automake libtool \
-          qt6-qtbase-devel qt6-qtmultimedia-devel qt6-qtserialport-devel \
-          libusb1-devel fftw-devel libxkbcommon-devel hamlib-devel
-
-      continue-on-error: true
+        dnf install -y gcc git clang which fuse ImageMagick cmake curl wget automake libtool \
+          qt6-qtbase-devel qt6-qtmultimedia-devel qt6-qtserialport-devel libudev-devel \
+          libusb1-devel fftw-devel libxkbcommon-devel hamlib-devel rpm-build
 
     - name: Install Boost 1.88
       id: install-boost
@@ -519,20 +517,24 @@ jobs:
       run: |
         git clone https://github.com/js8call/js8call.git ~/js8call
         mkdir -p ~/js8call/build && cd ~/js8call/build
-        cmake ..
-        make -j 4
+        cmake -D CMAKE_INSTALL_PREFIX=/opt/js8call ..
+        cmake --build . -- -j 4
 
-    - name: Package JS8Call (deb)
+# Below 2 aren't working atm
+# Failing on the rigctl/d runpaths
+    - name: Package JS8Call (rpm)
       run: |
         cd ~/js8call/build
-        cpack -G DEB
+        cpack -G RPM
+      continue-on-error: true
 
-    - name: Upload Artifact (deb)
+    - name: Upload Artifact (rpm)
       uses: actions/upload-artifact@v4
       with:
-        name: js8call_2.3.2-devel_x86_64_fedora-42.deb
-        path: ~/js8call/build/js8call_2.3.2-devel_amd64.deb
-
+        name: js8call_2.3.2-devel_x86_64_fedora-42.rpm
+        path: ~/js8call/build/js8call_2.3.2-devel.x86_64.rpm
+      continue-on-error: true
+      
     - name: Package JS8Call Fedora 42 AppImage (x86_64)
       run: |
         mkdir -p ~/appimage/AppDir
@@ -610,10 +612,9 @@ jobs:
       run: |
         uname -a
         dnf upgrade -y --refresh
-        dnf install -y gcc git which fuse ImageMagick cmake curl wget automake libtool \
+        dnf install -y gcc git clang which fuse ImageMagick cmake curl wget automake libtool \
           qt6-qtbase-devel qt6-qtmultimedia-devel qt6-qtserialport-devel \
-          libusb1-devel fftw-devel libxkbcommon-devel hamlib-devel
-      continue-on-error: true
+          libusb1-devel fftw-devel libxkbcommon-devel hamlib-devel rpm-build libudev-devel
 
     - name: Install Boost 1.88
       id: install-boost
@@ -640,20 +641,24 @@ jobs:
       run: |
         git clone https://github.com/js8call/js8call.git ~/js8call
         mkdir -p ~/js8call/build && cd ~/js8call/build
-        cmake ..
-        make -j 4
+        cmake -D CMAKE_INSTALL_PREFIX=/opt/js8call ..
+        cmake --build . -- -j 4
 
-    - name: Package JS8Call (deb)
+# Below 2 aren't working atm
+# Failing on the rigctl/d runpaths
+    - name: Package JS8Call (rpm)
       run: |
         cd ~/js8call/build
-        cpack -G DEB
-
+        cpack -G RPM
+      continue-on-error: true
+      
     - name: Upload Artifact (fed)
       uses: actions/upload-artifact@v4
       with:
-        name: js8call_2.3.2-devel_aarch64_fedora-42.deb
-        path: ~/js8call/build/js8call_2.3.2-devel_arm64.deb
-        
+        name: js8call_2.3.2-devel_aarch64_fedora-42.rpm
+        path: ~/js8call/build/js8call_2.3.2-devel_arm64.rpm
+      continue-on-error: true
+      
     - name: Create GitHub Release and get short commit SHA
       id: get_sha
       run: |
