@@ -535,7 +535,7 @@ jobs:
         path: ~/js8call/build/js8call-2.3.2-devel.x86_64.rpm
       continue-on-error: true
       
-    - name: Package JS8Call Fedora 42 AppImage (x86_64)
+    - name: Package JS8Call Fedora 42 AppImage (x86_64 fed)
       run: |
         mkdir -p ~/appimage/AppDir
         cd ~/js8call/build
@@ -567,7 +567,7 @@ jobs:
         
         EXEC_PATH=$(find AppDir -type f -name "js8call" -executable | head -1) && \
           echo "Found executable at: $EXEC_PATH" && \
-          ~/js8call/build/linuxdeploy/usr/bin/linuxdeploy --appdir AppDir \
+          NO_STRIP=1 ~/js8call/build/linuxdeploy/usr/bin/linuxdeploy --appdir AppDir \
           --executable "$EXEC_PATH" \
           --plugin qt \
           --output appimage \
@@ -658,7 +658,7 @@ jobs:
         cpack -G RPM
       continue-on-error: true
       
-    - name: Upload Artifact (fed)
+    - name: Upload Artifact (arm64 fed)
       uses: actions/upload-artifact@v4
       with:
         name: js8call_2.3.2-devel_aarch64_fedora-42.rpm
@@ -702,7 +702,7 @@ jobs:
         
         EXEC_PATH=$(find AppDir -type f -name "js8call" -executable | head -1) && \
           echo "Found executable at: $EXEC_PATH" && \
-          ~/js8call/build/linuxdeploy/usr/bin/linuxdeploy --appdir AppDir \
+          NO_STRIP=1 ~/js8call/build/linuxdeploy/usr/bin/linuxdeploy --appdir AppDir \
           --executable "$EXEC_PATH" \
           --plugin qt \
           --output appimage \
