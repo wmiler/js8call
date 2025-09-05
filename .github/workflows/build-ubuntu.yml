@@ -522,8 +522,6 @@ jobs:
         cmake -D CMAKE_INSTALL_PREFIX=/opt/js8call ..
         cmake --build . -- -j 4
 
-# Below 2 aren't working atm
-# Failing on the rigctl/d runpaths
     - name: Package JS8Call (rpm)
       run: |
         cd ~/js8call/build
@@ -565,6 +563,7 @@ jobs:
         ln -s ~/js8call/build/linuxdeploy-plugin-qt/usr/bin/linuxdeploy-plugin-qt ~/js8call/build/linuxdeploy/usr/bin/
 
         ls -l $(find AppDir -type f -name "js8call" -executable | head -1)
+        rm AppDir/usr/bin/js8call
         
         EXEC_PATH=$(find AppDir -type f -name "js8call" -executable | head -1) && \
           echo "Found executable at: $EXEC_PATH" && \
@@ -653,8 +652,6 @@ jobs:
         cmake -D CMAKE_INSTALL_PREFIX=/opt/js8call ..
         cmake --build . -- -j 4
 
-# Below 2 aren't working atm
-# Failing on the rigctl/d runpaths
     - name: Package JS8Call (rpm)
       run: |
         cd ~/js8call/build
@@ -665,7 +662,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: js8call_2.3.2-devel_aarch64_fedora-42.rpm
-        path: ~/js8call/build/js8call-2.3.2-devel_arm64.rpm
+        path: ~/js8call/build/js8call-2.3.2-devel.aarch64.rpm
       continue-on-error: true
       
     - name: Create GitHub Release and get short commit SHA
@@ -701,6 +698,7 @@ jobs:
         ln -s ~/js8call/build/linuxdeploy-plugin-qt/usr/bin/linuxdeploy-plugin-qt ~/js8call/build/linuxdeploy/usr/bin/
 
         ls -l $(find AppDir -type f -name "js8call" -executable | head -1)
+        rm AppDir/usr/bin/js8call
         
         EXEC_PATH=$(find AppDir -type f -name "js8call" -executable | head -1) && \
           echo "Found executable at: $EXEC_PATH" && \
