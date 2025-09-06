@@ -28,14 +28,15 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y build-essential git cmake ninja-build clang-17 libclang-17-dev llvm-17-dev \
           libgl1-mesa-dev libhamlib-dev libusb-1.0-0-dev libfftw3-dev libboost-all-dev \
-          libudev-dev libxkbcommon-dev libasound2-dev libpipewire-0.3-dev libfuse2 imagemagick
+          libudev-dev libxkbcommon-dev ffmpeg libavcodec-dev libavformat-dev libswscale-dev libavutil-dev \
+          libfuse2 imagemagick
 
     - name: Checkout QT 6.6.3
       run: |
         git clone https://github.com/qt/qt5.git qt6
         cd qt6
         git switch 6.6.3
-        ./init-repository --module-subset=essential,qtactiveqt,qtmultimedia,qtserialport,qtsvg,qtshadertools,qttools
+        ./init-repository --module-subset=essential,qtmultimedia,qtserialport,qtsvg,qtshadertools,qttools
 
     - name: Configure QT
       run: |
@@ -46,7 +47,7 @@ jobs:
     - name: Build QT 6.6.3
       run: |
         cd qt6/build
-        cmake -Wno-dev --build . --parallel 4
+        cmake -Wno-dev --build .
         cmake --install .
         
     - name: Build Hamlib
