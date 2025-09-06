@@ -67,7 +67,7 @@ jobs:
         pwd
         mkdir -p build && cd build
         pwd
-        cmake ..
+        cmake -DCMAKE_PREFIX_PATH=/home/runner/js8call/qt663-install ..
         make -j 4
 
     - name: Package JS8Call (deb)
