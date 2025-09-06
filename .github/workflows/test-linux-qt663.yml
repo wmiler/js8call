@@ -65,8 +65,7 @@ jobs:
     - name: Build JS8Call 
       run: |
         pwd
-        git clone https://github.com/js8call/js8call.git ~/js8call
-        mkdir -p ~/js8call/build && cd ~/js8call/build
+        mkdir -p build && cd build
         pwd
         cmake ..
         make -j 4
