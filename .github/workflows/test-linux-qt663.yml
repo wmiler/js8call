@@ -27,8 +27,8 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential git cmake ninja-build clang-17 libclang-17-dev llvm-17-dev \
-          libhamlib-dev libusb-1.0-0-dev libfftw3-dev libboost-all-dev libudev-dev libxkbcommon-dev \
-          libfuse2 imagemagick
+          libgl1-mesa-dev libhamlib-dev libusb-1.0-0-dev libfftw3-dev libboost-all-dev \
+          libudev-dev libxkbcommon-dev libasound2-dev libpipewire-0.3-dev libfuse2 imagemagick
 
     - name: Checkout QT 6.6.3
       run: |
