@@ -79,7 +79,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: js8call_2.3.2-devel_amd64_ubuntu-24.04.deb
-        path: ~/js8call/build/js8call_2.3.2-devel_amd64.deb
+        path: /home/runner/work/js8call/js8call/build/js8call_2.3.2-devel_amd64.deb
 
     - name: Package JS8Call AppImage (amd64)
       run: |
@@ -97,20 +97,20 @@ jobs:
         make DESTDIR=~/appimage/AppDir install
         
         test -f ~/appimage/AppDir/usr/share/applications/js8call.desktop || \
-          cp ~/js8call/js8call.desktop ~/appimage/AppDir/usr/share/applications/ && \
+          cp ~/js8call/js8call/js8call.desktop ~/appimage/AppDir/usr/share/applications/ && \
         if [ ! -f ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png ]; then \
         mkdir -p ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps && \
-        convert ~/js8call/artwork/js8call_icon.png -resize 128x128 \
+        convert ~/js8call/js8call/artwork/js8call_icon.png -resize 128x128 \
             ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png; \
         fi
         cd ~/appimage
 
-        echo "~/js8call/build/linuxdeploy/usr/bin:~/js8call/build/linuxdeploy-plugin-qt/usr/bin/" >> "$GITHUB_PATH"
-        ln -s ~/js8call/build/linuxdeploy-plugin-qt/usr/bin/linuxdeploy-plugin-qt ~/js8call/build/linuxdeploy/usr/bin/
+        echo "~/js8call/js8call/build/linuxdeploy/usr/bin:~/js8call/js8call/build/linuxdeploy-plugin-qt/usr/bin/" >> "$GITHUB_PATH"
+        ln -s ~/js8call/js8call/build/linuxdeploy-plugin-qt/usr/bin/linuxdeploy-plugin-qt ~/js8call/js8call/build/linuxdeploy/usr/bin/
         
         EXEC_PATH=$(find AppDir -type f -name "js8call" -executable | head -1) && \
           echo "Found executable at: $EXEC_PATH" && \
-          ~/js8call/build/linuxdeploy/usr/bin/linuxdeploy --appdir AppDir \
+          ~/js8call/js8call/build/linuxdeploy/usr/bin/linuxdeploy --appdir AppDir \
           --executable "$EXEC_PATH" \
           --plugin qt \
           --output appimage \
@@ -120,7 +120,7 @@ jobs:
     - name: Upload AppImage Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: js8call_2.3.2-devel_x86_64_ubuntu-24.04.AppImage
+        name: js8call_2.3.2-devel_x86_64_qt663-ubuntu-24.04.AppImage
         path: ~/appimage/js8call-x86_64.AppImage
 
     - name: Create GitHub Release and get short commit SHA
@@ -136,7 +136,7 @@ jobs:
     - name: Create Release and Upload Assets
       uses: softprops/action-gh-release@v2.3.2
       with:
-        tag_name: js8call_2.3.2-devel_ubuntu-24.04-amd64-ci
+        tag_name: js8call_2.3.2-devel_qt663-ubuntu-24.04-amd64-ci
         name: "JS8Call v2.3.2-devel Ubuntu 24.04 amd64 *** EXPERIMENTAL *** AppImage build"
         body: |
           WARNING: This is an EXPERIMENTAL build, terrible things prolly won't happen, but it also most likely won't work as expected!
