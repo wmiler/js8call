@@ -106,7 +106,7 @@ jobs:
           cp ~/js8call/js8call/js8call.desktop ~/appimage/AppDir/usr/share/applications/ && \
         if [ ! -f ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png ]; then \
         mkdir -p ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps && \
-        convert ~/js8call/js8call/artwork/js8call_icon.png -resize 128x128 \
+        convert /home/runner/work/js8call/js8call/artwork/js8call_icon.png -resize 128x128 \
             ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png; \
         fi
         cd ~/appimage
@@ -143,9 +143,9 @@ jobs:
       uses: softprops/action-gh-release@v2.3.2
       with:
         tag_name: js8call_2.3.2-devel_qt663-ubuntu-24.04-amd64-ci
-        name: "JS8Call v2.3.2-devel Ubuntu 24.04 amd64 *** EXPERIMENTAL *** AppImage build"
+        name: "JS8Call v2.3.2-devel Ubuntu 24.04 amd64 ** EXPERIMENTAL ** AppImage build"
         body: |
-          WARNING: This is an EXPERIMENTAL build, terrible things prolly won't happen, but it also most likely won't work as expected!
+          WARNING: This is an **EXPERIMENTAL** build, terrible things prolly won't happen, but it also most likely won't work as expected!
           Release created automatically from commit ${{ steps.get_sha.outputs.short_sha }}.
           This AppImage release is from the Ubuntu 24.04 amd64 *** EXPERIMENTAL *** build for JS8Call. Use at your own risk!
         files: /home/runner/work/js8call/js8call/js8call_2.3.2-devel_24.04-amd64-experimental.tar.gz
