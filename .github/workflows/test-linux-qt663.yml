@@ -96,8 +96,9 @@ jobs:
           && rm *.AppImage
 
         make DESTDIR=~/appimage/AppDir install
+        
+        # Some debugging info
         pwd
-        ls -l /home/runner/js8call/js8call/
         find ~ -name js8call_icon.png -print
         find ~ -name linuxdeploy -print
         
