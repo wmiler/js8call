@@ -111,12 +111,12 @@ jobs:
         fi
         cd ~/appimage
 
-        echo "~/js8call/js8call/build/linuxdeploy/usr/bin:~/js8call/js8call/build/linuxdeploy-plugin-qt/usr/bin/" >> "$GITHUB_PATH"
-        ln -s ~/js8call/js8call/build/linuxdeploy-plugin-qt/usr/bin/linuxdeploy-plugin-qt ~/js8call/js8call/build/linuxdeploy/usr/bin/
+        echo "/home/runner/work/js8call/js8call/build/linuxdeploy/usr/bin:/home/runner/work/js8call/js8call/build/linuxdeploy-plugin-qt/usr/bin/" >> "$GITHUB_PATH"
+        ln -s /home/runner/work/js8call/js8call/build/linuxdeploy-plugin-qt/usr/bin/linuxdeploy-plugin-qt /home/runner/work/js8call/js8call/build/linuxdeploy/usr/bin/
         
         EXEC_PATH=$(find AppDir -type f -name "js8call" -executable | head -1) && \
           echo "Found executable at: $EXEC_PATH" && \
-          ~/js8call/js8call/build/linuxdeploy/usr/bin/linuxdeploy --appdir AppDir \
+          /home/runner/work/js8call/js8call/build/linuxdeploy/usr/bin/linuxdeploy --appdir AppDir \
           --executable "$EXEC_PATH" \
           --plugin qt \
           --output appimage \
