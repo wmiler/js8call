@@ -99,8 +99,7 @@ jobs:
         
         # Some debugging info
         pwd
-        find ~ -name js8call_icon.png -print
-        find ~ -name linuxdeploy -print
+        find ~ -name qmake -print
         
         test -f ~/appimage/AppDir/usr/share/applications/js8call.desktop || \
           cp ~/js8call/js8call/js8call.desktop ~/appimage/AppDir/usr/share/applications/ && \
@@ -111,7 +110,7 @@ jobs:
         fi
         cd ~/appimage
 
-        echo "/home/runner/js8call/qt663-install/bin:/home/runner/work/js8call/js8call/build/linuxdeploy/usr/bin:/home/runner/work/js8call/js8call/build/linuxdeploy-plugin-qt/usr/bin/" >> "$GITHUB_PATH"
+        echo "/home/runner/work/js8call/qt663-install/bin:/home/runner/work/js8call/js8call/build/linuxdeploy/usr/bin:/home/runner/work/js8call/js8call/build/linuxdeploy-plugin-qt/usr/bin/" >> "$GITHUB_PATH"
         ln -s /home/runner/work/js8call/js8call/build/linuxdeploy-plugin-qt/usr/bin/linuxdeploy-plugin-qt /home/runner/work/js8call/js8call/build/linuxdeploy/usr/bin/
         
         EXEC_PATH=$(find AppDir -type f -name "js8call" -executable | head -1) && \
