@@ -109,7 +109,8 @@ jobs:
             ~/appimage/AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png; \
         fi
         cd ~/appimage
-
+        
+        echo "QMAKE=$(which qmake6)" >> $GITHUB_ENV
         echo "/home/runner/work/js8call/qt663-install/bin:/home/runner/work/js8call/js8call/build/linuxdeploy/usr/bin:/home/runner/work/js8call/js8call/build/linuxdeploy-plugin-qt/usr/bin/" >> "$GITHUB_PATH"
         ln -s /home/runner/work/js8call/js8call/build/linuxdeploy-plugin-qt/usr/bin/linuxdeploy-plugin-qt /home/runner/work/js8call/js8call/build/linuxdeploy/usr/bin/
         
