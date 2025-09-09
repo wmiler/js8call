@@ -110,7 +110,7 @@ jobs:
 
     - name: Create Git Tag
       id: create_tag
-      uses: actions/github-script@v7
+      uses: actions/github-script@v8
       with:
         script: |
           const shortSha = process.env.SHORT_SHA;
