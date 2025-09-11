@@ -30,7 +30,7 @@ jobs:
           libgl1-mesa-dev libhamlib-dev libusb-1.0-0-dev libfftw3-dev libboost-all-dev \
           libudev-dev libxkbcommon-dev pulseaudio pulseaudio-utils libasound2t64 \
           libpulse-dev libfuse2 imagemagick libxkbcommon-dev libusb-1.0-0-dev libfftw3-dev libboost-all-dev \
-          libudev-dev libxcb-xinerama0
+          libudev-dev libxcb*
 
     - name: Checkout QT 6.6.3
       run: |
