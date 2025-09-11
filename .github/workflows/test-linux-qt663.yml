@@ -116,7 +116,7 @@ jobs:
         
         EXEC_PATH=$(find AppDir -type f -name "js8call" -executable | head -1) && \
           echo "Found executable at: $EXEC_PATH" && \
-          /home/runner/work/js8call/js8call/build/linuxdeploy/usr/bin/linuxdeploy --appdir AppDir \
+          QMAKE=/home/runner/js8call/qt663-install/bin/qmake /home/runner/work/js8call/js8call/build/linuxdeploy/usr/bin/linuxdeploy --appdir AppDir \
           --executable "$EXEC_PATH" \
           --plugin qt \
           --output appimage \
