@@ -24,13 +24,15 @@ jobs:
 
     steps:
 #    - uses: actions/checkout@v5
-    - run: git clone -b fix/cmake https://github.com/bazineta/js8call.git
+
     - name: Install dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential git cmake libhamlib-dev qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
           libusb-1.0-0-dev libfftw3-dev libboost-all-dev libudev-dev libxkbcommon-dev libfuse2 imagemagick
-
+          
+    - run: git clone -b fix/cmake https://github.com/bazineta/js8call.git
+    
     - name: Build Hamlib
       run: |
         ldd --version
@@ -133,13 +135,14 @@ jobs:
     
     steps:
 #    - uses: actions/checkout@v5
-    - run: git clone -b fix/cmake https://github.com/bazineta/js8call.git
+
     - name: Install dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential git cmake libhamlib-dev qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
           libusb-1.0-0-dev libfftw3-dev libboost-all-dev libudev-dev libxkbcommon-dev libfuse2 imagemagick
-
+    - run: git clone -b fix/cmake https://github.com/bazineta/js8call.git
+    
     - name: Build Hamlib
       run: |
         ldd --version
@@ -242,7 +245,7 @@ jobs:
       image: debian:bookworm
     steps:
 #    - uses: actions/checkout@v5
-    - run: git clone -b fix/cmake https://github.com/bazineta/js8call.git
+
     - name: Install dependencies
       run: |
         uname -a
@@ -251,7 +254,8 @@ jobs:
           qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
           libusb-1.0-0-dev libfftw3-dev libudev-dev libxkbcommon-dev \
           libhamlib-dev
-
+    - run: git clone -b fix/cmake https://github.com/bazineta/js8call.git
+    
     - name: Install Boost 1.88
       id: install-boost
       run: |
@@ -363,7 +367,7 @@ jobs:
       image: arm64v8/debian:bookworm
     steps:
 #    - uses: actions/checkout@v5
-    - run: git clone -b fix/cmake https://github.com/bazineta/js8call.git
+
     - name: Install dependencies
       run: |
         uname -a
@@ -372,7 +376,8 @@ jobs:
           qt6-base-dev qt6-multimedia-dev qt6-serialport-dev \
           libusb-1.0-0-dev libfftw3-dev libudev-dev libxkbcommon-dev \
           libhamlib-dev
-
+    - run: git clone -b fix/cmake https://github.com/bazineta/js8call.git
+    
     - name: Install Boost 1.88
       id: install-boost
       run: |
@@ -485,7 +490,7 @@ jobs:
       image: amd64/fedora:42
     steps:
 #    - uses: actions/checkout@v5
-    - run: git clone -b fix/cmake https://github.com/bazineta/js8call.git
+
     - name: Install dependencies
       run: |
         uname -a
@@ -493,7 +498,8 @@ jobs:
         dnf install -y gcc git clang which fuse ImageMagick cmake curl wget automake libtool \
           qt6-qtbase-devel qt6-qtmultimedia-devel qt6-qtserialport-devel libudev-devel \
           libusb1-devel fftw-devel libxkbcommon-devel hamlib-devel rpm-build boost-devel
-
+    - run: git clone -b fix/cmake https://github.com/bazineta/js8call.git
+    
 # Use Boost 1.83 from package repo
 #    - name: Install Boost 1.88
 #      id: install-boost
@@ -615,7 +621,7 @@ jobs:
       image: arm64v8/fedora:42
     steps:
 #    - uses: actions/checkout@v5
-    - run: git clone -b fix/cmake https://github.com/bazineta/js8call.git
+
     - name: Install dependencies
       run: |
         uname -a
@@ -623,7 +629,8 @@ jobs:
         dnf install -y gcc git clang which fuse ImageMagick cmake curl wget automake libtool \
           qt6-qtbase-devel qt6-qtmultimedia-devel qt6-qtserialport-devel \
           libusb1-devel fftw-devel libxkbcommon-devel hamlib-devel rpm-build libudev-devel boost-devel
-
+    - run: git clone -b fix/cmake https://github.com/bazineta/js8call.git
+    
 # Use Boost 1.83 from package repo
 #    - name: Install Boost 1.88
 #      id: install-boost
