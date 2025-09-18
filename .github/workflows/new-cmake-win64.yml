@@ -23,6 +23,7 @@ jobs:
     steps:
     - run: git config --global core.autocrlf input
     - run: git clone -b fix/cmake https://github.com/bazineta/js8call.git
+    - run: cat js8call/CMakeLists.txt
            
     - uses: msys2/setup-msys2@v2
       with:
