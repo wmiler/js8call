@@ -93,9 +93,12 @@ jobs:
         cmake --build . --config Release --target package
       continue-on-error: true
 
-    - name: NSIS Error log
+    - name: NSIS Error logs and directory listings
       run: |
         cat "D:/a/js8call/js8call/js8call/build/_CPack_Packages/win64/NSIS/NSISOutput.log"
+        cat "D:/a/js8call/js8call/js8call/build/_CPack_Packages/win64/NSIS/project.nsi"
+        dir "D:/a/js8call/js8call/js8call/build/_CPack_Packages/win64/NSIS/"
+        dir "D:/a/js8call/js8call/js8call/build/_CPack_Packages/win64/NSIS/JS8Call-2.3.1-win64/*.*"
       continue-on-error: true
 
     - name: Upload Artifact (from github runner)
