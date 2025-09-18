@@ -82,9 +82,9 @@ jobs:
     - name: Configure JS8Call
       shell: msys2 {0}
       run: |
-        dir
         cd ./js8call/build
-        cmake -DENABLE_OMNIRIG=ON -G "MinGW Makefiles" ..
+        cmake -G "MinGW Makefiles" ..
+        # cmake -DENABLE_OMNIRIG=ON -G "MinGW Makefiles" ..
 
     - name: Build JS8Call
       shell: msys2 {0}
