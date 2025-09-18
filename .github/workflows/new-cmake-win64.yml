@@ -82,6 +82,7 @@ jobs:
     - name: Configure JS8Call
       shell: msys2 {0}
       run: |
+        dir
         cd ./build
         cmake -G "MinGW Makefiles" ..
 
