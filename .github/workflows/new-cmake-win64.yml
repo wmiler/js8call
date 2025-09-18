@@ -45,7 +45,7 @@ jobs:
       shell: msys2 {0}
       run: |
         mkdir -p js8libs
-        mkdir -p build
+        mkdir -p js8call/build
 
     - name: Release download for QT6
       uses: robinraju/release-downloader@v1.12
@@ -83,13 +83,13 @@ jobs:
       shell: msys2 {0}
       run: |
         dir
-        cd ./build
+        cd ./js8call/build
         cmake -G "MinGW Makefiles" ..
 
     - name: Build JS8Call
       shell: msys2 {0}
       run: |
-        cd ./build
+        cd ./js8call/build
         cmake --build . --config Release --target package
 
     - name: Upload Artifact (from github runner)
@@ -112,7 +112,7 @@ jobs:
       with:
         script: |
           const shortSha = process.env.SHORT_SHA;
-          const tagName = `js8call-v2.3.2-devel-ci`;
+          const tagName = `cmake-js8call-v2.3.2-devel-ci`;
             
           await github.rest.git.createRef({
             owner: context.repo.owner,
@@ -172,6 +172,7 @@ jobs:
         tag_name: js8call-v2.3.2-devel-ci
         name: "JS8Call v2.3.2-devel Windows MSYS2 CI Github runner build ${{ steps.get_sha.outputs.short_sha }}"
         body: |
+          ** EXPERIMENTAL CMake build **
           Release created automatically from commit ${{ github.sha }}.
           This release is from the Windows MSYS2 CI builds via Github runner for JS8Call. Use at your own risk!
           ${{steps.github_release.outputs.changelog}}
