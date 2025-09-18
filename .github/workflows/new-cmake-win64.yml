@@ -45,7 +45,6 @@ jobs:
     - name: Setup build directories
       shell: msys2 {0}
       run: |
-        mkdir -p js8libs
         mkdir -p js8call/build
 
     - name: Release download for QT6
@@ -85,7 +84,7 @@ jobs:
       run: |
         dir
         cd ./js8call/build
-        cmake -G "MinGW Makefiles" ..
+        cmake -D ENABLE_OMNIRIG -G "MinGW Makefiles" ..
 
     - name: Build JS8Call
       shell: msys2 {0}
