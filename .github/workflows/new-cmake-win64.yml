@@ -22,7 +22,7 @@ jobs:
 
     steps:
     - run: git config --global core.autocrlf input
-           git clone -b fix/cmake https://github.com/bazineta/js8call.git
+    - run: git clone -b fix/cmake https://github.com/bazineta/js8call.git
            
     - uses: msys2/setup-msys2@v2
       with:
