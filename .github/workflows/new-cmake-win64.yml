@@ -78,7 +78,13 @@ jobs:
     - name: Add registry entries so OmniRig cmake works
       run: |
         reg import .\OmniRig120.reg
-                
+
+    - name: Edit CMakeLists.txt to add verbose for windeployqt
+      run: |
+        cd ./js8call/
+        sed -i 's/COMMAND "${WINDEPLOYQT}"/COMMAND "${WINDEPLOYQT}" --verbose 2 /' CMakeLists.txt
+        cat CMakeLists.txt
+      
     - name: Configure JS8Call
       shell: msys2 {0}
       run: |
