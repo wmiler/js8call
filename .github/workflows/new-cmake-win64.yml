@@ -91,6 +91,7 @@ jobs:
       run: |
         cd ./js8call/build
         cmake --build . --config Release --target package
+        dir
       continue-on-error: true
 
     - name: NSIS Error logs (Output)
