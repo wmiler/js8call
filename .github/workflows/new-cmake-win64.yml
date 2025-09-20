@@ -100,9 +100,16 @@ jobs:
       shell: msys2 {0}
       run: |
         cd ./js8call/build
-        cmake --build . --config Release --target package
+        cmake --build . --config Release
       continue-on-error: true
 
+    - name: Package JS8Call
+      shell: msys2 {0}
+      run: |
+        cd ./js8call/build
+        cmake --trace-expand --build . --config Release --target package
+      continue-on-error: true
+      
     - name: Build directory listing
       run: |
         dir "D:/a/js8call/js8call/js8call/build/"
