@@ -107,7 +107,7 @@ jobs:
       shell: msys2 {0}
       run: |
         cd ./js8call/build
-        cmake --build . --config Release --target package --trace-expand
+        cmake --build . --config Release --target package --verbose
       continue-on-error: true
       
     - name: Build directory listing
