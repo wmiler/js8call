@@ -82,7 +82,7 @@ jobs:
     - name: Edit CMakeLists.txt to add verbose for windeployqt
       run: |
         cd ./js8call/
-        sed -i 's/COMMAND "${WINDEPLOYQT}" "$<TARGET_FILE_DIR:${TARGET}>"/COMMAND "${WINDEPLOYQT}" --verbose 2 "$<TARGET_FILE_DIR:${TARGET}>/../.."' CMakeLists.txt
+        sed -i 's#COMMAND "${WINDEPLOYQT}" "$<TARGET_FILE_DIR:${TARGET}>"#COMMAND "${WINDEPLOYQT}" --verbose 2 "$<TARGET_FILE_DIR:${TARGET}>/../.."#' CMakeLists.txt
         cat CMakeLists.txt
       
     - name: Configure JS8Call
