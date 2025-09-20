@@ -110,10 +110,11 @@ jobs:
         cmake --build . --config Release --target package --verbose
       continue-on-error: true
       
-    - name: Build directory listing and CPackConfig
+    - name: Build directory listing and CPackConfig/SourceConfig
       run: |
         dir "D:/a/js8call/js8call/js8call/build/"
         cat "D:/a/js8call/js8call/js8call/build/CPackConfig.cmake"
+        cat "D:/a/js8call/js8call/js8call/build/CPackSourceConfig.cmake"
       continue-on-error: true
       
     - name: NSIS Error logs (Output)
