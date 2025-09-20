@@ -83,7 +83,11 @@ jobs:
       run: |
         cd ./js8call/
         sed -i 's#COMMAND "${WINDEPLOYQT}" "$<TARGET_FILE_DIR:${TARGET}>"#COMMAND "${WINDEPLOYQT}" --verbose 2 "$<TARGET_FILE_DIR:${TARGET}>"#' CMakeLists.txt
-        cat CMakeLists.txt
+
+    - name: Edit NSIS.template.in to add verbose
+      run: |
+        cd ./js8call/
+        sed -i '1i!verbose 4' CMake/Modules/NSIS.template.in
       
     - name: Configure JS8Call
       shell: msys2 {0}
