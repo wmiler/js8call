@@ -79,6 +79,10 @@ jobs:
       run: |
         reg import .\OmniRig120.reg
 
+# The issue is NO install() directives in the new CMakeLists.txt!
+# Will need to sed changes in for now to give the Windows build a place 
+# to install into. Leaving the debug stuff in place for now.
+
     - name: Edit CMakeLists.txt to add verbose for windeployqt
       run: |
         cd ./js8call/
