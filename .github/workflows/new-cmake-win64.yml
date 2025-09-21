@@ -82,8 +82,6 @@ jobs:
 # The issue is NO install() directives in the new CMakeLists.txt!
 # Will need to sed changes in for now to give the Windows build a place 
 # to install into. Leaving the debug stuff in place for now.
-    - name: Setup upterm session
-      uses: owenthereal/action-upterm@v1
       
     - name: Create install.cmake 
       shell: msys2 {0}
@@ -91,7 +89,7 @@ jobs:
         cd ./js8call/
         touch CMake/Modules/install.cmake
         
-        MY_FILE_1=$(cat << 'EOF'
+        MY_FILE_1=$(cat << EOF
           if (WIN32)
             set (PLUGIN_DESTINATION plugins)
           if (WSJT_CREATE_WINMAIN)
@@ -100,7 +98,7 @@ jobs:
           EOF
           )
           
-        MY_FILE_2=$(cat << 'EOF'
+        MY_FILE_2=$(cat << EOF
             install (CODE "
               get_filename_component (the_qt_conf \"$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${WSJT_QT_CONF_DESTINATION}/qt.conf\" REALPATH)
               file (WRITE \"${the_qt_conf}\" \"[Paths] \")"
@@ -121,7 +119,7 @@ jobs:
               EOF
               )
 
-        MY_FILE_3=$(cat << 'EOF'
+        MY_FILE_3=$(cat << EOF
               install (
               	DIRECTORY
               	${QT_PLUGINS_DIR}/platforms
@@ -141,7 +139,7 @@ jobs:
              EOF
              )
              
-        MY_FILE_4=$(cat << 'EOF'
+        MY_FILE_4=$(cat << EOF
           file (RELATIVE_PATH _plugins_path "${CMAKE_INSTALL_PREFIX}/${WSJT_QT_CONF_DESTINATION}" "${CMAKE_INSTALL_PREFIX}/${WSJT_PLUGIN_DESTINATION}")
               install (CODE "
                 get_filename_component (the_qt_conf \"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${WSJT_QT_CONF_DESTINATION}/qt.conf\" REALPATH)
