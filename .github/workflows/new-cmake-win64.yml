@@ -87,7 +87,7 @@ jobs:
       run: |
         cd ./js8call/
         touch CMake/Modules/install.cmake
-        cat > CMake/Modules/install.cmake << EOF
+        MY_FILE=$(cat << EOF
           if (WIN32)
             set (PLUGIN_DESTINATION plugins)
           if (WSJT_CREATE_WINMAIN)
@@ -148,6 +148,8 @@ jobs:
                #COMPONENT runtime
                )
         EOF
+        )
+        cat $MY_FILE > CMake/Modules/install.cmake
 
     - name: Edit CMakeLists.txt to add verbose for windeployqt and include the install.cmake
       run: |
