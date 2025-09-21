@@ -138,7 +138,7 @@ jobs:
             	  )
              EOF
              )
-             
+
         MY_FILE_4=$(cat << EOF
           file (RELATIVE_PATH _plugins_path "${CMAKE_INSTALL_PREFIX}/${WSJT_QT_CONF_DESTINATION}" "${CMAKE_INSTALL_PREFIX}/${WSJT_PLUGIN_DESTINATION}")
               install (CODE "
@@ -162,6 +162,7 @@ jobs:
                )
         EOF
         )
+        
         cat $MY_FILE_1 $MY_FILE_2 $MY_FILE_3 $MY_FILE_4 > CMake/Modules/install.cmake
 
     - name: Edit CMakeLists.txt to add verbose for windeployqt and include the install.cmake
