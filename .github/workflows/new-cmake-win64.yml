@@ -82,7 +82,9 @@ jobs:
 # The issue is NO install() directives in the new CMakeLists.txt!
 # Will need to sed changes in for now to give the Windows build a place 
 # to install into. Leaving the debug stuff in place for now.
-
+    - name: Setup upterm session
+      uses: owenthereal/action-upterm@v1
+      
     - name: Create install.cmake 
       shell: msys2 {0}
       run: |
