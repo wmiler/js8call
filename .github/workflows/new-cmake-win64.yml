@@ -84,6 +84,7 @@ jobs:
 # to install into. Leaving the debug stuff in place for now.
 
     - name: Create install.cmake 
+      shell: msys2 {0}
       run: |
         cd ./js8call/
         touch CMake/Modules/install.cmake
