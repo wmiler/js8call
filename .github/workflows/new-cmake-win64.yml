@@ -90,13 +90,13 @@ jobs:
         touch CMake/Modules/install.cmake
         
         MY_FILE_1=$(cat << EOF
-          if (WIN32)
-            set (PLUGIN_DESTINATION plugins)
-          if (WSJT_CREATE_WINMAIN)
-            set_target_properties (js8call PROPERTIES WIN32_EXECUTABLE ON)
-          endif (WSJT_CREATE_WINMAIN)
-          EOF
-          )
+if (WIN32)
+  set (PLUGIN_DESTINATION plugins)
+if (WSJT_CREATE_WINMAIN)
+  set_target_properties (js8call PROPERTIES WIN32_EXECUTABLE ON)
+endif (WSJT_CREATE_WINMAIN)
+EOF
+)
 
         cat $MY_FILE_1 > CMake/Modules/install.cmake
           
