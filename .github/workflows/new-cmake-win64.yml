@@ -97,73 +97,75 @@ jobs:
           endif (WSJT_CREATE_WINMAIN)
           EOF
           )
+
+        cat $MY_FILE_1 > CMake/Modules/install.cmake
           
-        MY_FILE_2=$(cat << EOF
-            install (CODE "
-              get_filename_component (the_qt_conf \"$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${WSJT_QT_CONF_DESTINATION}/qt.conf\" REALPATH)
-              file (WRITE \"${the_qt_conf}\" \"[Paths] \")"
-              #COMPONENT runtime
-              )
+#        MY_FILE_2=$(cat << EOF
+#            install (CODE "
+#              get_filename_component (the_qt_conf \"$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${WSJT_QT_CONF_DESTINATION}/qt.conf\" REALPATH)
+#              file (WRITE \"${the_qt_conf}\" \"[Paths] \")"
+#              #COMPONENT runtime
+#              )
+#
+#              # if a system Qt is used (e.g. installed in /usr/lib/), it will not be included in the installation
+#              set (fixup_exe "\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${CMAKE_PROJECT_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
+#
+#              get_filename_component (hamlib_lib_dir ${Hamlib_LIBRARY} PATH)
+#              list (APPEND fixup_library_dirs ${hamlib_lib_dir}/../bin)
+#
+#              get_filename_component (usb_lib_dir ${Usb_LIBRARY} PATH)
+#              list (APPEND fixup_library_dirs ${usb_lib_dir})
+#
+#              get_filename_component (fftw_lib_dir ${FFTW3F_LIBRARY} PATH)
+#              list (APPEND fixup_library_dirs ${fftw_lib_dir})
+#              EOF
+#              )
 
-              # if a system Qt is used (e.g. installed in /usr/lib/), it will not be included in the installation
-              set (fixup_exe "\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${CMAKE_PROJECT_NAME}${CMAKE_EXECUTABLE_SUFFIX}")
-
-              get_filename_component (hamlib_lib_dir ${Hamlib_LIBRARY} PATH)
-              list (APPEND fixup_library_dirs ${hamlib_lib_dir}/../bin)
-
-              get_filename_component (usb_lib_dir ${Usb_LIBRARY} PATH)
-              list (APPEND fixup_library_dirs ${usb_lib_dir})
-
-              get_filename_component (fftw_lib_dir ${FFTW3F_LIBRARY} PATH)
-              list (APPEND fixup_library_dirs ${fftw_lib_dir})
-              EOF
-              )
-
-        MY_FILE_3=$(cat << EOF
-              install (
-              	DIRECTORY
-              	${QT_PLUGINS_DIR}/platforms
-               	${QT_PLUGINS_DIR}/accessible
-              	${QT_PLUGINS_DIR}/audio
-               	${QT_PLUGINS_DIR}/imageformats
-                ${QT_PLUGINS_DIR}/styles
-               	DESTINATION ${WSJT_PLUGIN_DESTINATION}
-              	CONFIGURATIONS Release MinSizeRel RelWithDebInfo
-              	#COMPONENT runtime
-                FILES_MATCHING PATTERN "*${CMAKE_SHARED_LIBRARY_SUFFIX}"
-                PATTERN "*minimal*${CMAKE_SHARED_LIBRARY_SUFFIX}" EXCLUDE
-                PATTERN "*offscreen*${CMAKE_SHARED_LIBRARY_SUFFIX}" EXCLUDE
-                PATTERN "*quick*${CMAKE_SHARED_LIBRARY_SUFFIX}" EXCLUDE
-                PATTERN "*d${CMAKE_SHARED_LIBRARY_SUFFIX}" EXCLUDE
-            	  )
-             EOF
-             )
-
-        MY_FILE_4=$(cat << EOF
-          file (RELATIVE_PATH _plugins_path "${CMAKE_INSTALL_PREFIX}/${WSJT_QT_CONF_DESTINATION}" "${CMAKE_INSTALL_PREFIX}/${WSJT_PLUGIN_DESTINATION}")
-              install (CODE "
-                get_filename_component (the_qt_conf \"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${WSJT_QT_CONF_DESTINATION}/qt.conf\" REALPATH)
-                file (APPEND \"\${the_qt_conf}\" \"Plugins = ${_plugins_path}\")"
-              	#COMPONENT runtime
-            	)
-
-              set (gp_tool "objdump")	# we want MinGW tool - not MSVC (See GetPrerequisites.cmake)
-              install (CODE "
-               get_filename_component (the_path \"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${WSJT_PLUGIN_DESTINATION}\" REALPATH)
-               file (GLOB_RECURSE QTPLUGINS \"\${the_path}/*${CMAKE_SHARED_LIBRARY_SUFFIX}\")
-               set (CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake/Modules ${CMAKE_MODULE_PATH})
-               include (BundleUtilities)
-               set (BU_CHMOD_BUNDLE_ITEMS ON)
-               set (gp_tool ${gp_tool})
-               # canonicalize path in install context
-               get_filename_component (the_exe ${fixup_exe} REALPATH)
-               fixup_bundle (\"\${the_exe}\" \"\${QTPLUGINS}\" \"${fixup_library_dirs}\")"
-               #COMPONENT runtime
-               )
-        EOF
-        )
+#        MY_FILE_3=$(cat << EOF
+#              install (
+#               	DIRECTORY
+#               	${QT_PLUGINS_DIR}/platforms
+#               	${QT_PLUGINS_DIR}/accessible
+#               	${QT_PLUGINS_DIR}/audio
+#               	${QT_PLUGINS_DIR}/imageformats
+#                 ${QT_PLUGINS_DIR}/styles
+#               	DESTINATION ${WSJT_PLUGIN_DESTINATION}
+#              	CONFIGURATIONS Release MinSizeRel RelWithDebInfo
+#              	#COMPONENT runtime
+#                FILES_MATCHING PATTERN "*${CMAKE_SHARED_LIBRARY_SUFFIX}"
+#                PATTERN "*minimal*${CMAKE_SHARED_LIBRARY_SUFFIX}" EXCLUDE
+#                PATTERN "*offscreen*${CMAKE_SHARED_LIBRARY_SUFFIX}" EXCLUDE
+#                PATTERN "*quick*${CMAKE_SHARED_LIBRARY_SUFFIX}" EXCLUDE
+#                PATTERN "*d${CMAKE_SHARED_LIBRARY_SUFFIX}" EXCLUDE
+#            	  )
+#             EOF
+#             )
+             
+#        MY_FILE_4=$(cat << EOF
+#          file (RELATIVE_PATH _plugins_path "${CMAKE_INSTALL_PREFIX}/${WSJT_QT_CONF_DESTINATION}" "${CMAKE_INSTALL_PREFIX}/${WSJT_PLUGIN_DESTINATION}")
+#              install (CODE "
+#                get_filename_component (the_qt_conf \"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${WSJT_QT_CONF_DESTINATION}/qt.conf\" REALPATH)
+#                file (APPEND \"\${the_qt_conf}\" \"Plugins = ${_plugins_path}\")"
+#              	#COMPONENT runtime
+#            	)
+#
+#              set (gp_tool "objdump")	# we want MinGW tool - not MSVC (See GetPrerequisites.cmake)
+#              install (CODE "
+#               get_filename_component (the_path \"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${WSJT_PLUGIN_DESTINATION}\" REALPATH)
+#               file (GLOB_RECURSE QTPLUGINS \"\${the_path}/*${CMAKE_SHARED_LIBRARY_SUFFIX}\")
+#               set (CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake/Modules ${CMAKE_MODULE_PATH})
+#               include (BundleUtilities)
+#               set (BU_CHMOD_BUNDLE_ITEMS ON)
+#               set (gp_tool ${gp_tool})
+#               # canonicalize path in install context
+#               get_filename_component (the_exe ${fixup_exe} REALPATH)
+#               fixup_bundle (\"\${the_exe}\" \"\${QTPLUGINS}\" \"${fixup_library_dirs}\")"
+#               #COMPONENT runtime
+#               )
+#        EOF
+#        )
         
-        cat $MY_FILE_1 $MY_FILE_2 $MY_FILE_3 $MY_FILE_4 > CMake/Modules/install.cmake
+#        cat $MY_FILE_1 $MY_FILE_2 $MY_FILE_3 $MY_FILE_4 > CMake/Modules/install.cmake
 
     - name: Edit CMakeLists.txt to add verbose for windeployqt and include the install.cmake
       run: |
