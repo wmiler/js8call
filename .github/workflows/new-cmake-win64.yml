@@ -135,12 +135,12 @@ jobs:
                 PATTERN "*offscreen*${CMAKE_SHARED_LIBRARY_SUFFIX}" EXCLUDE
                 PATTERN "*quick*${CMAKE_SHARED_LIBRARY_SUFFIX}" EXCLUDE
                 PATTERN "*d${CMAKE_SHARED_LIBRARY_SUFFIX}" EXCLUDE
-            	)
+            	  )
              EOF
              )
              
         MY_FILE_4=$(cat << EOF
-        file (RELATIVE_PATH _plugins_path "${CMAKE_INSTALL_PREFIX}/${WSJT_QT_CONF_DESTINATION}" "${CMAKE_INSTALL_PREFIX}/${WSJT_PLUGIN_DESTINATION}")
+          file (RELATIVE_PATH _plugins_path "${CMAKE_INSTALL_PREFIX}/${WSJT_QT_CONF_DESTINATION}" "${CMAKE_INSTALL_PREFIX}/${WSJT_PLUGIN_DESTINATION}")
               install (CODE "
                 get_filename_component (the_qt_conf \"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${WSJT_QT_CONF_DESTINATION}/qt.conf\" REALPATH)
                 file (APPEND \"\${the_qt_conf}\" \"Plugins = ${_plugins_path}\")"
