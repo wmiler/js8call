@@ -87,15 +87,20 @@ jobs:
       run: |
         cd ./js8call/
         touch CMake/Modules/install.cmake
-        MY_FILE=$(cat << EOF
+        
+        MY_FILE_1=$(cat << EOF
           if (WIN32)
             set (PLUGIN_DESTINATION plugins)
           if (WSJT_CREATE_WINMAIN)
             set_target_properties (js8call PROPERTIES WIN32_EXECUTABLE ON)
           endif (WSJT_CREATE_WINMAIN)
+          EOF
+          )
+          
+        MY_FILE_2=$(cat << EOF
             install (CODE "
-              get_filename_component (the_qt_conf \"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${WSJT_QT_CONF_DESTINATION}/qt.conf\" REALPATH)
-              file (WRITE \"\${the_qt_conf}\" \"[Paths] \")"
+              get_filename_component (the_qt_conf \"$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${WSJT_QT_CONF_DESTINATION}/qt.conf\" REALPATH)
+              file (WRITE \"${the_qt_conf}\" \"[Paths] \")"
               #COMPONENT runtime
               )
 
@@ -110,7 +115,10 @@ jobs:
 
               get_filename_component (fftw_lib_dir ${FFTW3F_LIBRARY} PATH)
               list (APPEND fixup_library_dirs ${fftw_lib_dir})
+              EOF
+              )
 
+        MY_FILE_3=$(cat << EOF
               install (
               	DIRECTORY
               	${QT_PLUGINS_DIR}/platforms
@@ -127,7 +135,11 @@ jobs:
                 PATTERN "*quick*${CMAKE_SHARED_LIBRARY_SUFFIX}" EXCLUDE
                 PATTERN "*d${CMAKE_SHARED_LIBRARY_SUFFIX}" EXCLUDE
             	)
-              file (RELATIVE_PATH _plugins_path "${CMAKE_INSTALL_PREFIX}/${WSJT_QT_CONF_DESTINATION}" "${CMAKE_INSTALL_PREFIX}/${WSJT_PLUGIN_DESTINATION}")
+             EOF
+             )
+             
+        MY_FILE_4=$(cat << EOF
+        file (RELATIVE_PATH _plugins_path "${CMAKE_INSTALL_PREFIX}/${WSJT_QT_CONF_DESTINATION}" "${CMAKE_INSTALL_PREFIX}/${WSJT_PLUGIN_DESTINATION}")
               install (CODE "
                 get_filename_component (the_qt_conf \"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${WSJT_QT_CONF_DESTINATION}/qt.conf\" REALPATH)
                 file (APPEND \"\${the_qt_conf}\" \"Plugins = ${_plugins_path}\")"
@@ -149,7 +161,7 @@ jobs:
                )
         EOF
         )
-        cat $MY_FILE > CMake/Modules/install.cmake
+        cat $MY_FILE_1 $MY_FILE_2 $MY_FILE_3 $MY_FILE_4 > CMake/Modules/install.cmake
 
     - name: Edit CMakeLists.txt to add verbose for windeployqt and include the install.cmake
       run: |
