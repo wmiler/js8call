@@ -26,10 +26,10 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential git cmake ninja-build clang-17 libclang-17-dev llvm-17-dev \
+        sudo apt-get install -y build-essential git cmake ninja-build clang-18 libclang-18-dev llvm-18-dev \
           libgl1-mesa-dev libhamlib-dev libusb-1.0-0-dev libfftw3-dev libboost-all-dev \
           libudev-dev libxkbcommon-dev pulseaudio pulseaudio-utils libasound2t64 \
-          libpulse-dev libfuse2 imagemagick libxkbcommon-dev libusb-1.0-0-dev libfftw3-dev libboost-all-dev \
+          libpulse-dev libfuse2 imagemagick libxkbcommon-dev \
           libudev-dev libxcb1-dev libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxext-dev \
           libxfixes-dev libxcursor-dev libxrandr-dev libxinerama-dev libxkbcommon-dev libxkbcommon-x11-dev \
           libxcb-xinerama0-dev libxcb-xfixes0-dev libxcb-randr0-dev libxcb-shape0-dev libxcb-xkb-dev libxkbcommon-x11-dev libxcb-cursor-dev
