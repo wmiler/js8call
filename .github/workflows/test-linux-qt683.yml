@@ -45,7 +45,7 @@ jobs:
       run: |
         mkdir -p qt6/build
         cd qt6/build
-        ../configure --prefix=~/js8call/qt683-install -Wno-dev
+        ../configure --prefix=~/js8call/qt683-install
           
     - name: Build QT 6.8.3
       run: |
@@ -146,7 +146,7 @@ jobs:
       uses: softprops/action-gh-release@v2.3.2
       with:
         tag_name: js8call_2.3.2-devel_qt683-ubuntu-24.04-amd64-ci
-        name: "JS8Call v2.3.2-devel Ubuntu 24.04 amd64 ** EXPERIMENTAL ** AppImage build"
+        name: "JS8Call v2.3.2-devel Ubuntu 24.04 amd64 QT 6.8.3 ** EXPERIMENTAL ** AppImage build"
         body: |
           WARNING: This is an **EXPERIMENTAL** QT 6.8.3 build, terrible things prolly won't happen, but it also most likely won't work as expected!
           Release created automatically from commit ${{ steps.get_sha.outputs.short_sha }}.
