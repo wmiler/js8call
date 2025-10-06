@@ -33,6 +33,8 @@ jobs:
           libudev-dev libxcb1-dev libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxext-dev \
           libxfixes-dev libxcursor-dev libxrandr-dev libxinerama-dev libxkbcommon-dev libxkbcommon-x11-dev \
           libxcb-xinerama0-dev libxcb-xfixes0-dev libxcb-randr0-dev libxcb-shape0-dev libxcb-xkb-dev libxkbcommon-x11-dev libxcb-cursor-dev
+        sudo apt clean
+        df -h /
 
     - name: Checkout QT 6.8.3
       run: |
