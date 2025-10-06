@@ -80,7 +80,7 @@ jobs:
             cd mingw64
             zip -r ../qt663-windows-msys2-binaries.zip .
         
-        - uses: softprops/action-gh-release@v2.3.3
+        - uses: softprops/action-gh-release@v2.3.4
           with:
             tag_name: qt6-v6.6.3-ci
             name: "QT6 v6.6.3 for Windows MSYS2 CI build"
