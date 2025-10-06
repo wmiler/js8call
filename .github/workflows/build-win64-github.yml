@@ -164,7 +164,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Create Release and Upload Assets
-      uses: softprops/action-gh-release@v2.3.3
+      uses: softprops/action-gh-release@v2.3.4
       with:
         tag_name: js8call-v2.3.2-devel-ci
         name: "JS8Call v2.3.2-devel Windows MSYS2 CI Github runner build ${{ steps.get_sha.outputs.short_sha }}"
