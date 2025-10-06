@@ -45,7 +45,7 @@ jobs:
       run: |
         mkdir -p qt6/build
         cd qt6/build
-        ../configure --prefix=~/js8call/qt683-install
+        ../configure --prefix=~/js8call/qt683-install -submodules essential,qtmultimedia,qtserialport
           
     - name: Build QT 6.8.3
       run: |
