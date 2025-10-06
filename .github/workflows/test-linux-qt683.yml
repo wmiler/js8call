@@ -61,7 +61,7 @@ jobs:
       run: |
         mkdir -p qt6/build
         cd qt6/build
-        ../configure --prefix=~/js8call/qt683-install -qt-xcb -init-submodules -submodules qtmultimedia,qtserialport
+        ../configure --prefix=~/js8call/qt683-install -init-submodules -submodules qtmultimedia,qtserialport
           
     - name: Build QT 6.8.3
       run: |
