@@ -39,7 +39,7 @@ jobs:
         git clone https://github.com/qt/qt5.git qt6
         cd qt6
         git switch 6.8.3
-        ./init-repository --module-subset=essential,qtmultimedia,qtserialport,qtsvg,qtshadertools,qttools
+        ./init-repository --module-subset=essential,qtmultimedia,qtserialport
 
     - name: Configure QT
       run: |
