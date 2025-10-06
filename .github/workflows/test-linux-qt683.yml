@@ -129,7 +129,7 @@ jobs:
     - name: Upload AppImage Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: js8call_2.3.2-devel_x86_64_qt663-ubuntu-24.04.AppImage
+        name: js8call_2.3.2-devel_x86_64_qt683-ubuntu-24.04.AppImage
         path: ~/appimage/js8call-x86_64.AppImage
 
     - name: Create GitHub Release and get short commit SHA
@@ -145,10 +145,10 @@ jobs:
     - name: Create Release and Upload Assets
       uses: softprops/action-gh-release@v2.3.2
       with:
-        tag_name: js8call_2.3.2-devel_qt663-ubuntu-24.04-amd64-ci
+        tag_name: js8call_2.3.2-devel_qt683-ubuntu-24.04-amd64-ci
         name: "JS8Call v2.3.2-devel Ubuntu 24.04 amd64 ** EXPERIMENTAL ** AppImage build"
         body: |
-          WARNING: This is an **EXPERIMENTAL** build, terrible things prolly won't happen, but it also most likely won't work as expected!
+          WARNING: This is an **EXPERIMENTAL** QT 6.8.3 build, terrible things prolly won't happen, but it also most likely won't work as expected!
           Release created automatically from commit ${{ steps.get_sha.outputs.short_sha }}.
           This AppImage release is from the Ubuntu 24.04 amd64 *** EXPERIMENTAL *** build for JS8Call. Use at your own risk!
         files: /home/runner/work/js8call/js8call/js8call_2.3.2-devel_24.04-amd64-experimental.tar.gz
