@@ -45,9 +45,11 @@ jobs:
           libpulse-dev libfuse2 imagemagick libxkbcommon-dev \
           libudev-dev libxcb1-dev libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxext-dev \
           libxfixes-dev libxcursor-dev libxrandr-dev libxinerama-dev libxkbcommon-dev libxkbcommon-x11-dev \
-          libxcb-xinerama0-dev libxcb-xfixes0-dev libxcb-randr0-dev libxcb-shape0-dev libxcb-xkb-dev libxkbcommon-x11-dev libxcb-cursor-dev \
-          libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev libxcb-icccm4-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-randr0-dev \
-          libxcb-render-util0-dev libxcb-shape0-dev libxcb-sync-dev libxcb-xfixes0-dev libgl-dev libfontconfig1-dev libxcb-glx0-dev
+          libxcb-xinerama0-dev libxcb-xfixes0-dev libxcb-randr0-dev libxcb-shape0-dev libxcb-xkb-dev \
+          libxkbcommon-x11-dev libxcb-cursor-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev \
+          libxcb-icccm4-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-randr0-dev ffmpeg libavcodec-dev \
+          libavformat-dev libswscale-dev libxcb-render-util0-dev libxcb-shape0-dev libxcb-sync-dev \
+          libxcb-xfixes0-dev libgl-dev libfontconfig1-dev libxcb-glx0-dev
         sudo apt clean
         df -h /
 
@@ -63,6 +65,9 @@ jobs:
         cd qt6/build
         ../configure --prefix=~/js8call/qt683-install -init-submodules -submodules qtmultimedia,qtserialport
           
+    - name: Configure Summary QT
+      run: cat /home/runner/work/js8call/js8call/qt6/build/config.summary
+
     - name: Build QT 6.8.3
       run: |
         cd qt6/build
