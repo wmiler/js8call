@@ -47,7 +47,7 @@ jobs:
           libxfixes-dev libxcursor-dev libxrandr-dev libxinerama-dev libxkbcommon-dev libxkbcommon-x11-dev \
           libxcb-xinerama0-dev libxcb-xfixes0-dev libxcb-randr0-dev libxcb-shape0-dev libxcb-xkb-dev libxkbcommon-x11-dev libxcb-cursor-dev \
           libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev libxcb-icccm4-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-randr0-dev \
-          libxcb-render-util0-dev libxcb-shape0-dev libxcb-sync-dev libxcb-xfixes0-dev libgl-dev libfontconfig1-dev
+          libxcb-render-util0-dev libxcb-shape0-dev libxcb-sync-dev libxcb-xfixes0-dev libgl-dev libfontconfig1-dev libxcb-glx0-dev
         sudo apt clean
         df -h /
 
