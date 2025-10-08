@@ -35,13 +35,14 @@ jobs:
             pkg-config
             tar
             zip
-            ffmpeg
+            
           pacboy: >-
             toolchain:p
             autotools:p
             cmake:p
             ninja:p
             libusb:p
+            ffmpeg:p
 
       - name: Checkout QT 6.8.3
         run: |
