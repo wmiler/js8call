@@ -35,6 +35,7 @@ jobs:
             pkg-config
             tar
             zip
+            ffmpeg
           pacboy: >-
             toolchain:p
             autotools:p
@@ -55,11 +56,14 @@ jobs:
           mkdir ./build
           cd build
           ../configure --prefix=/d/a/js8call/qt683-install
-          
+
+      - name: Configure Summary QT 6.8.3
+        run: cat /d/a/js8call/js8call/qt6/build/config.summary
+
       - name: Build QT 6.8.3
         run: |
           cd qt6/build
-          cmake --build . --parallel 4
+          cmake --build . --parallel
           cmake --install .
 
       - name: Upload QT 6.8.3 Artifact binaries
