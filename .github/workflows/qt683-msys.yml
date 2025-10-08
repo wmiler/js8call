@@ -42,7 +42,7 @@ jobs:
             cmake:p
             ninja:p
             libusb:p
-            ffmpeg:p
+            ffmpeg7.1:p
 
       - name: Checkout QT 6.8.3
         run: |
