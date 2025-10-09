@@ -1,0 +1,175 @@
+name: Build for Windows 10+ amd64 QT 6.8.3
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      '.github/workflows/build-win64-qt683.yml'
+  pull_request:
+    branches: [ "main" ]
+      
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+  build_windows-2025:
+    runs-on: windows-2025
+    permissions: write-all
+
+    steps:
+    - run: git config --global core.autocrlf input
+    - uses: actions/checkout@v5
+    - uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: >-
+          git python base-devel make unzip zip tar
+        pacboy: >-
+          toolchain:p
+          autotools:p
+          cmake:p
+          ninja:p
+          libusb:p
+          wget:p
+          boost:p
+          fftw:p
+          sqlite3:p
+          nsis:p
+
+    - name: Setup build directories
+      shell: msys2 {0}
+      run: |
+        mkdir -p js8libs
+        mkdir -p build
+
+    - name: Release download for QT6
+      uses: robinraju/release-downloader@v1.12
+      with:
+        repository: 'wmiler/js8call'
+        fileName: 'qt683-windows-msys2-binaries*.zip'
+        tag: 'qt6-v6.8.3-ci'
+        extract: true
+        out-file-path: 'D:/a/_temp/msys64/mingw64/'
+
+    - name: Release download for hamlib
+      uses: robinraju/release-downloader@v1.12
+      with:
+        repository: 'wmiler/js8call'
+        fileName: 'hamlib-windows-msys2-binaries*.zip'
+        tag: 'hamlib-v4.6.4-ci'
+        extract: true
+        out-file-path: 'D:/a/_temp/msys64/mingw64/'
+       
+# Below is the workaround for installing OmniRig on the Github runners
+# which is just everything in Program Files (86)\Afreet directory plus the reg file.
+    - name: Fetch OmniRig.tar.gz from my site
+      run: |
+        Invoke-WebRequest -Uri "https://www.spacemonitoring.com/OmniRig120.tar.gz" -OutFile ".\OmniRig120.tar.gz"
+        Invoke-WebRequest -Uri "https://www.spacemonitoring.com/OmniRig120.reg" -OutFile ".\OmniRig120.reg"
+
+    - name: Untar to Program Files (x86)
+      run: tar -xzf ".\OmniRig120.tar.gz" -C "C:\"
+
+    - name: Add registry entries so OmniRig cmake works
+      run: |
+        reg import .\OmniRig120.reg
+                
+    - name: Configure JS8Call
+      shell: msys2 {0}
+      run: |
+        cd ./build
+        cmake -G "MinGW Makefiles" ..
+
+    - name: Build JS8Call
+      shell: msys2 {0}
+      run: |
+        cd ./build
+        cmake --build . --config Release --target package
+
+    - name: Upload Artifact (from github runner)
+      uses: actions/upload-artifact@v4
+      with:
+        name: js8call-2.3.2-devel-qt683-win64.exe
+        path: "build/js8call-2.3.2-devel-win64.exe"
+
+# This doesn't work if we keep commiting to the same tag, need to add a bit of if/else.
+# For now, continue-on-error is enabled. This should be able to go away on the 
+# main js8call/js8call repo and work with regular commit sha.
+    - name: Create GitHub Release and get short commit SHA
+      id: get_sha
+      run: |
+        echo "short_sha=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
+
+    - name: Create Git Tag
+      id: create_tag
+      uses: actions/github-script@v8
+      with:
+        script: |
+          const shortSha = process.env.SHORT_SHA;
+          const tagName = `js8call-v2.3.2-devel-qt683-ci`;
+            
+          await github.rest.git.createRef({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: `refs/tags/${tagName}`,
+            sha: context.sha,
+          });
+          console.log(`Tag '${tagName}' created.`);
+      env:
+        SHORT_SHA: ${{ steps.get_sha.outputs.short_sha }}
+      continue-on-error: true
+
+    - name: Create zip file to upload to release page
+      shell: msys2 {0}
+      run: |
+        cd build
+        zip -r "../js8call-2.3.2-devel-qt683-win64.exe-ci.zip" "js8call-2.3.2-devel-win64.exe"
+      continue-on-error: true
+         
+    - name: Create Changelog
+      id: github_release
+      uses: mikepenz/release-changelog-builder-action@v5
+      with:
+        mode: "COMMIT"
+        configurationJson: |
+          {
+            "template": "#{{CHANGELOG}}",
+            "categories": [
+              {
+                  "title": "## Feature",
+                  "labels": ["feat", "feature"]
+              },
+              {
+                  "title": "## Fix",
+                  "labels": ["fix", "bug"]
+              },
+              {
+                  "title": "## Other",
+                  "labels": []
+              }
+            ],
+            "label_extractor": [
+              {
+                "pattern": "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\\([\\w\\-\\.]+\\))?(!)?: ([\\w ])+([\\s\\S]*)",
+                "on_property": "title",
+                "target": "$1"
+              }
+            ]
+          }
+      continue-on-error: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create Release and Upload Assets
+      uses: softprops/action-gh-release@v2.3.4
+      with:
+        tag_name: js8call-v2.3.2-devel-qt683-ci
+        name: "JS8Call v2.3.2-devel QT 6.8.3 Windows MSYS2 CI Github runner build ${{ steps.get_sha.outputs.short_sha }}"
+        body: |
+          Release created automatically from commit ${{ github.sha }}.
+          This release is from the Windows MSYS2 CI builds via Github runner for JS8Call, using QT 6.8.3 Use at your own risk!
+          ${{steps.github_release.outputs.changelog}}
+        files: js8call-2.3.2-devel-qt683-win64.exe-ci.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
