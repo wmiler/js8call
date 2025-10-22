@@ -12,6 +12,10 @@ on:
 
 env:
   BUILD_TYPE: Release
+  build_package: build-essential, git, cmake
+  qt_package: qt6-base-dev, qt6-multimedia-dev, qt6-serialport-dev
+  misc_package: libhamlib-dev, libusb-1.0-0-dev, libfftw3-dev, libudev-dev, libboost-all-dev, libxkbcommon-dev
+  appimg_package: libfuse2, imagemagick
 
 jobs:
   build_matrix:
@@ -21,10 +25,6 @@ jobs:
         # Ubuntu 24.04 amd64 and arm64
         os: [ubuntu-latest]
         platform: [amd64, arm64]
-        build_package: [build-essential, git, cmake]
-        qt_package: [qt6-base-dev, qt6-multimedia-dev, qt6-serialport-dev]
-        misc_package: [libhamlib-dev, libusb-1.0-0-dev, libfftw3-dev, libudev-dev, libboost-all-dev, libxkbcommon-dev]
-        appimg_package: [libfuse2, imagemagick]
         include:
           - platform: amd64
             runner: ubuntu-24.04
@@ -45,5 +45,5 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y ${{ matrix.build_package }} ${{ matrix.qt_package }} ${{ matrix.misc_package }} ${{ matrix.appimg_package }}
+        sudo apt-get install -y ${{ env.build_package }} ${{ env.qt_package }} ${{ env.misc_package }} ${{ env.appimg_package }}
         
