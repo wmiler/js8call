@@ -12,10 +12,10 @@ on:
 
 env:
   BUILD_TYPE: Release
-  build_package: build-essential, git, cmake
-  qt_package: qt6-base-dev, qt6-multimedia-dev, qt6-serialport-dev
-  misc_package: libhamlib-dev, libusb-1.0-0-dev, libfftw3-dev, libudev-dev, libboost-all-dev, libxkbcommon-dev
-  appimg_package: libfuse2, imagemagick
+  build_package: build-essential git cmake
+  qt_package: qt6-base-dev qt6-multimedia-dev qt6-serialport-dev
+  misc_package: libhamlib-dev libusb-1.0-0-dev libfftw3-dev libudev-dev libboost-all-dev libxkbcommon-dev
+  appimg_package: libfuse2 imagemagick
 
 jobs:
   build_matrix:
