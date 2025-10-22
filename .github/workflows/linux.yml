@@ -18,7 +18,7 @@ jobs:
     runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
-        # Ubuntu 24.04 amd and arm64
+        # Ubuntu 24.04 amd64 and arm64
         os: [ubuntu-latest]
         platform: [amd64, arm64]
         build_package: [build-essential, git, cmake]
@@ -28,7 +28,7 @@ jobs:
         include:
           - platform: amd64
             runner: ubuntu-24.04
-          - platform: amd64
+          - platform: arm64
             runner: ubuntu-24.04-arm
 #        container:
 #          - debian:bookworm
