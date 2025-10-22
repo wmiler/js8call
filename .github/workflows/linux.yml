@@ -30,14 +30,14 @@ jobs:
             runner: ubuntu-24.04
           - platform: amd64
             runner: ubuntu-24.04-arm
-        container:
-          - debian:bookworm
-          - arm64v8/debian:bookworm
-          - amd64/fedora:42
-          - arm64v8/fedora:42
+#        container:
+#          - debian:bookworm
+#          - arm64v8/debian:bookworm
+#          - amd64/fedora:42
+#          - arm64v8/fedora:42
 
-    container:
-      image: ${{ matrix.container }} # Reference the container image from the matrix
+#    container:
+#      image: ${{ matrix.container }} # Reference the container image from the matrix
 
     steps:
     - uses: actions/checkout@v5
