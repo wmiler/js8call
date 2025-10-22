@@ -1,0 +1,49 @@
+permissions:
+  contents: read
+
+name: Matrix CI Build for Linux x86_64 and Arm64
+
+on:
+  push:
+    branches: [ "main" ]
+
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build_matrix:
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        # Ubuntu 24.04 amd and arm64
+        os: [ubuntu-latest]
+        platform: [amd64, arm64]
+        build_package: [build-essential, git, cmake]
+        qt_package: [qt6-base-dev, qt6-multimedia-dev, qt6-serialport-dev]
+        misc_package: [libhamlib-dev, libusb-1.0-0-dev, libfftw3-dev, libudev-dev, libboost-all-dev, libxkbcommon-dev]
+        appimg_package: [libfuse2, imagemagick]
+        include:
+          - platform: amd64
+            runner: ubuntu-24.04
+          - platform: amd64
+            runner: ubuntu-24.04-arm
+        container:
+          - debian:bookworm
+          - arm64v8/debian:bookworm
+          - amd64/fedora:42
+          - arm64v8/fedora:42
+
+    container:
+      image: ${{ matrix.container }} # Reference the container image from the matrix
+
+    steps:
+    - uses: actions/checkout@v5
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ${{ matrix.build_package }} ${{ matrix.qt_package }} ${{ matrix.misc_package }} ${{ matrix.appimg_package }}
+        
