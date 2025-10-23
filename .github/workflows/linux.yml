@@ -42,7 +42,14 @@ jobs:
     steps:
     - uses: actions/checkout@v5
     
-    - name: Install dependencies (same for both archs)
+    - name: Install dependencies (container)
+      if: ${{ matrix.container }}
+      run: |
+        apt-get update
+        apt-get install -y ${{ env.build_package }} ${{ env.qt_package }} ${{ env.misc_package }} ${{ env.appimg_package }}
+
+    - name: Install dependencies (not in container)
+      if: ! ${{ matrix.container }}
       run: |
         sudo apt-get update
         sudo apt-get install -y ${{ env.build_package }} ${{ env.qt_package }} ${{ env.misc_package }} ${{ env.appimg_package }}
