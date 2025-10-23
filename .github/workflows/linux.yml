@@ -13,6 +13,7 @@ on:
 env:
   BUILD_TYPE: Release
   build_package: build-essential git cmake libusb-1.0-0-dev libxkbcommon-dev libudev-dev
+  ffmpeg_package: ffmpeg 
 #  appimg_package: libfuse2 imagemagick
 #  qt_package: qt6-base-dev qt6-multimedia-dev qt6-serialport-dev
 #  misc_package: libhamlib-dev libfftw3-dev libboost-all-dev 
@@ -40,7 +41,9 @@ jobs:
     - name: Install dependencies (ubuntu)
       run: |
         sudo apt-get update
-        sudo apt-get install -y ${{ env.build_package }}
+        sudo apt-get install -y ${{ env.build_package }} ${{ env.ffmpeg_package }}
+        ffmpeg -encoders
+        ffmpeg -decoders
 
 # For CI, these should really already be built somewhere
     - name: Install Hamlib
@@ -91,9 +94,9 @@ jobs:
         git switch 6.8.3
         mkdir -p qt6/build
         cd qt6/build
-        ../configure --prefix=~/js8call/qt683-install -init-submodules -submodules qtmultimedia,qtserialport
+        ls -l ..
+        ${GITHUB_WORKSPACE}/qt6/configure -prefix=~/js8call/qt683-install -init-submodules -submodules qtmultimedia,qtserialport
         cat /home/runner/work/js8call/js8call/qt6/build/config.summary
-        cd qt6/build
         cmake --build .
         cmake --install .
 
