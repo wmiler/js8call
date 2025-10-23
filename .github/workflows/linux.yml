@@ -29,14 +29,18 @@ jobs:
           - platform: amd64
             runner: ubuntu-24.04
           - platform: amd64
+            os: debian
             container: debian:bookworm
           - platform: amd64
+            os: fedora
             container: amd64/fedora:42
           - platform: arm64
             runner: ubuntu-24.04-arm
           - platform: arm64
+            os: debian
             container: arm64v8/debian:bookworm
           - platform: arm64
+            os: fedora
             container: arm64v8/fedora:42
     container:
       image: ${{ matrix.container }} # Reference the container image from the matrix
@@ -44,13 +48,21 @@ jobs:
     steps:
     - uses: actions/checkout@v5
     
-    - name: Install dependencies (container)
-      if: ${{ matrix.container }}
+    - name: Install dependencies (debian container)
+      if: ${{ matrix.container.os }} == 'debian'
       run: |
-        apt update
-        apt install -y ${{ env.build_package }} ${{ env.qt_package }} ${{ env.misc_package }} ${{ env.appimg_package }}
+        sudo apt-get update
+        sudo apt-get install -y ${{ env.build_package }} ${{ env.qt_package }} ${{ env.misc_package }} ${{ env.appimg_package }}
 
-    - name: Install dependencies (not in container)
+    - name: Install dependencies (fedora container)
+      if: ${{ matrix.container.os }} == 'fedora'
+      run: |
+        dnf upgrade -y --refresh
+        dnf install -y gcc git clang which fuse ImageMagick cmake curl wget automake libtool \
+          qt6-qtbase-devel qt6-qtmultimedia-devel qt6-qtserialport-devel libudev-devel \
+          libusb1-devel fftw-devel libxkbcommon-devel hamlib-devel rpm-build boost-devel
+
+    - name: Install dependencies (ubuntu)
       if: ! ${{ matrix.container }}
       run: |
         sudo apt-get update
