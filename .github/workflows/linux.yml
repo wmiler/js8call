@@ -66,7 +66,7 @@ jobs:
         cd fftw-3.3.10
         ./configure --prefix=${GITHUB_WORKSPACE}/local
         make
-        make install
+        sudo make install
 
     - name: Check disk space
       run: df -h /
@@ -78,7 +78,7 @@ jobs:
         tar zxf boost-1.88.0.tar.gz
         cd boost_1_88_0
         ./bootstrap.sh --prefix=${GITHUB_WORKSPACE}/local
-        ./b2 install
+        sudo ./b2 install
         
     - name: Check disk space
       run: df -h /
