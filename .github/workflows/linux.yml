@@ -12,10 +12,10 @@ on:
 
 env:
   BUILD_TYPE: Release
-  build_package: build-essential git cmake
+  build_package: build-essential git cmake libfuse2 imagemagick libusb-1.0-0-dev libxkbcommon-dev
   qt_package: qt6-base-dev qt6-multimedia-dev qt6-serialport-dev
-  misc_package: libhamlib-dev libusb-1.0-0-dev libfftw3-dev libudev-dev libboost-all-dev libxkbcommon-dev
-  appimg_package: libfuse2 imagemagick
+  misc_package: libhamlib-dev libfftw3-dev libudev-dev libboost-all-dev 
+
 
 jobs:
   build_matrix:
@@ -30,20 +30,72 @@ jobs:
             runner: ubuntu-24.04
           - platform: arm64
             runner: ubuntu-24.04-arm
-#        container:
-#          - debian:bookworm
-#          - arm64v8/debian:bookworm
-#          - amd64/fedora:42
-#          - arm64v8/fedora:42
+        container:
+          - debian:bookworm
+          - arm64v8/debian:bookworm
+          - amd64/fedora:42
+          - arm64v8/fedora:42
 
-#    container:
-#      image: ${{ matrix.container }} # Reference the container image from the matrix
+    container:
+      image: ${{ matrix.container }} # Reference the container image from the matrix
 
     steps:
     - uses: actions/checkout@v5
     
-    - name: Install dependencies
+    - name: Install dependencies (same for both archs)
       run: |
         sudo apt-get update
         sudo apt-get install -y ${{ env.build_package }} ${{ env.qt_package }} ${{ env.misc_package }} ${{ env.appimg_package }}
+
+# For CI, these should really already be built somewhere
+    - name: Install Hamlib
+      id: install-hamlib
+      run: |
+        git clone https://github.com/Hamlib/Hamlib.git ~/hamlib
+        cd ~/hamlib
+        git checkout 4.6.4
+        ./bootstrap
+        ./configure
+        make -j 4
+        sudo make install-strip
+        sudo ldconfig
+
+    - name: Install Boost 1.88
+      id: install-boost
+      run: |
+        curl --location --output ./boost-1.88.0.tar.gz https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.gz
+        tar zxf boost-1.88.0.tar.gz
+        cd boost_1_88_0
+        ./bootstrap.sh
+        ./b2 install
         
+    - name: Install fftw 3.3.10
+      id: install-fftw
+      run: |
+        curl --location --output ./fftw-3.3.10.tar.gz https://www.fftw.org/fftw-3.3.10.tar.gz
+        tar zxf fftw-3.3.10.tar.gz
+        cd fftw-3.3.10
+        ./configure
+        make
+        make install
+
+    - name: Install QT 6.8.3
+      id: install-qt683
+      run: |
+        git clone https://github.com/qt/qt5.git qt6
+        cd qt6
+        git switch 6.8.3
+        mkdir -p qt6/build
+        cd qt6/build
+        ../configure --prefix=~/js8call/qt683-install -init-submodules -submodules qtmultimedia,qtserialport
+        cat /home/runner/work/js8call/js8call/qt6/build/config.summary
+        cd qt6/build
+        cmake --build .
+        cmake --install .
+
+    - name: Build JS8Call 
+      run: |
+        pwd
+        mkdir -p build && cd build
+        cmake -DCMAKE_PREFIX_PATH=/home/runner/js8call/qt683-install ..
+        make -j 4
