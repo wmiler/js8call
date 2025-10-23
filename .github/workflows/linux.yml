@@ -12,9 +12,10 @@ on:
 
 env:
   BUILD_TYPE: Release
-  build_package: build-essential git cmake libfuse2 imagemagick libusb-1.0-0-dev libxkbcommon-dev
-  qt_package: qt6-base-dev qt6-multimedia-dev qt6-serialport-dev
-  misc_package: libhamlib-dev libfftw3-dev libudev-dev libboost-all-dev 
+  build_package: build-essential git cmake libusb-1.0-0-dev libxkbcommon-dev libudev-dev
+#  appimg_package: libfuse2 imagemagick
+#  qt_package: qt6-base-dev qt6-multimedia-dev qt6-serialport-dev
+#  misc_package: libhamlib-dev libfftw3-dev libboost-all-dev 
 
 
 jobs:
@@ -25,7 +26,7 @@ jobs:
     - name: Install dependencies (ubuntu)
       run: |
         sudo apt-get update
-        sudo apt-get install -y ${{ env.build_package }} ${{ env.qt_package }} ${{ env.misc_package }} ${{ env.appimg_package }}
+        sudo apt-get install -y ${{ env.build_package }}
 
 # For CI, these should really already be built somewhere
     - name: Install Hamlib
