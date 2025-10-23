@@ -1,7 +1,7 @@
 permissions:
   contents: read
 
-name: Matrix CI Build for Linux x86_64 and Arm64
+name: CI Build for Linux x86_64 and Arm64
 
 on:
   push:
@@ -55,15 +55,9 @@ jobs:
         sudo make install-strip
         sudo ldconfig
 
-    - name: Install Boost 1.88
-      id: install-boost
-      run: |
-        curl --location --output ./boost-1.88.0.tar.gz https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.gz
-        tar zxf boost-1.88.0.tar.gz
-        cd boost_1_88_0
-        ./bootstrap.sh --prefix=$HOME/local
-        ./b2 install
-        
+    - name: Check disk space
+      run: df -h /
+      
     - name: Install fftw 3.3.10
       id: install-fftw
       run: |
@@ -74,6 +68,21 @@ jobs:
         make
         make install
 
+    - name: Check disk space
+      run: df -h /
+      
+    - name: Install Boost 1.88
+      id: install-boost
+      run: |
+        curl --location --output ./boost-1.88.0.tar.gz https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.gz
+        tar zxf boost-1.88.0.tar.gz
+        cd boost_1_88_0
+        ./bootstrap.sh --prefix=$HOME/local
+        ./b2 install
+        
+    - name: Check disk space
+      run: df -h /
+      
     - name: Install QT 6.8.3
       id: install-qt683
       run: |
@@ -88,6 +97,9 @@ jobs:
         cmake --build .
         cmake --install .
 
+    - name: Check disk space
+      run: df -h /
+      
     - name: Build JS8Call 
       run: |
         pwd
