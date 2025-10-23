@@ -50,7 +50,7 @@ jobs:
         cd ~/hamlib
         git checkout 4.6.4
         ./bootstrap
-        ./configure --prefix=$HOME/local
+        ./configure --prefix=${GITHUB_WORKSPACE}/local
         make -j 4
         sudo make install-strip
         sudo ldconfig
@@ -64,7 +64,7 @@ jobs:
         curl --location --output ./fftw-3.3.10.tar.gz https://www.fftw.org/fftw-3.3.10.tar.gz
         tar zxf fftw-3.3.10.tar.gz
         cd fftw-3.3.10
-        ./configure --prefix=$HOME/local
+        ./configure --prefix=${GITHUB_WORKSPACE}/local
         make
         make install
 
@@ -77,7 +77,7 @@ jobs:
         curl --location --output ./boost-1.88.0.tar.gz https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.gz
         tar zxf boost-1.88.0.tar.gz
         cd boost_1_88_0
-        ./bootstrap.sh --prefix=$HOME/local
+        ./bootstrap.sh --prefix=${GITHUB_WORKSPACE}/local
         ./b2 install
         
     - name: Check disk space
@@ -104,5 +104,5 @@ jobs:
       run: |
         pwd
         mkdir -p build && cd build
-        cmake -DCMAKE_PREFIX_PATH=/home/runner/js8call/qt683-install -DCMAKE_PREFIX_PATH=/home/runner/js8call/local ..
+        cmake -DCMAKE_PREFIX_PATH=/home/runner/js8call/qt683-install -DCMAKE_PREFIX_PATH=${GITHUB_WORKSPACE}/local ..
         make -j 4
