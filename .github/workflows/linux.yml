@@ -47,8 +47,8 @@ jobs:
     - name: Install dependencies (container)
       if: ${{ matrix.container }}
       run: |
-        apt-get update
-        apt-get install -y ${{ env.build_package }} ${{ env.qt_package }} ${{ env.misc_package }} ${{ env.appimg_package }}
+        apt update
+        apt install -y ${{ env.build_package }} ${{ env.qt_package }} ${{ env.misc_package }} ${{ env.appimg_package }}
 
     - name: Install dependencies (not in container)
       if: ! ${{ matrix.container }}
