@@ -18,56 +18,11 @@ env:
 
 
 jobs:
-  build_matrix:
-    runs-on: ${{ matrix.runner }}
-    strategy:
-      matrix:
-        # Ubuntu 24.04 amd64 and arm64
-        os: [ubuntu-latest]
-        platform: [amd64, arm64]
-        include:
-          - platform: amd64
-            runner: ubuntu-24.04
-          - platform: amd64
-            runner: ubuntu-24.04
-            os: debian
-            container: debian:bookworm
-          - platform: amd64
-            runner: ubuntu-24.04
-            os: fedora
-            container: amd64/fedora:42
-          - platform: arm64
-            runner: ubuntu-24.04-arm
-          - platform: arm64
-            runner: ubuntu-24.04-arm
-            os: debian
-            container: arm64v8/debian:bookworm
-          - platform: arm64
-            runner: ubuntu-24.04-arm
-            os: fedora
-            container: arm64v8/fedora:42
-    container:
-      image: ${{ matrix.container }} # Reference the container image from the matrix
-
+  build_amd64_2404:
+    runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v5
-    
-    - name: Install dependencies (debian container)
-      if: ${{ matrix.container.os }} == 'debian'
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y ${{ env.build_package }} ${{ env.qt_package }} ${{ env.misc_package }} ${{ env.appimg_package }}
-
-    - name: Install dependencies (fedora container)
-      if: ${{ matrix.container.os }} == 'fedora'
-      run: |
-        dnf upgrade -y --refresh
-        dnf install -y gcc git clang which fuse ImageMagick cmake curl wget automake libtool \
-          qt6-qtbase-devel qt6-qtmultimedia-devel qt6-qtserialport-devel libudev-devel \
-          libusb1-devel fftw-devel libxkbcommon-devel hamlib-devel rpm-build boost-devel
-
     - name: Install dependencies (ubuntu)
-      if: ! ${{ matrix.container }}
       run: |
         sudo apt-get update
         sudo apt-get install -y ${{ env.build_package }} ${{ env.qt_package }} ${{ env.misc_package }} ${{ env.appimg_package }}
