@@ -29,17 +29,21 @@ jobs:
           - platform: amd64
             runner: ubuntu-24.04
           - platform: amd64
+            runner: ubuntu-24.04
             os: debian
             container: debian:bookworm
           - platform: amd64
+            runner: ubuntu-24.04
             os: fedora
             container: amd64/fedora:42
           - platform: arm64
             runner: ubuntu-24.04-arm
           - platform: arm64
+            runner: ubuntu-24.04-arm
             os: debian
             container: arm64v8/debian:bookworm
           - platform: arm64
+            runner: ubuntu-24.04-arm
             os: fedora
             container: arm64v8/fedora:42
     container:
