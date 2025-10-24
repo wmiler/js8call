@@ -45,8 +45,7 @@ jobs:
     - name: Install dependencies (ubuntu)
       run: |
         sudo apt-get update
-        sudo apt-get install -y ${{ env.build_package }} ${{ env.ffmpeg_package }} ${{ env.opengl_package1 }} \
-          ${{ env.opengl_package2 }} ${{ env.opengl_package3 }}
+        sudo apt-get install -y ${{ env.build_package }} ${{ env.ffmpeg_package }} ${{ env.opengl_package1 }} ${{ env.opengl_package2 }} ${{ env.opengl_package3 }}
         ffmpeg -encoders
         ffmpeg -decoders
 
