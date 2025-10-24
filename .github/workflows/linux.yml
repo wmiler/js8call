@@ -17,7 +17,6 @@ env:
   opengl_package1: libegl1-mesa-dev libgles2-mesa-dev libgbm-dev libgl1-mesa-dev libxkbcommon-x11-dev 
   opengl_package2: libxcb-keysyms1-dev libxcb-image0-dev libxcb-icccm4-dev libxcb-render-util0-dev 
   opengl_package3: libxcb-xfixes0-dev libxcb-sync1-dev libxcb-randr0-dev libxrender-dev
-  opengl_package: ${{ env.opengl_package1 }} ${{ env.opengl_package2 }} ${{ env.opengl_package3 }}
 
 #  appimg_package: libfuse2 imagemagick
 #  qt_package: qt6-base-dev qt6-multimedia-dev qt6-serialport-dev
@@ -46,7 +45,8 @@ jobs:
     - name: Install dependencies (ubuntu)
       run: |
         sudo apt-get update
-        sudo apt-get install -y ${{ env.build_package }} ${{ env.ffmpeg_package }} ${{ env.opengl_package }}
+        sudo apt-get install -y ${{ env.build_package }} ${{ env.ffmpeg_package }} ${{ env.opengl_package1 }} \
+          ${{ env.opengl_package2 }} ${{ env.opengl_package3 }}
         ffmpeg -encoders
         ffmpeg -decoders
 
