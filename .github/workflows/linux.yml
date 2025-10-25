@@ -95,10 +95,12 @@ jobs:
         cd qt6/build
         ls -l ..
         ${GITHUB_WORKSPACE}/qt6/configure --prefix=${GITHUB_WORKSPACE}/qt683-install -init-submodules -submodules qtmultimedia,qtserialport
-        cat ${GITHUB_WORKSPACE}/qt6/qt6/build/config.summary
         cmake --build .
         cmake --install .
 
+    - name: QT 6.8.3 Summary
+      run: cat ${GITHUB_WORKSPACE}/qt6/qt6/build/config.summary
+      
     - name: Check disk space
       run: df -h /
       
