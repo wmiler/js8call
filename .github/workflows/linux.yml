@@ -43,43 +43,66 @@ jobs:
 
     - name: Install dependencies (ubuntu)
       run: |
+        ffmpeg -version
         sudo add-apt-repository ppa:ubuntuhandbook1/ffmpeg7
         sudo apt-get update
         sudo apt-get install -y ${{ env.build_package }} ${{ env.ffmpeg_package }} ${{ env.opengl_package1 }} ${{ env.opengl_package2 }} ${{ env.opengl_package3 }}
-        ffmpeg -encoders
-        ffmpeg -decoders
         ffmpeg -version
-        
+
 # For CI, these should really already be built somewhere or cached
-    - name: Install Hamlib
+    - name: Cache Hamlib 4.6.4
+      id: cache-hamlib
+      uses: actions/cache@v4
+      with:
+        path: ${GITHUB_WORKSPACE}/local/hamlib
+        key: ${{ runner.os }}-${{ env.ImageOS }}-${{ runner.arch }}-hamlib
+
+    - name: Install Hamlib 4.6.4
+      if: steps.cache-hamlib.outputs.cache-hit != 'true'
       id: install-hamlib
       run: |
         git clone https://github.com/Hamlib/Hamlib.git ~/hamlib
         cd ~/hamlib
         git checkout 4.6.4
         ./bootstrap
-        ./configure --prefix=${GITHUB_WORKSPACE}/local
+        ./configure --prefix=${GITHUB_WORKSPACE}/local/hamlib
         make -j 4
         sudo make install-strip
         sudo ldconfig
  
+    - name: Cache fftw 3.3.10
+      id: cache-fftw
+      uses: actions/cache@v4
+      with:
+        path: ${GITHUB_WORKSPACE}/local/fftw
+        key: ${{ runner.os }}-${{ env.ImageOS }}-${{ runner.arch }}-fftw
+
     - name: Install fftw 3.3.10
+      if: steps.cache-fftw.outputs.cache-hit != 'true'
       id: install-fftw
       run: |
         curl --location --output ./fftw-3.3.10.tar.gz https://www.fftw.org/fftw-3.3.10.tar.gz
         tar zxf fftw-3.3.10.tar.gz
         cd fftw-3.3.10
-        ./configure --prefix=${GITHUB_WORKSPACE}/local
+        ./configure --prefix=${GITHUB_WORKSPACE}/local/fftw
         make
         sudo make install
     
+    - name: Cache Boost 1.88
+      id: cache-boost
+      uses: actions/cache@v4
+      with:
+        path: ${GITHUB_WORKSPACE}/local/boost
+        key: ${{ runner.os }}-${{ env.ImageOS }}-${{ runner.arch }}-boost
+
     - name: Install Boost 1.88
+      if: steps.cache-boost.outputs.cache-hit != 'true'
       id: install-boost
       run: |
         curl --location --output ./boost-1.88.0.tar.gz https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.gz
         tar zxf boost-1.88.0.tar.gz
         cd boost_1_88_0
-        ./bootstrap.sh --prefix=${GITHUB_WORKSPACE}/local
+        ./bootstrap.sh --prefix=${GITHUB_WORKSPACE}/local/boost
         sudo ./b2 install
 
     - name: Cache QT 6.8.3
@@ -87,7 +110,10 @@ jobs:
       uses: actions/cache@v4
       with:
         path: ${GITHUB_WORKSPACE}/qt683-install
-        key: ${{ runner.os }}-${{ runner.arch }}-qt683
+        key: ${{ runner.os }}-${{ env.ImageOS }}-${{ runner.arch }}-qt683
+
+    - name: Find libavcodec.pc
+      run: sudo find ${GITHUB_WORKSPACE}/ -name libavcodec.pc -print
 
     # Takes about 1 hour, this one should definitely be pre-built
     - name: Install QT 6.8.3
@@ -114,5 +140,5 @@ jobs:
       run: |
         pwd
         mkdir -p build && cd build
-        cmake -DCMAKE_PREFIX_PATH="${GITHUB_WORKSPACE}/qt683-install;${GITHUB_WORKSPACE}/local" ..
+        cmake -DCMAKE_PREFIX_PATH="${GITHUB_WORKSPACE}/qt683-install;${GITHUB_WORKSPACE}/local/" ..
         make -j 4
