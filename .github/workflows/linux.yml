@@ -4,6 +4,7 @@ permissions:
 name: CI Build for Linux x86_64 and Arm64
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "main" ]
 
@@ -50,7 +51,7 @@ jobs:
         ffmpeg -encoders
         ffmpeg -decoders
         ffmpeg -version
-
+        
 # For CI, these should really already be built somewhere
     - name: Install Hamlib
       id: install-hamlib
