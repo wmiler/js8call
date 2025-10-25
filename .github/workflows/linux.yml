@@ -84,8 +84,16 @@ jobs:
         ./bootstrap.sh --prefix=${GITHUB_WORKSPACE}/local
         sudo ./b2 install
 
+    - name: Cache QT 6.8.3
+      id: cache-qt
+      uses: actions/cache@v4
+      with:
+        path: ${GITHUB_WORKSPACE}/qt683-install
+        key: ${{ runner.os }}-qt683
+
     # Takes about 1 hour, this one should definitely be pre-built
     - name: Install QT 6.8.3
+      if: steps.cache-qt.outputs.cache-hit != 'true'
       id: install-qt683
       run: |
         git clone https://github.com/qt/qt5.git qt6
