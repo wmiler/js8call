@@ -33,8 +33,6 @@ jobs:
     - name: Free Disk Space (Ubuntu)
       uses: jlumbroso/free-disk-space@main
       with:
-        # this might remove tools that are actually needed,
-        # if set to "true" but frees about 6 GB
         tool-cache: false
         android: true
         dotnet: true
@@ -52,7 +50,7 @@ jobs:
         ffmpeg -decoders
         ffmpeg -version
         
-# For CI, these should really already be built somewhere
+# For CI, these should really already be built somewhere or cached
     - name: Install Hamlib
       id: install-hamlib
       run: |
@@ -89,7 +87,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: ${GITHUB_WORKSPACE}/qt683-install
-        key: ${{ runner.os }}-qt683
+        key: ${{ runner.os }}-${{ runner.arch }}-qt683
 
     # Takes about 1 hour, this one should definitely be pre-built
     - name: Install QT 6.8.3
@@ -102,7 +100,7 @@ jobs:
         mkdir -p qt6/build
         cd qt6/build
         ls -l ..
-        ${GITHUB_WORKSPACE}/qt6/configure --prefix=${GITHUB_WORKSPACE}/qt683-install -init-submodules -submodules qtmultimedia,qtserialport
+        ${GITHUB_WORKSPACE}/qt6/configure -DCMAKE_FIND_DEBUG_MODE=1 --prefix=${GITHUB_WORKSPACE}/qt683-install -init-submodules -submodules qtmultimedia,qtserialport
         cmake --build .
         cmake --install .
 
@@ -116,5 +114,5 @@ jobs:
       run: |
         pwd
         mkdir -p build && cd build
-        cmake -DCMAKE_PREFIX_PATH=${GITHUB_WORKSPACE}/qt683-install;${GITHUB_WORKSPACE}/local ..
+        cmake -DCMAKE_PREFIX_PATH="${GITHUB_WORKSPACE}/qt683-install;${GITHUB_WORKSPACE}/local" ..
         make -j 4
