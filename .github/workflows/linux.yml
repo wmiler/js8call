@@ -108,5 +108,5 @@ jobs:
       run: |
         pwd
         mkdir -p build && cd build
-        cmake -DCMAKE_PREFIX_PATH=${GITHUB_WORKSPACE}/qt683-instal;${GITHUB_WORKSPACE}/local ..
+        cmake -DCMAKE_PREFIX_PATH=${GITHUB_WORKSPACE}/qt683-install;${GITHUB_WORKSPACE}/local ..
         make -j 4
