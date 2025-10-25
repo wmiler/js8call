@@ -83,7 +83,8 @@ jobs:
         cd boost_1_88_0
         ./bootstrap.sh --prefix=${GITHUB_WORKSPACE}/local
         sudo ./b2 install
-          
+
+    # Takes about 1 hour, this one should definitely be pre-built
     - name: Install QT 6.8.3
       id: install-qt683
       run: |
@@ -105,5 +106,5 @@ jobs:
       run: |
         pwd
         mkdir -p build && cd build
-        cmake -DCMAKE_PREFIX_PATH=${GITHUB_WORKSPACE}/qt683-install -DCMAKE_PREFIX_PATH=${GITHUB_WORKSPACE}/local ..
+        cmake -DCMAKE_PREFIX_PATH=${GITHUB_WORKSPACE}/qt683-instal;${GITHUB_WORKSPACE}/local ..
         make -j 4
