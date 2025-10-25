@@ -43,7 +43,6 @@ jobs:
 
     - name: Install dependencies (ubuntu)
       run: |
-        ffmpeg -version
         sudo add-apt-repository ppa:ubuntuhandbook1/ffmpeg7
         sudo apt-get update
         sudo apt-get install -y ${{ env.build_package }} ${{ env.ffmpeg_package }} ${{ env.opengl_package1 }} ${{ env.opengl_package2 }} ${{ env.opengl_package3 }}
