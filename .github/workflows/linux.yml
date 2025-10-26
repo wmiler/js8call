@@ -17,7 +17,8 @@ env:
   opengl_package1: libegl1-mesa-dev libgles2-mesa-dev libgbm-dev libgl1-mesa-dev libxkbcommon-x11-dev 
   opengl_package2: libxcb-keysyms1-dev libxcb-image0-dev libxcb-icccm4-dev libxcb-render-util0-dev 
   opengl_package3: libxcb-xfixes0-dev libxcb-sync-dev libxcb-randr0-dev libxrender-dev
-
+  ffmpeg_build: libass-dev libfreetype6-dev libgnutls28-dev libmp3lame-dev libsdl2-dev libva-dev libvdpau-dev libvorbis-dev
+  
 #  ffmpeg_package: yasm libva-dev ffmpeg libavformat-dev libavcodec-dev libavutil-dev libswresample-dev libpulse-dev
 #  appimg_package: libfuse2 imagemagick
 #  qt_package: qt6-base-dev qt6-multimedia-dev qt6-serialport-dev
@@ -50,7 +51,7 @@ jobs:
     - name: Install dependencies (ubuntu)
       run: |
         sudo apt-get update
-        sudo apt-get install -y ${{ env.build_package }} ${{ env.opengl_package1 }} ${{ env.opengl_package2 }} ${{ env.opengl_package3 }}
+        sudo apt-get install -y ${{ env.build_package }} ${{ env.ffmpeg_build }} ${{ env.opengl_package1 }} ${{ env.opengl_package2 }} ${{ env.opengl_package3 }}
 
 ## libusb
     - name: Cache Check libusb 1.0.29
@@ -97,7 +98,7 @@ jobs:
         mkdir -p ffmpeg/build
         cd ffmpeg/build
         ../configure --prefix=${GITHUB_WORKSPACE}/local/ffmpeg --disable-doc --enable-network --enable-shared \
-          --enable-gpl --enable-libmp3lame --enable-libopus --enable-libsvtav1 \
+          --enable-gpl --enable-libaom --enable-libass --enable-libfdk-aac --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libsvtav1 \
           --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265
         make -j install
         /home/runner/work/js8call/js8call/local/ffmpeg/ffmpeg --version
