@@ -30,7 +30,7 @@ jobs:
     steps:
     - uses: actions/checkout@v5
 
-    - name: Create our own var with the ImageOS value
+    - name: Create our own var with the ImageOS value for cache use
       id: which-os
       run: echo "thisos=$ImageOS" >> $GITHUB_OUTPUT
       shell: bash
@@ -53,8 +53,7 @@ jobs:
         sudo apt-get install -y ${{ env.build_package }} ${{ env.ffmpeg_package }} ${{ env.opengl_package1 }} ${{ env.opengl_package2 }} ${{ env.opengl_package3 }}
         ffmpeg -version
 
-# For CI, these should really already be built somewhere or cached
-    - name: Cache Hamlib 4.6.4
+    - name: Cache Check Hamlib 4.6.4
       id: cache-hamlib
       uses: actions/cache@v4
       with:
@@ -81,7 +80,7 @@ jobs:
         key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-hamlib
         path: /home/runner/work/js8call/js8call/local/hamlib
           
-    - name: Cache fftw 3.3.10
+    - name: Cache Check fftw 3.3.10
       id: cache-fftw
       uses: actions/cache@v4
       with:
@@ -106,7 +105,7 @@ jobs:
         key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-fftw
         path: /home/runner/work/js8call/js8call/local/fftw
         
-    - name: Cache Boost 1.88
+    - name: Cache Check Boost 1.88
       id: cache-boost
       uses: actions/cache@v4
       with:
@@ -130,7 +129,7 @@ jobs:
         key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-boost
         path: /home/runner/work/js8call/js8call/local/boost
         
-    - name: Cache QT 6.8.3
+    - name: Cache Check QT 6.8.3
       id: cache-qt
       uses: actions/cache@v4
       with:
@@ -140,7 +139,7 @@ jobs:
 #    - name: Find libavcodec.pc
 #      run: sudo find / -name libavcodec.pc -print
 
-    # Takes about 1 hour, this one should definitely be pre-built
+    # Takes about 1 hour
     - name: Install QT 6.8.3
       if: steps.cache-qt.outputs.cache-hit != 'true'
       id: install-qt683
@@ -151,7 +150,7 @@ jobs:
         mkdir -p qt6/build
         cd qt6/build
         ls -l ..
-        ${GITHUB_WORKSPACE}/qt6/configure -DCMAKE_FIND_DEBUG_MODE=1 --prefix=${GITHUB_WORKSPACE}/local/qt683-install -init-submodules -submodules qtmultimedia,qtserialport
+        ${GITHUB_WORKSPACE}/qt6/configure --debug-find --fmpeg-dir /usr/lib/x86_64-linux-gnu/ --prefix=${GITHUB_WORKSPACE}/local/qt683-install -init-submodules -submodules qtmultimedia,qtserialport
         cmake --build . --parallel
         cmake --install .
 
@@ -163,6 +162,7 @@ jobs:
         path: /home/runner/work/js8call/js8call/local/qt683-install
         
     - name: QT 6.8.3 Summary
+      if: steps.cache-qt.outputs.cache-hit != 'true'
       run: cat ${GITHUB_WORKSPACE}/qt6/qt6/build/config.summary
       
     - name: Build JS8Call 
