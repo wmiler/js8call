@@ -14,7 +14,7 @@ on:
 env:
   BUILD_TYPE: Release
   build_package: build-essential git cmake libusb-1.0-0-dev libxkbcommon-dev libudev-dev
-  ffmpeg_package: ffmpeg libavformat-dev libavcodec-dev libavutil-dev libswresample-dev libpulse-dev
+  ffmpeg_package: yasm libva-dev ffmpeg libavformat-dev libavcodec-dev libavutil-dev libswresample-dev libpulse-dev
   opengl_package1: libegl1-mesa-dev libgles2-mesa-dev libgbm-dev libgl1-mesa-dev libxkbcommon-x11-dev 
   opengl_package2: libxcb-keysyms1-dev libxcb-image0-dev libxcb-icccm4-dev libxcb-render-util0-dev 
   opengl_package3: libxcb-xfixes0-dev libxcb-sync-dev libxcb-randr0-dev libxrender-dev
@@ -53,6 +53,30 @@ jobs:
         sudo apt-get install -y ${{ env.build_package }} ${{ env.ffmpeg_package }} ${{ env.opengl_package1 }} ${{ env.opengl_package2 }} ${{ env.opengl_package3 }}
         ffmpeg -version
 
+    - name: Cache Check ffmpeg 7.1.1
+      id: cache-ffmpeg
+      uses: actions/cache@v4
+      with:
+        path: /home/runner/work/js8call/js8call/local/ffmpeg
+        key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-ffmpeg
+
+    - name: Install ffmpeg 7.1.1
+      if: steps.cache-ffmpeg.outputs.cache-hit != 'true'
+      id: install-ffmpeg
+      run: |
+        git clone --branch n7.1.1 https://git.ffmpeg.org/ffmpeg.git ffmpeg
+        mkdir -p ffmpeg/build
+        cd ffmpeg/build
+        ../configure --prefix=${GITHUB_WORKSPACE}/local/ffmpeg --disable-doc --enable-network --enable-shared
+        make -j install
+
+    - name: Save ffmpeg cache
+      if: steps.cache-ffmpeg.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v4
+      with:
+        key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-ffmpeg
+        path: /home/runner/work/js8call/js8call/local/ffmpeg
+        
     - name: Cache Check Hamlib 4.6.4
       id: cache-hamlib
       uses: actions/cache@v4
@@ -150,7 +174,7 @@ jobs:
         mkdir -p qt6/build
         cd qt6/build
         ls -l ..
-        ${GITHUB_WORKSPACE}/qt6/configure -DCMAKE_FIND_DEBUG_MODE=1 --fmpeg-dir /usr/lib/x86_64-linux-gnu/ --prefix=${GITHUB_WORKSPACE}/local/qt683-install -init-submodules -submodules qtmultimedia,qtserialport
+        ${GITHUB_WORKSPACE}/qt6/configure -DCMAKE_FIND_DEBUG_MODE=1 -ffmpeg-dir /home/runner/work/js8call/js8call/local/ffmpeg --prefix=${GITHUB_WORKSPACE}/local/qt683-install -init-submodules -submodules qtmultimedia,qtserialport
         cmake --build . --parallel
         cmake --install .
 
