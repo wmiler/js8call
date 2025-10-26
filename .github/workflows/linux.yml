@@ -79,7 +79,7 @@ jobs:
       uses: actions/cache/save@v4
       with:
         key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-hamlib
-        path: ${GITHUB_WORKSPACE}/local/hamlib
+        path: /home/runner/work/js8call/js8call/local/hamlib
           
     - name: Cache fftw 3.3.10
       id: cache-fftw
@@ -123,8 +123,8 @@ jobs:
         path: ${GITHUB_WORKSPACE}/qt683-install
         key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-qt683
 
-    - name: Find libavcodec.pc
-      run: sudo find / -name libavcodec.pc -print
+#    - name: Find libavcodec.pc
+#      run: sudo find / -name libavcodec.pc -print
 
     # Takes about 1 hour, this one should definitely be pre-built
     - name: Install QT 6.8.3
@@ -138,18 +138,15 @@ jobs:
         cd qt6/build
         ls -l ..
         ${GITHUB_WORKSPACE}/qt6/configure -DCMAKE_FIND_DEBUG_MODE=1 --prefix=${GITHUB_WORKSPACE}/qt683-install -init-submodules -submodules qtmultimedia,qtserialport
-        cmake --build .
+        cmake --build . --parallel
         cmake --install .
 
     - name: QT 6.8.3 Summary
       run: cat ${GITHUB_WORKSPACE}/qt6/qt6/build/config.summary
       
-    - name: Check disk space
-      run: df -h /
-      
     - name: Build JS8Call 
       run: |
         pwd
         mkdir -p build && cd build
-        cmake --debug-find -DCMAKE_PREFIX_PATH="${GITHUB_WORKSPACE}/qt683-install;${GITHUB_WORKSPACE}/local/hamlib;${GITHUB_WORKSPACE}/local/fftw;${GITHUB_WORKSPACE}/local/boost" ..
+        cmake -DCMAKE_PREFIX_PATH="${GITHUB_WORKSPACE}/qt683-install;${GITHUB_WORKSPACE}/local/hamlib;${GITHUB_WORKSPACE}/local/fftw;${GITHUB_WORKSPACE}/local/boost" ..
         make -j 4
