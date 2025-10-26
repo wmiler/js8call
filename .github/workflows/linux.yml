@@ -46,9 +46,9 @@ jobs:
         docker-images: true
         swap-storage: true
 
-#        sudo add-apt-repository ppa:ubuntuhandbook1/ffmpeg7
     - name: Install dependencies (ubuntu)
       run: |
+        sudo add-apt-repository ppa:ubuntuhandbook1/ffmpeg7
         sudo apt-get update
         sudo apt-get install -y ${{ env.build_package }} ${{ env.ffmpeg_package }} ${{ env.opengl_package1 }} ${{ env.opengl_package2 }} ${{ env.opengl_package3 }}
         ffmpeg -version
@@ -88,7 +88,7 @@ jobs:
         curl --location --output ./fftw-3.3.10.tar.gz https://www.fftw.org/fftw-3.3.10.tar.gz
         tar zxf fftw-3.3.10.tar.gz
         cd fftw-3.3.10
-        ./configure --prefix=${GITHUB_WORKSPACE}/local/fftw --enable-threads
+        ./configure --prefix=${GITHUB_WORKSPACE}/local/fftw --enable-threads --enable-shared --enable-sse2 --enable-avx --enable-avx2 --enable-float --enable-long-double
         make
         sudo make install
     
@@ -117,7 +117,7 @@ jobs:
         key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-qt683
 
     - name: Find libavcodec.pc
-      run: sudo find ${GITHUB_WORKSPACE}/ -name libavcodec.pc -print
+      run: sudo find / -name libavcodec.pc -print
 
     # Takes about 1 hour, this one should definitely be pre-built
     - name: Install QT 6.8.3
@@ -144,5 +144,5 @@ jobs:
       run: |
         pwd
         mkdir -p build && cd build
-        cmake -DCMAKE_FIND_DEBUG_MODE=1 -DCMAKE_PREFIX_PATH="${GITHUB_WORKSPACE}/qt683-install;${GITHUB_WORKSPACE}/local/hamlib;${GITHUB_WORKSPACE}/local/fftw;${GITHUB_WORKSPACE}/local/boost" ..
+        cmake --debug-find -DCMAKE_PREFIX_PATH="${GITHUB_WORKSPACE}/qt683-install;${GITHUB_WORKSPACE}/local/hamlib;${GITHUB_WORKSPACE}/local/fftw;${GITHUB_WORKSPACE}/local/boost" ..
         make -j 4
