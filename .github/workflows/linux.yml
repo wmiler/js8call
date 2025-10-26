@@ -44,9 +44,9 @@ jobs:
         docker-images: true
         swap-storage: true
 
+#        sudo add-apt-repository ppa:ubuntuhandbook1/ffmpeg7
     - name: Install dependencies (ubuntu)
       run: |
-        sudo add-apt-repository ppa:ubuntuhandbook1/ffmpeg7
         sudo apt-get update
         sudo apt-get install -y ${{ env.build_package }} ${{ env.ffmpeg_package }} ${{ env.opengl_package1 }} ${{ env.opengl_package2 }} ${{ env.opengl_package3 }}
         ffmpeg -version
