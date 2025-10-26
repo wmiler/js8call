@@ -73,7 +73,14 @@ jobs:
         make -j 4
         sudo make install-strip
         sudo ldconfig
- 
+
+    - name: Save Hamlib cache
+      if: steps.cache-hamlib.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v4
+      with:
+        key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-hamlib
+        path: ${GITHUB_WORKSPACE}/local/hamlib
+          
     - name: Cache fftw 3.3.10
       id: cache-fftw
       uses: actions/cache@v4
@@ -88,7 +95,7 @@ jobs:
         curl --location --output ./fftw-3.3.10.tar.gz https://www.fftw.org/fftw-3.3.10.tar.gz
         tar zxf fftw-3.3.10.tar.gz
         cd fftw-3.3.10
-        ./configure --prefix=${GITHUB_WORKSPACE}/local/fftw --enable-threads --enable-shared --enable-sse2 --enable-avx --enable-avx2 --enable-float --enable-long-double
+        ./configure --prefix=${GITHUB_WORKSPACE}/local/fftw --enable-threads --enable-shared --enable-sse2 --enable-avx --enable-avx2 --enable-float
         make
         sudo make install
     
