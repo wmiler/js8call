@@ -58,7 +58,7 @@ jobs:
       id: cache-hamlib
       uses: actions/cache@v4
       with:
-        path: ${GITHUB_WORKSPACE}/local/hamlib
+        path: /home/runner/work/js8call/js8call/local/hamlib
         key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-hamlib
 
     - name: Install Hamlib 4.6.4
@@ -85,7 +85,7 @@ jobs:
       id: cache-fftw
       uses: actions/cache@v4
       with:
-        path: ${GITHUB_WORKSPACE}/local/fftw
+        path: /home/runner/work/js8call/js8call/local/fftw
         key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-fftw
 
     - name: Install fftw 3.3.10
@@ -98,12 +98,19 @@ jobs:
         ./configure --prefix=${GITHUB_WORKSPACE}/local/fftw --enable-threads --enable-shared --enable-sse2 --enable-avx --enable-avx2 --enable-float
         make
         sudo make install
-    
+
+    - name: Save fftw 3.3.10 cache
+      if: steps.cache-fftw.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v4
+      with:
+        key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-fftw
+        path: /home/runner/work/js8call/js8call/local/fftw
+        
     - name: Cache Boost 1.88
       id: cache-boost
       uses: actions/cache@v4
       with:
-        path: ${GITHUB_WORKSPACE}/local/boost
+        path: /home/runner/work/js8call/js8call/local/boost
         key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-boost
 
     - name: Install Boost 1.88
@@ -116,11 +123,18 @@ jobs:
         ./bootstrap.sh --prefix=${GITHUB_WORKSPACE}/local/boost
         sudo ./b2 install
 
+    - name: Save Boost 1.88 cache
+      if: steps.cache-boost.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v4
+      with:
+        key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-boost
+        path: /home/runner/work/js8call/js8call/local/boost
+        
     - name: Cache QT 6.8.3
       id: cache-qt
       uses: actions/cache@v4
       with:
-        path: ${GITHUB_WORKSPACE}/qt683-install
+        path: /home/runner/work/js8call/js8call/local/qt683-install
         key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-qt683
 
 #    - name: Find libavcodec.pc
@@ -137,10 +151,17 @@ jobs:
         mkdir -p qt6/build
         cd qt6/build
         ls -l ..
-        ${GITHUB_WORKSPACE}/qt6/configure -DCMAKE_FIND_DEBUG_MODE=1 --prefix=${GITHUB_WORKSPACE}/qt683-install -init-submodules -submodules qtmultimedia,qtserialport
+        ${GITHUB_WORKSPACE}/qt6/configure -DCMAKE_FIND_DEBUG_MODE=1 --prefix=${GITHUB_WORKSPACE}/local/qt683-install -init-submodules -submodules qtmultimedia,qtserialport
         cmake --build . --parallel
         cmake --install .
 
+    - name: Save QT 6.8.3 cache
+      if: steps.cache-qt.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v4
+      with:
+        key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-qt683
+        path: /home/runner/work/js8call/js8call/local/qt683-install
+        
     - name: QT 6.8.3 Summary
       run: cat ${GITHUB_WORKSPACE}/qt6/qt6/build/config.summary
       
@@ -148,5 +169,5 @@ jobs:
       run: |
         pwd
         mkdir -p build && cd build
-        cmake -DCMAKE_PREFIX_PATH="${GITHUB_WORKSPACE}/qt683-install;${GITHUB_WORKSPACE}/local/hamlib;${GITHUB_WORKSPACE}/local/fftw;${GITHUB_WORKSPACE}/local/boost" ..
+        cmake -DCMAKE_PREFIX_PATH="${GITHUB_WORKSPACE}/local/qt683-install;${GITHUB_WORKSPACE}/local/hamlib;${GITHUB_WORKSPACE}/local/fftw;${GITHUB_WORKSPACE}/local/boost" ..
         make -j 4
