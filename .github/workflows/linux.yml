@@ -57,7 +57,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: ${GITHUB_WORKSPACE}/local/hamlib
-        key: ${{ runner.os }}-${{ env.ImageOS }}-${{ runner.arch }}-hamlib
+        key: ${{ runner.os }}-${ ImageOS }-${{ runner.arch }}-hamlib
 
     - name: Install Hamlib 4.6.4
       if: steps.cache-hamlib.outputs.cache-hit != 'true'
