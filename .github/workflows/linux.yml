@@ -41,9 +41,9 @@ jobs:
         tool-cache: false
         android: true
         dotnet: true
-        haskell: true
-        large-packages: true
-        docker-images: true
+        haskell: false
+        large-packages: false
+        docker-images: false
         swap-storage: true
         
 #         sudo add-apt-repository ppa:ubuntuhandbook1/ffmpeg7
@@ -97,7 +97,7 @@ jobs:
         mkdir -p ffmpeg/build
         cd ffmpeg/build
         ../configure --prefix=${GITHUB_WORKSPACE}/local/ffmpeg --disable-doc --enable-network --enable-shared \
-          --enable-gpl --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libsvtav1 \
+          --enable-gpl --enable-libmp3lame --enable-libopus --enable-libsvtav1 \
           --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265
         make -j install
         /home/runner/work/js8call/js8call/local/ffmpeg/ffmpeg --version
