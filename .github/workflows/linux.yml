@@ -98,7 +98,7 @@ jobs:
         mkdir -p ffmpeg/build
         cd ffmpeg/build
         ../configure --prefix=${GITHUB_WORKSPACE}/local/ffmpeg --disable-doc --enable-network --enable-shared \
-          --enable-gpl --enable-libaom --enable-libass --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libsvtav1 \
+          --enable-gpl --enable-libass --enable-libfreetype --enable-libmp3lame --enable-libopus \
           --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265
         make -j install
         /home/runner/work/js8call/js8call/local/ffmpeg/ffmpeg --version
