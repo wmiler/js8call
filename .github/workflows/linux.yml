@@ -29,6 +29,9 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v5
+
+    - name: Dump env vars
+      run: env
     
     - name: Free Disk Space (Ubuntu)
       uses: jlumbroso/free-disk-space@main
@@ -139,5 +142,5 @@ jobs:
       run: |
         pwd
         mkdir -p build && cd build
-        cmake -DCMAKE_PREFIX_PATH="${GITHUB_WORKSPACE}/qt683-install;${GITHUB_WORKSPACE}/local/" ..
+        cmake -DCMAKE_PREFIX_PATH="${GITHUB_WORKSPACE}/qt683-install;${GITHUB_WORKSPACE}/local/hamlib;${GITHUB_WORKSPACE}/local/fftw;${GITHUB_WORKSPACE}/local/boost" ..
         make -j 4
