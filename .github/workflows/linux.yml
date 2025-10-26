@@ -150,7 +150,7 @@ jobs:
         mkdir -p qt6/build
         cd qt6/build
         ls -l ..
-        ${GITHUB_WORKSPACE}/qt6/configure --debug-find --fmpeg-dir /usr/lib/x86_64-linux-gnu/ --prefix=${GITHUB_WORKSPACE}/local/qt683-install -init-submodules -submodules qtmultimedia,qtserialport
+        ${GITHUB_WORKSPACE}/qt6/configure -DCMAKE_FIND_DEBUG_MODE=1 --fmpeg-dir /usr/lib/x86_64-linux-gnu/ --prefix=${GITHUB_WORKSPACE}/local/qt683-install -init-submodules -submodules qtmultimedia,qtserialport
         cmake --build . --parallel
         cmake --install .
 
