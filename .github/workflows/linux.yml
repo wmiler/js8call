@@ -30,8 +30,10 @@ jobs:
     steps:
     - uses: actions/checkout@v5
 
-    - name: Dump env vars
-      run: env
+    - name: Create our own var with the ImageOS value
+      id: which-os
+      run: echo "thisos=$ImageOS" >> $GITHUB_OUTPUT
+      shell: bash
     
     - name: Free Disk Space (Ubuntu)
       uses: jlumbroso/free-disk-space@main
@@ -57,7 +59,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: ${GITHUB_WORKSPACE}/local/hamlib
-        key: ${{ runner.os }}-${ ImageOS }-${{ runner.arch }}-hamlib
+        key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-hamlib
 
     - name: Install Hamlib 4.6.4
       if: steps.cache-hamlib.outputs.cache-hit != 'true'
@@ -77,7 +79,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: ${GITHUB_WORKSPACE}/local/fftw
-        key: ${{ runner.os }}-${{ env.ImageOS }}-${{ runner.arch }}-fftw
+        key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-fftw
 
     - name: Install fftw 3.3.10
       if: steps.cache-fftw.outputs.cache-hit != 'true'
@@ -86,7 +88,7 @@ jobs:
         curl --location --output ./fftw-3.3.10.tar.gz https://www.fftw.org/fftw-3.3.10.tar.gz
         tar zxf fftw-3.3.10.tar.gz
         cd fftw-3.3.10
-        ./configure --prefix=${GITHUB_WORKSPACE}/local/fftw
+        ./configure --prefix=${GITHUB_WORKSPACE}/local/fftw --enable-threads
         make
         sudo make install
     
@@ -95,7 +97,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: ${GITHUB_WORKSPACE}/local/boost
-        key: ${{ runner.os }}-${{ env.ImageOS }}-${{ runner.arch }}-boost
+        key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-boost
 
     - name: Install Boost 1.88
       if: steps.cache-boost.outputs.cache-hit != 'true'
@@ -112,7 +114,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: ${GITHUB_WORKSPACE}/qt683-install
-        key: ${{ runner.os }}-${{ env.ImageOS }}-${{ runner.arch }}-qt683
+        key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-qt683
 
     - name: Find libavcodec.pc
       run: sudo find ${GITHUB_WORKSPACE}/ -name libavcodec.pc -print
@@ -142,5 +144,5 @@ jobs:
       run: |
         pwd
         mkdir -p build && cd build
-        cmake -DCMAKE_PREFIX_PATH="${GITHUB_WORKSPACE}/qt683-install;${GITHUB_WORKSPACE}/local/hamlib;${GITHUB_WORKSPACE}/local/fftw;${GITHUB_WORKSPACE}/local/boost" ..
+        cmake -DCMAKE_FIND_DEBUG_MODE=1 -DCMAKE_PREFIX_PATH="${GITHUB_WORKSPACE}/qt683-install;${GITHUB_WORKSPACE}/local/hamlib;${GITHUB_WORKSPACE}/local/fftw;${GITHUB_WORKSPACE}/local/boost" ..
         make -j 4
