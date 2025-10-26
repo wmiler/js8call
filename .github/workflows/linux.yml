@@ -14,11 +14,11 @@ on:
 env:
   BUILD_TYPE: Release
   build_package: build-essential git cmake libusb-1.0-0-dev libxkbcommon-dev libudev-dev yasm libva-dev
-#  ffmpeg_package: yasm libva-dev ffmpeg libavformat-dev libavcodec-dev libavutil-dev libswresample-dev libpulse-dev
   opengl_package1: libegl1-mesa-dev libgles2-mesa-dev libgbm-dev libgl1-mesa-dev libxkbcommon-x11-dev 
   opengl_package2: libxcb-keysyms1-dev libxcb-image0-dev libxcb-icccm4-dev libxcb-render-util0-dev 
   opengl_package3: libxcb-xfixes0-dev libxcb-sync-dev libxcb-randr0-dev libxrender-dev
 
+#  ffmpeg_package: yasm libva-dev ffmpeg libavformat-dev libavcodec-dev libavutil-dev libswresample-dev libpulse-dev
 #  appimg_package: libfuse2 imagemagick
 #  qt_package: qt6-base-dev qt6-multimedia-dev qt6-serialport-dev
 #  misc_package: libhamlib-dev libfftw3-dev libboost-all-dev 
@@ -52,6 +52,34 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y ${{ env.build_package }} ${{ env.opengl_package1 }} ${{ env.opengl_package2 }} ${{ env.opengl_package3 }}
 
+## libusb
+    - name: Cache Check libusb 1.0.29
+      id: cache-usb
+      uses: actions/cache@v4
+      with:
+        path: /home/runner/work/js8call/js8call/local/libusb
+        key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-libusb
+
+    - name: Install libusb 1.0.29
+      if: steps.cache-usb.outputs.cache-hit != 'true'
+      id: install-usb
+      run: |
+        curl --location --output ./v1.0.29.tar.gz https://github.com/libusb/libusb/archive/refs/tags/v1.0.29.tar.gz
+        tar zxf v1.0.29.tar.gz
+        cd libusb
+        ./bootstrap.sh
+        ./configure --prefix=/home/runner/work/js8call/js8call/local/libusb
+        make
+        make install
+
+    - name: Save libusb cache
+      if: steps.cache-usb.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v4
+      with:
+        key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-libusb
+        path: /home/runner/work/js8call/js8call/local/libusb
+        
+## ffmpeg
     - name: Cache Check ffmpeg 7.1.1
       id: cache-ffmpeg
       uses: actions/cache@v4
@@ -67,8 +95,7 @@ jobs:
         mkdir -p ffmpeg/build
         cd ffmpeg/build
         ../configure --prefix=${GITHUB_WORKSPACE}/local/ffmpeg --disable-doc --enable-network --enable-shared \
-          --enable-gpl --enable-libaom --enable-libass \
-          --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libsvtav1 \
+          --enable-gpl --enable-libass --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libsvtav1 \
           --enable-libdav1d --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265
         make -j install
         /home/runner/work/js8call/js8call/local/ffmpeg/ffmpeg --version
@@ -79,7 +106,8 @@ jobs:
       with:
         key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-ffmpeg
         path: /home/runner/work/js8call/js8call/local/ffmpeg
-        
+
+## hamlib
     - name: Cache Check Hamlib 4.6.4
       id: cache-hamlib
       uses: actions/cache@v4
@@ -107,6 +135,7 @@ jobs:
         key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-hamlib
         path: /home/runner/work/js8call/js8call/local/hamlib
           
+ ## fftw
     - name: Cache Check fftw 3.3.10
       id: cache-fftw
       uses: actions/cache@v4
@@ -132,6 +161,7 @@ jobs:
         key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-fftw
         path: /home/runner/work/js8call/js8call/local/fftw
         
+## boost
     - name: Cache Check Boost 1.88
       id: cache-boost
       uses: actions/cache@v4
@@ -156,6 +186,7 @@ jobs:
         key: ${{ runner.os }}-${{ steps.which-os.outputs.thisos }}-${{ runner.arch }}-boost
         path: /home/runner/work/js8call/js8call/local/boost
         
+## QT
     - name: Cache Check QT 6.8.3
       id: cache-qt
       uses: actions/cache@v4
