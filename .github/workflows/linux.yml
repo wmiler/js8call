@@ -13,7 +13,7 @@ on:
 
 env:
   BUILD_TYPE: Release
-  build_package: build-essential git cmake libusb-1.0-0-dev libxkbcommon-dev libudev-dev yasm libva-dev
+  build_package: build-essential git cmake libusb-1.0-0-dev libxkbcommon-dev libudev-dev yasm libva-dev libpulse-dev
   opengl_package1: libegl1-mesa-dev libgles2-mesa-dev libgbm-dev libgl1-mesa-dev libxkbcommon-x11-dev 
   opengl_package2: libxcb-keysyms1-dev libxcb-image0-dev libxcb-icccm4-dev libxcb-render-util0-dev 
   opengl_package3: libxcb-xfixes0-dev libxcb-sync-dev libxcb-randr0-dev libxrender-dev
