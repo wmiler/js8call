@@ -100,7 +100,7 @@ jobs:
         ../configure --prefix=${GITHUB_WORKSPACE}/local/ffmpeg --disable-doc --enable-network --enable-shared \
           --enable-gpl --enable-libass --enable-libfreetype --enable-libmp3lame --enable-libvorbis
         make -j install
-        /home/runner/work/js8call/js8call/local/ffmpeg/ffmpeg --version
+        ls -lR /home/runner/work/js8call/js8call/local/ffmpeg
 
     - name: Save ffmpeg cache
       if: steps.cache-ffmpeg.outputs.cache-hit != 'true'
