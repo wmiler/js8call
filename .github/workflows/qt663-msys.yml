@@ -61,7 +61,7 @@ jobs:
           cmake --install .
 
       - name: Upload QT 6.6.3 Artifact binaries
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: qt663-windows-msys2-binaries
           path: /d/a/js8call/qt663-install/

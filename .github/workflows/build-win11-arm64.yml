@@ -95,7 +95,7 @@ jobs:
         cmake --build . --config Release --target package
 
     - name: Upload Artifact (from github runner)
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: js8call-2.3.2-devel-win64-github.exe
         path: "build/js8call-2.3.2-devel-win64.exe"
