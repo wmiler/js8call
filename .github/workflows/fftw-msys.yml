@@ -2,7 +2,6 @@ name: Build fftw on Windows (MSYS2)
 
 on:
   push:
-    branches: [ "main" ]
     paths:
       '.github/workflows/fftw-msys.yml'
 
