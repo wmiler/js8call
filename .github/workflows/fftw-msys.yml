@@ -44,7 +44,7 @@ jobs:
         if: (runner.arch == 'X64')
         run: |
           cd /tmp/fftw-3.3.10
-          ./configure --prefix=${GITHUB_WORKSPACE}/local/fftw --enable-threads --enable-shared --enable-sse2 --enable-avx --enable-avx2 --enable-float
+          ./configure --prefix=${GITHUB_WORKSPACE}/local/fftw --enable-threads --enable-shared --enable-sse2 --enable-avx --enable-avx2 --enable-float --with-our-malloc
           make
           make install
           
