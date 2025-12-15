@@ -58,7 +58,7 @@ jobs:
         cpack -G DEB
 
     - name: Upload Artifact (deb)
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: js8call_2.3.2-devel_amd64_ubuntu-24.04.deb
         path: ~/js8call/build/js8call_2.3.2-devel_amd64.deb
@@ -100,7 +100,7 @@ jobs:
           --icon-file AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png
         
     - name: Upload AppImage Artifact
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: js8call_2.3.2-devel_x86_64_ubuntu-24.04.AppImage
         path: ~/appimage/js8call-x86_64.AppImage
@@ -165,7 +165,7 @@ jobs:
         cpack -G DEB
 
     - name: Upload Artifact (deb)
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: js8call_2.3.2-devel_arm64_ubuntu-24.04.deb
         path: ~/js8call/build/js8call_2.3.2-devel_arm64.deb
@@ -207,7 +207,7 @@ jobs:
           --icon-file AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png
         
     - name: Upload AppImage Artifact
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: js8call_2.3.2-devel_aarch64_ubuntu-24.04.AppImage
         path: ~/appimage/js8call-aarch64.AppImage
@@ -286,7 +286,7 @@ jobs:
         cpack -G DEB
 
     - name: Upload Artifact (deb)
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: js8call_2.3.2-devel_x86_64_debian-12.deb
         path: ~/js8call/build/js8call_2.3.2-devel_amd64.deb
@@ -328,7 +328,7 @@ jobs:
           --icon-file AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png
         
     - name: Upload AppImage Artifact
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: js8call_2.3.2-devel_x86_64_debian-12.AppImage
         path: ~/appimage/js8call-x86_64.AppImage
@@ -407,7 +407,7 @@ jobs:
         cpack -G DEB
 
     - name: Upload Artifact (deb)
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: js8call_2.3.2-devel_aarch64_debian-12.deb
         path: ~/js8call/build/js8call_2.3.2-devel_arm64.deb
@@ -454,7 +454,7 @@ jobs:
           --icon-file AppDir/usr/share/icons/hicolor/128x128/apps/js8call_icon.png
         
     - name: Upload AppImage Artifact
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: js8call_2.3.2-devel_aarch64_debian-12.AppImage
         path: ~/appimage/js8call-aarch64.AppImage
@@ -531,7 +531,7 @@ jobs:
       continue-on-error: true
 
     - name: Upload Artifact (rpm)
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: js8call_2.3.2-devel_x86_64_fedora-42.rpm
         path: ~/js8call/build/js8call-2.3.2-devel.x86_64.rpm
@@ -578,7 +578,7 @@ jobs:
       continue-on-error: true
         
     - name: Upload AppImage Artifact
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: js8call_2.3.2-devel_x86_64_fedora-42.AppImage
         path: ~/appimage/js8call-x86_64.AppImage
@@ -661,7 +661,7 @@ jobs:
       continue-on-error: true
       
     - name: Upload Artifact (arm64 fed)
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: js8call_2.3.2-devel_aarch64_fedora-42.rpm
         path: ~/js8call/build/js8call-2.3.2-devel.aarch64.rpm
@@ -713,7 +713,7 @@ jobs:
       continue-on-error: true
         
     - name: Upload AppImage Artifact
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: js8call_2.3.2-devel_aarch64_fedora-12.AppImage
         path: ~/appimage/js8call-aarch64.AppImage
