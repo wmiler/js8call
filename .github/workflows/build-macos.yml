@@ -63,7 +63,7 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload Artifact (app)
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v7
       with:
         name: js8call_2.3.2-devel_arm64_macos15.app
         path: /Users/runner/work/js8call/js8call/build/
