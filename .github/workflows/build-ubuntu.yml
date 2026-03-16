@@ -116,7 +116,7 @@ jobs:
         tar zcf /home/runner/work/js8call/js8call/js8call_2.3.2-devel_24.04-amd64-ci.tar.gz js8call-x86_64.AppImage
         
     - name: Create Release and Upload Assets
-      uses: softprops/action-gh-release@v2.4.2
+      uses: softprops/action-gh-release@v2.6.1
       with:
         tag_name: js8call_2.3.2-devel_ubuntu-24.04-amd64-ci
         name: "JS8Call v2.3.2-devel Ubuntu 24.04 amd64 CI AppImage build"
@@ -223,7 +223,7 @@ jobs:
         tar zcf /home/runner/work/js8call/js8call/js8call_2.3.2-devel_24.04-aarch64-ci.tar.gz js8call-aarch64.AppImage
         
     - name: Create Release and Upload Assets
-      uses: softprops/action-gh-release@v2.4.2
+      uses: softprops/action-gh-release@v2.6.1
       with:
         tag_name: js8call_2.3.2-devel_ubuntu-24.04-aarch64-ci
         name: "JS8Call v2.3.2-devel Ubuntu 24.04 aarch64/arm64 CI AppImage build"
@@ -344,7 +344,7 @@ jobs:
         tar zcf /__w/js8call/js8call/js8call_2.3.2-devel_deb12-x86_64-ci.tar.gz js8call-x86_64.AppImage
         
     - name: Create Release and Upload Assets
-      uses: softprops/action-gh-release@v2.4.2
+      uses: softprops/action-gh-release@v2.6.1
       with:
         tag_name: js8call_2.3.2-devel_debian-12-x86_64-ci
         name: "JS8Call v2.3.2-devel Debian 12 x86_64 CI AppImage build"
@@ -465,7 +465,7 @@ jobs:
         tar zcf /__w/js8call/js8call/js8call_2.3.2-devel_debian-12-aarch64-ci.tar.gz js8call-aarch64.AppImage
         
     - name: Create Release and Upload Assets
-      uses: softprops/action-gh-release@v2.4.2
+      uses: softprops/action-gh-release@v2.6.1
       with:
         tag_name: js8call_2.3.2-devel_debian-12-aarch64-ci
         name: "JS8Call v2.3.2-devel Debian 12 aarch64/arm64 CI AppImage build"
@@ -596,7 +596,7 @@ jobs:
       continue-on-error: true
         
     - name: Create Release and Upload Assets
-      uses: softprops/action-gh-release@v2.4.2
+      uses: softprops/action-gh-release@v2.6.1
       with:
         tag_name: js8call_2.3.2-devel_fedora-42-x86_64-ci
         name: "JS8Call v2.3.2-devel Fedora 42 x86_64 CI AppImage build"
@@ -726,7 +726,7 @@ jobs:
       continue-on-error: true
         
     - name: Create Release and Upload Assets
-      uses: softprops/action-gh-release@v2.4.2
+      uses: softprops/action-gh-release@v2.6.1
       with:
         tag_name: js8call_2.3.2-devel_fedora-42-aarch64-ci
         name: "JS8Call v2.3.2-devel Fedora 42 aarch64/arm64 CI AppImage build"

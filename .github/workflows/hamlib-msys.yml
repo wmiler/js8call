@@ -134,7 +134,7 @@ jobs:
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release and Upload Assets
-        uses: softprops/action-gh-release@v2.4.2
+        uses: softprops/action-gh-release@v2.6.1
         with:
           tag_name: hamlib-v4.6.4-ci
           name: "Hamlib v4.6.4 for Windows MSYS2 CI build"
