@@ -46,7 +46,7 @@ jobs:
         mkdir -p build
 
     - name: Release download for QT6
-      uses: robinraju/release-downloader@v1.12
+      uses: robinraju/release-downloader@v1.13
       with:
         repository: 'wmiler/js8call'
         fileName: 'qt663-windows-msys2-binaries*.zip'
@@ -55,7 +55,7 @@ jobs:
         out-file-path: 'D:/a/_temp/msys64/mingw64/'
 
     - name: Release download for hamlib
-      uses: robinraju/release-downloader@v1.12
+      uses: robinraju/release-downloader@v1.13
       with:
         repository: 'wmiler/js8call'
         fileName: 'hamlib-windows-msys2-binaries*.zip'
